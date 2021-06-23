@@ -1,0 +1,44 @@
+.App {
+  display: grid;
+  place-items: center;
+}
+
+.router__div {
+  background-image: linear-gradient(
+    to right top,
+    #fff5ff,
+    #fef8ff,
+    #fdfaff,
+    #fefdff,
+    #ffffff
+  );
+  height: 10vh;
+  display: flex;
+}
+
+.ul__list {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  font-weight: bolder;
+  color: white;
+  padding-inline-start: 0px;
+}
+
+.ul__list > li {
+  padding: 4px;
+}
+
+.ul__list > Link {
+  color: white;
+}
+
+@media only screen and (max-width: 600px) {
+  .ul__list > li {
+    padding: 4px;
+  }
+}
+
+.header__Icons {
+  margin-left: auto;
+}

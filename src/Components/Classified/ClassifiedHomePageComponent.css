@@ -26,3 +26,18 @@
   margin: 10px;
   cursor: pointer;
 }
+
+.MuiButton-outlinedPrimary {
+  font-weight: bold !important;
+  background-image: linear-gradient(
+    to right top,
+    #3ad29f,
+    #48db8a,
+    #63e270,
+    #84e74d,
+    #a8eb12
+  );
+  color: #fff !important;
+  border: none !important;
+  outline: none !important;
+}

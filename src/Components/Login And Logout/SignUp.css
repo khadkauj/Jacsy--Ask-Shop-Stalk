@@ -1,4 +1,4 @@
-.main {
+.main45 {
   display: flex;
   flex-direction: column;
   user-select: none;
@@ -6,7 +6,7 @@
   justify-content: center;
 }
 
-h1 {
+.headerf {
   font-size: 2rem;
   text-align: center;
   font-family: cursive;
@@ -23,7 +23,7 @@ hr {
   margin-bottom: 10px;
 }
 
-h3 {
+.headerthree {
   font-size: 2rem;
   text-align: center;
   font-family: cursive;
@@ -32,7 +32,7 @@ h3 {
   margin-bottom: 10px;
 }
 
-input {
+.inpt {
   padding: 1rem;
   margin: 20px 0;
   width: 80%;
@@ -45,11 +45,11 @@ input {
   background: transparent;
   transition: 1sec;
 }
-input:hover {
+.inpt:hover {
   transform: scale(1.05);
 }
 
-button {
+.butto {
   padding: 1rem 3rem;
   border-radius: 50px;
   color: black;
@@ -60,6 +60,6 @@ button {
   transition: 0.5sec;
 }
 
-button:hover {
+.butto:hover {
   transform: scale(1.1);
 }

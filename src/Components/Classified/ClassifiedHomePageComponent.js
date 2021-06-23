@@ -63,42 +63,82 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ClassifiedHomePageComponent = () => {
-    // raw data
+    // initializations
     const [productFromFirebase, setproductFromFirebase] = useState([])
-    console.log("productFromFirebase", productFromFirebase);
     const [nameofProduct, setnameofProduct] = useState("")
     const [producttype, setproducttype] = React.useState('');
     const [productCondition, setproductCondition] = useState("")
-    const [productImage, setproductImage] = useState("")
+    const [productImage, setproductImage] = useState(null)
     const [productPrice, setproductPrice] = useState("")
     const [productDescription, setproductDescription] = useState("")
     const [errorMessgae, seterrorMessgae] = useState(false)
     const history = useHistory()
+    const [userDetailsFirebase, setuserDetailsFirebase] = useState("")
+    const [urlForImage, seturlForImage] = useState(null)
     // firebase setups
-    const submitToFirebase = () => {
 
-        if (nameofProduct && producttype && productCondition && productPrice) {
-            db.collection("products").add(
-                {
-                    id: Math.random(),
-                    date: new Date(),
-                    name: nameofProduct,
-                    price: productPrice,
-                    category: producttype,
-                    productDetails: productCondition,
-                    productDescription: productDescription
-                },
-            ).then(e => {
-                setOpen(false);
-                seterrorMessgae(false)
-            }).catch(error => console.log("Error while sendig items to Firebase"))
-        } else {
-            seterrorMessgae(true)
+    const imagehandleChange = (e) => {
+        console.log(e.target.files[0]);
+        if (e.target.files[0]) {
+            setproductImage(e.target.files[0])
         }
+    }
 
+    const sendImageToFirebase = (e) => {
+        // console.log(e.target.files[0]);
+        // if (e.target.files[0]) {
+        //     setproductImage(e.target.files[0])
+        // }
+        if (productImage) {
+            // setproductImage(e.target.files[0]);
+            // send pictures
+            // console.log("productImage", e.target.files[0])
+            console.log("Trying to send image to firebase");
+            var storageRef = firebase.storage().ref();
+            var uploadTask = storageRef.child(`${userDetailsFirebase.uid}/` + Math.random()).put(productImage)
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                },
+                (error) => {
+                    // Handle unsuccessful uploads
+                    console.log("error");
+                },
+                async () => {
+                    // Handle successful uploads on complete
+                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                    const downloadurl = await uploadTask.snapshot.ref.getDownloadURL()
+                    console.log("rlrurl", downloadurl);
+
+                    if (nameofProduct && producttype && productCondition && productPrice) {
+                        // send details from form
+                        db.collection("products").add(
+                            {
+                                id: Math.random(),
+                                date: new Date(),
+                                name: nameofProduct,
+                                price: productPrice,
+                                category: producttype,
+                                productDetails: productCondition,
+                                productDescription: productDescription,
+                                imageURL: downloadurl
+                            },
+                        ).then(e => {
+                            setOpen(false);
+                            seterrorMessgae(false)
+                        }).catch(error => console.log("Error while sendig items to Firebase"))
+                    } else {
+                        seterrorMessgae(true)
+                    }
+                }
+            );
+        }
+    }
+
+    const submitToFirebase = () => {
     }
 
     useEffect(() => {
+        // fetching all public posts
         db.collection("products").onSnapshot(snapshot => {
             setproductFromFirebase(
                 snapshot.docs.map((doc) => ({
@@ -109,8 +149,18 @@ const ClassifiedHomePageComponent = () => {
                 ))
             )
         })
+        // checking user and his stauts
+        firebase.auth().onAuthStateChanged(User => {
+            if (User) {
+                setuserDetailsFirebase(User)
+                console.log("user found", User);
+            }
+            else {
+                console.log("User not found");
+                history.push("/Login")
+            }
+        })
         return () => {
-
         }
     }, [])
 
@@ -122,31 +172,24 @@ const ClassifiedHomePageComponent = () => {
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-
     // setup for Input dailog box from Material UI
     const [open, setOpen] = React.useState(false);
-
     const handleClickOpen = () => {
-
         firebase.auth().onAuthStateChanged(User => {
             if (User) {
                 setOpen(true);
-                console.log("user found");
+                console.log("user found", User);
             }
             else {
                 console.log("User not found");
                 history.push("/Login")
             }
         })
-
-
     };
-
     const handleClose = () => {
         setOpen(false);
         seterrorMessgae(false)
     };
-
     const handleChange = (event) => {
         setproducttype(event.target.value);
     };
@@ -166,8 +209,8 @@ const ClassifiedHomePageComponent = () => {
     </div> */}
 
             <div className="button">
-                <div style={{margin:"20px"}}>
-                    <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                <div style={{ margin: "20px" }}>
+                    <Button className="addButton" variant="outlined" color="primary" onClick={handleClickOpen}>
                         Add items.
                     </Button>
                     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -176,7 +219,7 @@ const ClassifiedHomePageComponent = () => {
                             {!errorMessgae && <DialogContentText DialogContentText>
                                 Please fill in the details to add your item to the store.
                             </DialogContentText>}
-                            {errorMessgae && <DialogContentText style={{color:"red"}}>
+                            {errorMessgae && <DialogContentText style={{ color: "red" }}>
                                 Please fill in the required.
                             </DialogContentText>}
                             <TextField
@@ -230,10 +273,12 @@ const ClassifiedHomePageComponent = () => {
                                 value={productDescription}
                                 onChange={e => setproductDescription(e.target.value)}
                             />
-
-                            <label for="fname">Product Image</label>
-                            <input type="file" id="fname" name="fname"
-                                onChange={e => setproductImage(e.target.value)} ></input>
+                            <form>
+                                <label for="fname">Product Image</label>
+                                <input type="file" on
+                                    onChange={imagehandleChange} ></input>
+                                {/* <button type="submit" onClick={sendImageToFirebase}>send image</button> */}
+                            </form>
 
                             <TextField
                                 autoFocus
@@ -250,7 +295,7 @@ const ClassifiedHomePageComponent = () => {
                             <Button onClick={handleClose} color="primary">
                                 Cancel
                             </Button>
-                            <Button onClick={submitToFirebase} color="primary">
+                            <Button onClick={sendImageToFirebase} color="primary">
                                 Submit
                             </Button>
                         </DialogActions>
@@ -281,7 +326,7 @@ const ClassifiedHomePageComponent = () => {
 
                                 <CardMedia
                                     className={classes.media}
-                                    image="https://i.pinimg.com/474x/a8/65/58/a86558def3340a5fd8f4fe647e351a37.jpg"
+                                    image={item.data.imageURL ? item.data.imageURL : "https://data.whicdn.com/images/326864042/original.jpg"}
                                     title="Paella dish"
                                 />
                                 <CardContent>

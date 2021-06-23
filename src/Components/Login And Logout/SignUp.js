@@ -14,7 +14,7 @@ const SignUp = () => {
     const sendFromToFirbase = (e) => {
         e.preventDefault()
         firebase.auth().createUserWithEmailAndPassword(email, password).then(userCredentails => {
-            console.log("user credtenial returned after creating, " , userCredentails);
+            console.log("user credtenial returned after creating, ", userCredentails);
         }).catch(error => {
             console.log("error while creating user in firebase, ", error);
         })
@@ -22,36 +22,39 @@ const SignUp = () => {
 
 
     return (
-        <div className="main">
-            <h1>Sign Up</h1>
+        <div className="main123">
+            <h1 className="header1" >Sign Up</h1>
             <hr />
-            <h3>Welcome to SignUp page</h3>
+            <h3 className="header3" >Welcome to SignUp page</h3>
 
-                <input
-                    value={name}
-                    onChange={(e) => setname(e.target.value)}
-                    type="text"
-                    placeholder="Name"
-                    required
-                />
-                <input
-                    value={email}
-                    onChange={(e) => setemail(e.target.value)}
-                    type="email"
-                    placeholder="Email"
-                    required
-                />
-                <input
-                    value={password}
-                    onChange={(e) => setpassword(e.target.value)}
-                    type="password"
-                    placeholder="Password"
-                    required
-                />
-                <button onClick={sendFromToFirbase} type="submit">
-                    Sign Up
-                </button>
- 
+            <input
+                className="inp"
+                value={name}
+                onChange={(e) => setname(e.target.value)}
+                type="text"
+                placeholder="Name"
+                required
+            />
+            <input
+                className="inp"
+                value={email}
+                onChange={(e) => setemail(e.target.value)}
+                type="email"
+                placeholder="Email"
+                required
+            />
+            <input
+                className="inp"
+                value={password}
+                onChange={(e) => setpassword(e.target.value)}
+                type="password"
+                placeholder="Password"
+                required
+            />
+            <button className="butt" onClick={sendFromToFirbase} type="submit">
+                Sign Up
+            </button>
+
         </div>
     );
 };

@@ -21,10 +21,10 @@ const ListNews = () => {
     ]
     return (
         <div> {listOfNews.map(news => (
-            <div className="main">
+            <div className="mainfromList">
                 <img src={news.imageSource} alt="" className="imagehomepageList" />
                 <div className="innerdiv" >
-                    <h4>{ news.heading}</h4>
+                    <h4>{news.heading}</h4>
                     <p>{news.news.slice(0, 70)}..... </p>
                 </div>
             </div>
