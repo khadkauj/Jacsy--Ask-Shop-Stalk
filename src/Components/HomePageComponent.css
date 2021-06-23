@@ -1,0 +1,11 @@
+.main {
+  display: flex;
+  margin-top: 40px;
+  max-width: 100%;
+}
+
+.imagehomepage {
+  max-width: 45%;
+  background-size: contain;
+  padding: 10px;
+}

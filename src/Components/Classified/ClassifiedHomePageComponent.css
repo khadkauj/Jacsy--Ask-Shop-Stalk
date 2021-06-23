@@ -1,0 +1,28 @@
+.MuiGrid-item {
+  display: grid;
+  place-items: center;
+  overflow-y: hidden;
+}
+
+.makeStyles-root-51 {
+  width: 345px;
+}
+
+.MuiGrid-root > * {
+  min-width: 345px;
+  min-height: 402.062px;
+}
+
+.Advertisement {
+  margin-bottom: 24px;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+}
+.button > * {
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+}

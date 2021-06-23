@@ -1,0 +1,10 @@
+.main {
+  display: flex;
+  align-items: center;
+}
+
+.imagehomepageList {
+  max-width: 30%;
+  background-size: contain;
+  padding: 10px;
+}
