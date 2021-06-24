@@ -12,8 +12,10 @@
     #fefdff,
     #ffffff
   );
-  height: 10vh;
+  /* height: 10vh; */
   display: flex;
+  place-items: center;
+  padding: 14px;
 }
 
 .ul__list {
@@ -23,14 +25,11 @@
   font-weight: bolder;
   color: white;
   padding-inline-start: 0px;
+  text-decoration: none !important;
 }
 
 .ul__list > li {
   padding: 4px;
-}
-
-.ul__list > Link {
-  color: white;
 }
 
 @media only screen and (max-width: 600px) {
@@ -41,4 +40,12 @@
 
 .header__Icons {
   margin-left: auto;
+}
+
+.linkText {
+  text-decoration: none;
+}
+
+.nav__bar {
+  text-align: center;
 }

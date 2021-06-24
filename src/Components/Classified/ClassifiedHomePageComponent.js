@@ -27,6 +27,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import { auth } from "../../Firebase/Firebase";
 import firebase from "firebase";
+import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 import "./ClassifiedHomePageComponent.css";
 import { useHistory } from "react-router-dom";
@@ -75,8 +77,10 @@ const ClassifiedHomePageComponent = () => {
     const history = useHistory()
     const [userDetailsFirebase, setuserDetailsFirebase] = useState("")
     const [urlForImage, seturlForImage] = useState(null)
-    // firebase setups
 
+    // console.log("use", productFromFirebase[0]?.data?.date.tol);
+
+    // firebase setups
     const imagehandleChange = (e) => {
         console.log(e.target.files[0]);
         if (e.target.files[0]) {
@@ -111,16 +115,20 @@ const ClassifiedHomePageComponent = () => {
 
                     if (nameofProduct && producttype && productCondition && productPrice) {
                         // send details from form
-                        db.collection("products").add(
+                        const idGeneratedforProduct = userDetailsFirebase.uid + uuidv4()
+                        db.collection("products").doc(idGeneratedforProduct).set(
                             {
-                                id: Math.random(),
+                                id: idGeneratedforProduct,
                                 date: new Date(),
                                 name: nameofProduct,
                                 price: productPrice,
                                 category: producttype,
                                 productDetails: productCondition,
                                 productDescription: productDescription,
-                                imageURL: downloadurl
+                                imageURL: downloadurl,
+                                userEmail: userDetailsFirebase.email,
+                                userEmailVerified: userDetailsFirebase.emailVerified,
+                                userDisplayName: userDetailsFirebase.displayName
                             },
                         ).then(e => {
                             setOpen(false);
@@ -312,7 +320,7 @@ const ClassifiedHomePageComponent = () => {
                                 <CardHeader
                                     avatar={
                                         <Avatar aria-label="recipe" className={classes.avatar}>
-                                            {item?.contactDetails?.name.slice(0, 1).toUpperCase()}
+                                            {item?.data?.userEmail.slice(0, 1).toUpperCase()}
                                         </Avatar>
                                     }
                                     action={
@@ -320,38 +328,39 @@ const ClassifiedHomePageComponent = () => {
                                             <MoreVertIcon />
                                         </IconButton>
                                     }
-                                    title={item.data.name}
-                                    subheader={item.data.date.nanoseconds}
+                                    title={item.data.userEmail}
+                                    subheader={"posted at " + item.data.date.toDate().toLocaleString()}
                                 />
-
-                                <CardMedia
-                                    className={classes.media}
-                                    image={item.data.imageURL ? item.data.imageURL : "https://data.whicdn.com/images/326864042/original.jpg"}
-                                    title="Paella dish"
-                                />
-                                <CardContent>
-                                    <Typography
-                                        variant="body2"
-                                        color="textSecondary"
-                                        component="p"
-                                    >
-                                        {item?.data.category ? item?.data.category : "NA"}
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        color="textSecondary"
-                                        component="p"
-                                    >
-                                        {item?.data.productDetails ? item?.data.productDetails : "NA"}
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        color="textSecondary"
-                                        component="p"
-                                    >
-                                        {item?.data.productDescription ? item?.data.productDescription : "NA"}
-                                    </Typography>
-                                </CardContent>
+                                <Link to={"/Classified/Products/" + item.data.id} className="linkTextForCard" >
+                                    <CardMedia
+                                        className={classes.media}
+                                        image={item.data.imageURL ? item.data.imageURL : "https://data.whicdn.com/images/326864042/original.jpg"}
+                                        title="Paella dish"
+                                    />
+                                    <CardContent>
+                                        <Typography
+                                            variant="h5"
+                                            color="textPrimary"
+                                            component="p"
+                                        >
+                                            {item?.data.name ? item?.data.name : "NA"}
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            color="error"
+                                            component="p"
+                                        >
+                                            {item?.data.productDetails ? item?.data.productDetails : "NA"}
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            color="textSecondary"
+                                            component="p"
+                                        >
+                                            {item?.data.productDescription ? item?.data.productDescription : "NA"}
+                                        </Typography>
+                                    </CardContent>
+                                </Link>
                                 <CardActions disableSpacing>
                                     <IconButton aria-label="add to favorites">
                                         <FavoriteIcon />

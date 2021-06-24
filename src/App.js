@@ -8,6 +8,7 @@ import SignUp from "./Components/Login And Logout/SignUp";
 
 import "./App.css";
 import HeaderComponent from "./Components/HeaderComponent";
+import ClassifiedProductView from "./Components/Classified/ClassifiedProductView";
 
 function App() {
 	document.title = "Abundance"
@@ -35,6 +36,9 @@ function App() {
 						</Route>
 						<Route exact path="/SignUp">
 							<SignUp />
+						</Route>
+						<Route exact path="/Classified/Products/:id">
+							<ClassifiedProductView />
 						</Route>
 					</Switch>
 				</div>

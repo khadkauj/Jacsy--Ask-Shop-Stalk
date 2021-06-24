@@ -41,3 +41,7 @@
   border: none !important;
   outline: none !important;
 }
+
+.linkTextForCard {
+  text-decoration: none !important;
+}

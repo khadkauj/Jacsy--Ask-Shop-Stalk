@@ -2,31 +2,3 @@
   display: grid;
   place-items: center;
 }
-
-.router__div {
-  background-color: #000;
-  height: 10vh;
-}
-
-.ul__list {
-  list-style-type: none;
-  display: flex;
-  justify-content: center;
-  font-weight: bolder;
-  color: white;
-  padding-inline-start: 0px;
-}
-
-.ul__list > li {
-  padding: 4px;
-}
-
-.ul__list > Link {
-  color: white;
-}
-
-@media only screen and (max-width: 600px) {
-  .ul__list > li {
-    padding: 4px;
-  }
-}

@@ -39,23 +39,23 @@ const HeaderComponent = () => {
     }, [])
     return (
         <div className="router__div">
-            <nav >
+            <nav className="nav__bar" >
                 {/* Home Exams* Homeworks* Notes* Classified* Contact */}
                 <ul className="ul__list">
                     <li>
-                        <Link to="/" style={{ color: "black" }} >Home</Link>
+                        <Link to="/" className="linkText" style={{ color: "black" }} >Home</Link>
                     </li>
                     <li>
-                        <Link to="/Freshies" style={{ color: "black" }}>Freshies</Link>
+                        <Link to="/Freshies" className="linkText" style={{ color: "black" }}>Freshies</Link>
                     </li>
                     <li>
-                        <Link to="/Homeworks" style={{ color: "black" }}>Assignments</Link>
+                        <Link to="/Homeworks" className="linkText" style={{ color: "black" }}>Assignments</Link>
                     </li>
                     {/* <li>
             <Link to="/Notes" style={{ color: "white"}}>Notes</Link>
         </li> */}
                     <li>
-                        <Link to="/Classified" style={{ color: "black" }}>Classified</Link>
+                        <Link to="/Classified" className="linkText" style={{ color: "black" }}>Classified</Link>
                     </li>
                 </ul>
             </nav>
