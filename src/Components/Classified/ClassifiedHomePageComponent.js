@@ -235,13 +235,14 @@ const ClassifiedHomePageComponent = () => {
                                 autoFocus
                                 margin="dense"
                                 id="name"
-                                label="Name of product"
+                                label="Product name"
                                 type="text"
                                 fullWidth
                                 value={nameofProduct}
+                                placeholder="Big black Ikea Drawer"
                                 onChange={e => setnameofProduct(e.target.value)}
                             />
-                            <FormControl className={classes.formControl}>
+                            <FormControl className={classes.formControl} style={{ margin: 0 }} >
                                 <InputLabel id="demo-simple-select-label">Category</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
@@ -255,7 +256,7 @@ const ClassifiedHomePageComponent = () => {
                                 </Select>
                             </FormControl>
                             <br></br>
-                            <FormControl className={classes.formControl}>
+                            <FormControl className={classes.formControl} style={{ margin: 0 }}>
                                 <InputLabel id="demo-simple-select-label">Condition</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
@@ -313,7 +314,7 @@ const ClassifiedHomePageComponent = () => {
             </div>
 
             <div className="cards__main">
-                <Grid container spacing={2}>
+                <Grid container spacing={2} >
                     {productFromFirebase.map((item) => (
                         <Grid className="grid__main" item xs={12} sm={6} md={4} lg={4} key={Math.random()}>
                             <Card className={classes.root}>

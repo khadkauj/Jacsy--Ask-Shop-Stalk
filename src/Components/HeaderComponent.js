@@ -38,7 +38,7 @@ const HeaderComponent = () => {
         }
     }, [])
     return (
-        <div className="router__div">
+        <div className="router__div stickyProp">
             <nav className="nav__bar" >
                 {/* Home Exams* Homeworks* Notes* Classified* Contact */}
                 <ul className="ul__list">

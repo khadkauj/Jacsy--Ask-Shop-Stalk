@@ -44,7 +44,7 @@ const ClassifiedProductView = ({ }) => {
     }, [])
 
     return (
-        <div >
+        <div className="productViewMain" >
             <Grid container spacing={1}>
                 <Grid item xs={12} sm={12} md={6} lg={6}>
                     {productDataFromFirebase.imageURL && <CardMedia
@@ -53,13 +53,42 @@ const ClassifiedProductView = ({ }) => {
                         title="Paella dish"
                     />}
                 </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={6}>
-                    <p>hjee</p>
-                    <p>jn</p>
+                <div className="secondDivInGrid">
+                    <divc className="tophead">
+                        <div>
+                            <h2 className="productViewDetailsFont">{productDataFromFirebase?.name}</h2>
+                            <span className="prodPricedet" >{"€" + productDataFromFirebase?.price}</span>
+                        </div>
+                        <div className="avatarContainer leftAuto">
+                            <Avatar aria-label="recipe">
+                                {productDataFromFirebase?.userEmail?.slice(0, 1).toUpperCase()}
+                            </Avatar>
+                            <div className="avatarContainer__div">
+                                <h4 style={{ color: "#212529" }}>owner</h4>
+                                <h4><b style={{ color: "#004180" }}>{productDataFromFirebase?.userEmail}</b><sub>{productDataFromFirebase?.userEmailVerified}</sub></h4>
+                            </div>
+                        </div>
+                    </divc>
 
-                </Grid>
+                    <div className="productDetails">
+                        <h2 className="productViewDetailsh2">Product Details:</h2>
+                        <div className="productViewDetails">
+                            <h4> {"Category: " + productDataFromFirebase?.category} </h4>
+                            <h4>{"Condition: " + productDataFromFirebase?.productDetails} </h4>
+                            <h4>{"Product: " + productDataFromFirebase?.category} </h4>
+                        </div>
 
+                    </div>
+                    <div className="Payment" >
+                        <button>Cash</button>
+                        <button>paypal</button>
+                    </div>
+                    <div>
+                        <h3 className="endtext">{productDataFromFirebase?.productDescription}</h3>
+                    </div>
+                </div>
             </Grid>
+
         </div>
     )
 }
