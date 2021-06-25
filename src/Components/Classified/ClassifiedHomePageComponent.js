@@ -78,7 +78,7 @@ const ClassifiedHomePageComponent = () => {
     const [userDetailsFirebase, setuserDetailsFirebase] = useState("")
     const [urlForImage, seturlForImage] = useState(null)
     const [paymentOptions, setpaymentOptions] = useState([])
-
+    const [disableSUbmitButton, setDisableSUbmitButton] = useState(true)
     // console.log("use", productFromFirebase[0]?.data?.date.tol);
 
     // firebase setups
@@ -234,8 +234,8 @@ const ClassifiedHomePageComponent = () => {
                                 Please fill in the required.
                             </DialogContentText>}
                             <TextField
-                                required
                                 autoFocus
+                                required
                                 margin="dense"
                                 id="name"
                                 label="Product name"
@@ -290,7 +290,6 @@ const ClassifiedHomePageComponent = () => {
                                 </Select>
                             </FormControl>
                             <TextField
-                                autoFocus
                                 margin="dense"
                                 id="description"
                                 label="Description"
@@ -309,7 +308,7 @@ const ClassifiedHomePageComponent = () => {
                             </form>
 
                             <TextField
-                                autoFocus
+
                                 margin="dense"
                                 id="name"
                                 label="Price"
@@ -323,7 +322,9 @@ const ClassifiedHomePageComponent = () => {
                             <Button onClick={handleClose} color="primary">
                                 Cancel
                             </Button>
-                            <Button onClick={sendImageToFirebase} color="primary">
+                            <Button onClick={sendImageToFirebase} color="primary"
+                                disabled={!productImage | !nameofProduct}
+                            >
                                 Submit
                             </Button>
                         </DialogActions>
