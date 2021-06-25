@@ -77,6 +77,7 @@ const ClassifiedHomePageComponent = () => {
     const history = useHistory()
     const [userDetailsFirebase, setuserDetailsFirebase] = useState("")
     const [urlForImage, seturlForImage] = useState(null)
+    const [paymentOptions, setpaymentOptions] = useState([])
 
     // console.log("use", productFromFirebase[0]?.data?.date.tol);
 
@@ -128,7 +129,8 @@ const ClassifiedHomePageComponent = () => {
                                 imageURL: downloadurl,
                                 userEmail: userDetailsFirebase.email,
                                 userEmailVerified: userDetailsFirebase.emailVerified,
-                                userDisplayName: userDetailsFirebase.displayName
+                                userDisplayName: userDetailsFirebase.displayName,
+                                paymentOptions: paymentOptions
                             },
                         ).then(e => {
                             setOpen(false);
@@ -147,7 +149,7 @@ const ClassifiedHomePageComponent = () => {
 
     useEffect(() => {
         // fetching all public posts
-        db.collection("products").onSnapshot(snapshot => {
+        db.collection("products").orderBy("date", "desc").onSnapshot(snapshot => {
             setproductFromFirebase(
                 snapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -165,7 +167,7 @@ const ClassifiedHomePageComponent = () => {
             }
             else {
                 console.log("User not found");
-                history.push("/Login")
+                // history.push("/Login")
             }
         })
         return () => {
@@ -197,6 +199,7 @@ const ClassifiedHomePageComponent = () => {
     const handleClose = () => {
         setOpen(false);
         seterrorMessgae(false)
+        setpaymentOptions([])
     };
     const handleChange = (event) => {
         setproducttype(event.target.value);
@@ -268,6 +271,22 @@ const ClassifiedHomePageComponent = () => {
                                     <MenuItem value={"Used only once"}>Used only once</MenuItem>
                                     <MenuItem value={"Used and all parts fine"}>Used and all parts fine</MenuItem>
                                     <MenuItem value={"Used but few parts not working"}>Used but few parts not working</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <br></br>
+                            <FormControl className={classes.formControl} style={{ margin: 0 }}>
+                                <InputLabel id="demo-simple-select-label">Payment</InputLabel>
+                                <Select
+                                    multiple
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={paymentOptions}
+                                    onChange={e => setpaymentOptions(e.target.value)}
+                                >
+                                    <MenuItem value={"Cash"}>Cash</MenuItem>
+                                    <MenuItem value={"Sparkasse"}>Sparkasse</MenuItem>
+                                    <MenuItem value={"Paypal"}>Paypal</MenuItem>
+                                    <MenuItem value={"Other"}>Other</MenuItem>
                                 </Select>
                             </FormControl>
                             <TextField
@@ -351,14 +370,14 @@ const ClassifiedHomePageComponent = () => {
                                             color="error"
                                             component="p"
                                         >
-                                            {item?.data.productDetails ? item?.data.productDetails : "NA"}
+                                            {item?.data.productDetails ? item?.data?.productDetails + " €" + item?.data?.price : "NA"}
                                         </Typography>
                                         <Typography
                                             variant="body2"
                                             color="textSecondary"
                                             component="p"
                                         >
-                                            {item?.data.productDescription ? item?.data.productDescription : "NA"}
+                                            {item?.data.productDescription ? item?.data.productDescription?.slice(0, 100) : "NA"}
                                         </Typography>
                                     </CardContent>
                                 </Link>
@@ -384,8 +403,7 @@ const ClassifiedHomePageComponent = () => {
                                     <CardContent>
                                         <Typography paragraph>Method:</Typography>
                                         <Typography paragraph>
-                                            Heat 1/2 cup of the broth in a pot until simmering, add
-                                            saffron and set aside for 10 minutes.
+                                            {item?.data.productDescription ? item?.data.productDescription?.slice(0, 100) + "......" : "NA"}
                                         </Typography>
                                     </CardContent>
                                 </Collapse>

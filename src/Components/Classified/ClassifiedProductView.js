@@ -73,15 +73,16 @@ const ClassifiedProductView = ({ }) => {
                     <div className="productDetails">
                         <h2 className="productViewDetailsh2">Product Details:</h2>
                         <div className="productViewDetails">
-                            <h4> {"Category: " + productDataFromFirebase?.category} </h4>
+                            {productDataFromFirebase?.category && <h4> Category: {productDataFromFirebase?.category} </h4>}
                             <h4>{"Condition: " + productDataFromFirebase?.productDetails} </h4>
                             <h4>{"Product: " + productDataFromFirebase?.category} </h4>
                         </div>
 
                     </div>
                     <div className="Payment" >
-                        <button>Cash</button>
-                        <button>paypal</button>
+                        {productDataFromFirebase?.paymentOptions?.map(option => (
+                            <button>{option}</button>
+                        ))}
                     </div>
                     <div>
                         <h3 className="endtext">{productDataFromFirebase?.productDescription}</h3>

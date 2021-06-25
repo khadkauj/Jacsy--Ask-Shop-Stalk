@@ -9,17 +9,20 @@ import "./Login.css";
 const Login = () => {
     const [email, setemail] = useState("@gmail.com");
     const [password, setpassword] = useState("");
+    const [wrongCredentialsInLogin, setwrongCredentialsInLogin] = useState(false)
     //   const dispatch = useDispatch();
     const history = useHistory();
     const loginToFirebase = (e) => {
         e.preventDefault()
         firebase.auth().signInWithEmailAndPassword(email, password).then(userCredntials => {
             console.log("User found on firebase, ", userCredntials);
+            setwrongCredentialsInLogin(false)
             history.push("/Classified")
             // console.log("history detials, ", history.goBack());
 
         }).catch(error => {
             console.log("user not found");
+            setwrongCredentialsInLogin(true)
         })
     }
 
@@ -37,6 +40,7 @@ const Login = () => {
                 type="password"
                 placeholder="Password"
             />
+            {wrongCredentialsInLogin && <p style={{ color: "#bb2124" }} >Wrong credentials!!!</p>}<br />
             <p className="para">
                 Not a member?
                 <Link to="/SignUp">

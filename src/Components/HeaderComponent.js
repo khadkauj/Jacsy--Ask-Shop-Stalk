@@ -45,12 +45,12 @@ const HeaderComponent = () => {
                     <li>
                         <Link to="/" className="linkText" style={{ color: "black" }} >Home</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link to="/Freshies" className="linkText" style={{ color: "black" }}>Freshies</Link>
                     </li>
                     <li>
                         <Link to="/Homeworks" className="linkText" style={{ color: "black" }}>Assignments</Link>
-                    </li>
+                    </li> */}
                     {/* <li>
             <Link to="/Notes" style={{ color: "white"}}>Notes</Link>
         </li> */}
@@ -61,10 +61,10 @@ const HeaderComponent = () => {
             </nav>
             <div className="header__Icons"  >
                 {!userStatus && <IconButton aria-label="Sign" onClick={signToFirebase}  >
-                    <PersonAddIcon />
+                    <PersonAddIcon fontSize="large" />
                 </IconButton>}
-                {userStatus && <IconButton aria-label="add to favorites" size="medium" onClick={signOutOfFirebase} >
-                    <ExitToAppIcon />
+                {userStatus && <IconButton aria-label="add to favorites" onClick={signOutOfFirebase} >
+                    <ExitToAppIcon fontSize="large" />
                 </IconButton>}
             </div>
         </div>

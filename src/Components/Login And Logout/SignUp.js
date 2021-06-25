@@ -9,14 +9,18 @@ const SignUp = () => {
     const [name, setname] = useState("");
     const [email, setemail] = useState("@gmail.com");
     const [password, setpassword] = useState("");
+    const [userAlreadyExits, setuserAlreadyExits] = useState(false)
     const history = useHistory();
 
     const sendFromToFirbase = (e) => {
         e.preventDefault()
         firebase.auth().createUserWithEmailAndPassword(email, password).then(userCredentails => {
             console.log("user credtenial returned after creating, ", userCredentails);
+            setuserAlreadyExits(false)
+            history.push("/Login")
         }).catch(error => {
             console.log("error while creating user in firebase, ", error);
+            setuserAlreadyExits(true)
         })
     }
 
@@ -51,11 +55,12 @@ const SignUp = () => {
                 placeholder="Password"
                 required
             />
+            {userAlreadyExits && <p style={{ color: "#bb2124" }}>Can't create duplicate/invalid user.</p>} <br />
             <button className="butt" onClick={sendFromToFirbase} type="submit">
                 Sign Up
             </button>
 
-        </div>
+        </div >
     );
 };
 
