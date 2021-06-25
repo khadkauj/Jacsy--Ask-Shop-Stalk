@@ -50,4 +50,6 @@
 .like {
   padding: 0px 10px;
   margin-top: -14px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54);
 }

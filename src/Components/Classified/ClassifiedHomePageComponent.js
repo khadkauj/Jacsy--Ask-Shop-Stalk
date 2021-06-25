@@ -154,8 +154,8 @@ const ClassifiedHomePageComponent = () => {
     const submitToFirebase = () => {
     }
 
-    const addLikeToFirebase = (data) => {
-        console.log("id in funciton, ", data);
+    const addLikeToFirebase = (data, numToAdd) => {
+        console.log("id in funciton, ", data, numToAdd);
         firebase.auth().onAuthStateChanged(User => {
             if (User) {
                 console.log("user found", User);
@@ -165,6 +165,11 @@ const ClassifiedHomePageComponent = () => {
                         db.collection("products").doc(data?.id).update({
                             like: ++doc.data().like,
                             peopleWhoLiked: firebase.firestore.FieldValue.arrayUnion(User?.email ? User?.email : "joke")
+                        }, { merge: true })
+                    } else {
+                        db.collection("products").doc(data?.id).update({
+                            like: --doc.data().like,
+                            peopleWhoLiked: firebase.firestore.FieldValue.arrayRemove(User?.email)
                         }, { merge: true })
                     }
                 })
@@ -414,11 +419,11 @@ const ClassifiedHomePageComponent = () => {
                                     </CardContent>
                                 </Link>
                                 <CardActions disableSpacing>
-                                    {item.data?.peopleWhoLiked?.includes(userDetailsFirebase?.email) && <IconButton aria-label="add to favorites" style={{ color: "red" }}>
-                                        <FavoriteIcon onClick={e => addLikeToFirebase(item?.data)} />
+                                    {item.data?.peopleWhoLiked?.includes(userDetailsFirebase?.email) && <IconButton aria-label="add to favorites" style={{ color: "#ed4956" }}>
+                                        <FavoriteIcon onClick={e => addLikeToFirebase(item?.data, -1)} />
                                     </IconButton>}
                                     {!item.data?.peopleWhoLiked?.includes(userDetailsFirebase?.email) && <IconButton aria-label="add to favorites" >
-                                        <FavoriteBorderOutlined onClick={e => addLikeToFirebase(item?.data)} />
+                                        <FavoriteBorderOutlined onClick={e => addLikeToFirebase(item?.data, 1)} />
                                     </IconButton>}
                                     {/* <IconButton aria-label="add to favorites">
                                         <FavoriteBorderOutlined onClick={e => addLikeToFirebase(item?.data)} />
