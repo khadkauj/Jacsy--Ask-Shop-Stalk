@@ -29,9 +29,13 @@ import { auth } from "../../Firebase/Firebase";
 import firebase from "firebase";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 
 import "./ClassifiedHomePageComponent.css";
 import { useHistory } from "react-router-dom";
+import FavoriteBorderOutlined from "@material-ui/icons/FavoriteBorderOutlined";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -130,7 +134,10 @@ const ClassifiedHomePageComponent = () => {
                                 userEmail: userDetailsFirebase.email,
                                 userEmailVerified: userDetailsFirebase.emailVerified,
                                 userDisplayName: userDetailsFirebase.displayName,
-                                paymentOptions: paymentOptions
+                                paymentOptions: paymentOptions,
+                                like: 0,
+                                peopleWhoLiked: ["ds@gmial.com", "djs.com"],
+                                disLike: 0
                             },
                         ).then(e => {
                             setOpen(false);
@@ -146,6 +153,30 @@ const ClassifiedHomePageComponent = () => {
 
     const submitToFirebase = () => {
     }
+
+    const addLikeToFirebase = (data) => {
+        console.log("id in funciton, ", data);
+        firebase.auth().onAuthStateChanged(User => {
+            if (User) {
+                console.log("user found", User);
+                db.collection("products").doc(data?.id).get().then(doc => {
+                    console.log("chcking array, ", doc.data().peopleWhoLiked?.includes(User?.email));
+                    if (!doc.data().peopleWhoLiked?.includes(User?.email)) {
+                        db.collection("products").doc(data?.id).update({
+                            like: ++doc.data().like,
+                            peopleWhoLiked: firebase.firestore.FieldValue.arrayUnion(User?.email ? User?.email : "joke")
+                        }, { merge: true })
+                    }
+                })
+
+            }
+            else {
+                console.log("User not found");
+                // history.push("/Login")
+            }
+        })
+    }
+
 
     useEffect(() => {
         // fetching all public posts
@@ -300,9 +331,9 @@ const ClassifiedHomePageComponent = () => {
                                 value={productDescription}
                                 onChange={e => setproductDescription(e.target.value)}
                             />
-                            <form>
-                                <label for="fname">Product Image</label>
-                                <input type="file" on
+                            <form style={{ color: "rgb(112 103 103 / 87%)" }}>
+                                <label for="fname" style={{ color: "rgb(112 103 103 / 87%)" }}>Product Image</label>
+                                <input type="file" style={{ color: "rgb(112 103 103 / 87%)" }}
                                     onChange={imagehandleChange} ></input>
                                 {/* <button type="submit" onClick={sendImageToFirebase}>send image</button> */}
                             </form>
@@ -383,9 +414,15 @@ const ClassifiedHomePageComponent = () => {
                                     </CardContent>
                                 </Link>
                                 <CardActions disableSpacing>
-                                    <IconButton aria-label="add to favorites">
-                                        <FavoriteIcon />
-                                    </IconButton>
+                                    {item.data?.peopleWhoLiked?.includes(userDetailsFirebase?.email) && <IconButton aria-label="add to favorites" style={{ color: "red" }}>
+                                        <FavoriteIcon onClick={e => addLikeToFirebase(item?.data)} />
+                                    </IconButton>}
+                                    {!item.data?.peopleWhoLiked?.includes(userDetailsFirebase?.email) && <IconButton aria-label="add to favorites" >
+                                        <FavoriteBorderOutlined onClick={e => addLikeToFirebase(item?.data)} />
+                                    </IconButton>}
+                                    {/* <IconButton aria-label="add to favorites">
+                                        <FavoriteBorderOutlined onClick={e => addLikeToFirebase(item?.data)} />
+                                    </IconButton> */}
                                     <IconButton aria-label="share">
                                         <ShareIcon />
                                     </IconButton>
@@ -400,11 +437,12 @@ const ClassifiedHomePageComponent = () => {
                                         <ExpandMoreIcon />
                                     </IconButton>
                                 </CardActions>
+                                <p className="like">{item?.data?.like + " likes"}</p>
                                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                                     <CardContent>
                                         <Typography paragraph>Method:</Typography>
                                         <Typography paragraph>
-                                            {item?.data.productDescription ? item?.data.productDescription?.slice(0, 100) + "......" : "NA"}
+                                            {item?.data?.productDescription ? item?.data?.productDescription : "NA"}
                                         </Typography>
                                     </CardContent>
                                 </Collapse>

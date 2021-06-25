@@ -28,18 +28,7 @@ const ClassifiedProductView = ({ }) => {
         }).catch((error) => {
             console.log("Error getting document:", error);
         });
-
-        // const getProductData = async () => {
-        //     const docRef = await db.collection("products").doc("SByCM5FOv2TW5g6OdeOFZkcs3Bp2")
-        //     docRef.get().then(doc => {
-        //         console.log("data:", doc.data());
-        //     }).catch(error => {
-        //         console.log("error,", error);
-        //     })
-        // }
-        // getProductData();
         return () => {
-
         }
     }, [])
 
@@ -74,10 +63,9 @@ const ClassifiedProductView = ({ }) => {
                         <h2 className="productViewDetailsh2">Product Details:</h2>
                         <div className="productViewDetails">
                             {productDataFromFirebase?.category && <h4> Category: {productDataFromFirebase?.category} </h4>}
-                            <h4>{"Condition: " + productDataFromFirebase?.productDetails} </h4>
-                            <h4>{"Product: " + productDataFromFirebase?.category} </h4>
+                            {productDataFromFirebase?.productDetails && <h4> Condition: {productDataFromFirebase?.productDetails} </h4>}
+                            {productDataFromFirebase?.category && <h4> Product: {productDataFromFirebase?.category} </h4>}
                         </div>
-
                     </div>
                     <div className="Payment" >
                         {productDataFromFirebase?.paymentOptions?.map(option => (
