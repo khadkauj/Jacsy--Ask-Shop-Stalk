@@ -68,3 +68,21 @@
 .popup__text {
   color: rgb(223, 18, 18);
 }
+
+/* .MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-2 > *:hover {
+  display: none;
+} */
+/* 
+.MuiGrid-root.grid__main.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-sm-6.MuiGrid-grid-md-4.MuiGrid-grid-lg-4 {
+}
+
+.MuiGrid-root.grid__main.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-sm-6.MuiGrid-grid-md-4.MuiGrid-grid-lg-4:hover {
+} */
+
+.MuiPaper-root.MuiCard-root.makeStyles-root-1.MuiPaper-elevation1.MuiPaper-rounded {
+  transition: all 0.2s ease-in-out;
+}
+
+.MuiPaper-root.MuiCard-root.makeStyles-root-1.MuiPaper-elevation1.MuiPaper-rounded:hover {
+  transform: scale(1.1);
+}

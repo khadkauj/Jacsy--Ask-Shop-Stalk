@@ -26,41 +26,43 @@ const SignUp = () => {
 
 
     return (
-        <div className="main123">
-            <h1 className="header1" >Sign Up</h1>
-            <hr />
-            <h3 className="header3" >Welcome to SignUp page</h3>
+        <div className="main_div__grid">
+            <div className="main123">
+                <h1 className="header1" >Sign Up</h1>
+                <hr />
+                <h3 className="header3" >Welcome to SignUp page</h3>
 
-            <input
-                className="inp"
-                value={name}
-                onChange={(e) => setname(e.target.value)}
-                type="text"
-                placeholder="Name"
-                required
-            />
-            <input
-                className="inp"
-                value={email}
-                onChange={(e) => setemail(e.target.value)}
-                type="email"
-                placeholder="Email"
-                required
-            />
-            <input
-                className="inp"
-                value={password}
-                onChange={(e) => setpassword(e.target.value)}
-                type="password"
-                placeholder="Password"
-                required
-            />
-            {userAlreadyExits && <p style={{ color: "#bb2124" }}>Can't create duplicate/invalid user.</p>} <br />
-            <button className="butt" onClick={sendFromToFirbase} type="submit">
-                Sign Up
-            </button>
+                <input
+                    className="inp"
+                    value={name}
+                    onChange={(e) => setname(e.target.value)}
+                    type="text"
+                    placeholder="Name"
+                    required
+                />
+                <input
+                    className="inp"
+                    value={email}
+                    onChange={(e) => setemail(e.target.value)}
+                    type="email"
+                    placeholder="Email"
+                    required
+                />
+                <input
+                    className="inp"
+                    value={password}
+                    onChange={(e) => setpassword(e.target.value)}
+                    type="password"
+                    placeholder="Password"
+                    required
+                />
+                {userAlreadyExits && <p style={{ color: "#bb2124" }}>Can't create duplicate/invalid user.</p>} <br />
+                <button className="butt" onClick={sendFromToFirbase} type="submit">
+                    Sign Up
+                </button>
 
-        </div >
+            </div >
+        </div>
     );
 };
 

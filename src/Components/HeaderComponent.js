@@ -43,19 +43,19 @@ const HeaderComponent = () => {
                 {/* Home Exams* Homeworks* Notes* Classified* Contact */}
                 <ul className="ul__list">
                     <li>
-                        <Link to="/" className="linkText" style={{ color: "black" }} >Home</Link>
+                        <Link to="/" className="linkText " style={{ color: "#06201b" }} >Home</Link>
                     </li>
                     {/* <li>
-                        <Link to="/Freshies" className="linkText" style={{ color: "black" }}>Freshies</Link>
+                        <Link to="/Freshies" className="linkText" style={{ color: "#06201b" }}>Freshies</Link>
                     </li>
                     <li>
-                        <Link to="/Homeworks" className="linkText" style={{ color: "black" }}>Assignments</Link>
+                        <Link to="/Homeworks" className="linkText" style={{ color: "#06201b" }}>Assignments</Link>
                     </li> */}
                     {/* <li>
             <Link to="/Notes" style={{ color: "white"}}>Notes</Link>
         </li> */}
                     <li>
-                        <Link to="/Classified" className="linkText" style={{ color: "black" }}>Classified</Link>
+                        <Link to="/Classified" className="linkText" style={{ color: "#06201b" }}>Classified</Link>
                     </li>
                 </ul>
             </nav>

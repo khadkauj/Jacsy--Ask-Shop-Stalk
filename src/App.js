@@ -20,15 +20,17 @@ function App() {
 
 					{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-					<HeaderComponent />
+
 					<Switch>
 						<Route exact path="/">
+							<HeaderComponent />
 							<HomePageComponent />
 						</Route>
 						<Route exact path="/Freshies">
 							<FreshiesMainComponents />
 						</Route>
 						<Route exact path="/Classified">
+							<HeaderComponent />
 							<ClassifiedHomePageComponent />
 						</Route>
 						<Route exact path="/Login">
@@ -38,6 +40,7 @@ function App() {
 							<SignUp />
 						</Route>
 						<Route exact path="/Classified/Products/:id">
+							<HeaderComponent />
 							<ClassifiedProductView />
 						</Route>
 					</Switch>
