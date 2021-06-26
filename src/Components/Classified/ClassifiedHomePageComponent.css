@@ -53,3 +53,18 @@
   font-size: 14px;
   color: rgba(0, 0, 0, 0.54);
 }
+
+.MuiGrid-spacing-xs-2 {
+  width: 100% !important;
+  margin: 0px !important;
+}
+
+.MuiPaper-root.MuiPopover-paper.MuiPaper-elevation8.MuiPaper-rounded {
+  top: 55px !important;
+  box-shadow: none !important;
+  background-color: transparent;
+}
+
+.popup__text {
+  color: rgb(223, 18, 18);
+}

@@ -32,6 +32,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import Popover from '@material-ui/core/Popover';
 
 import "./ClassifiedHomePageComponent.css";
 import { useHistory } from "react-router-dom";
@@ -66,6 +67,9 @@ const useStyles = makeStyles((theme) => ({
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
+    typography: {
+        padding: theme.spacing(2),
+    },
 }));
 
 const ClassifiedHomePageComponent = () => {
@@ -83,7 +87,36 @@ const ClassifiedHomePageComponent = () => {
     const [urlForImage, seturlForImage] = useState(null)
     const [paymentOptions, setpaymentOptions] = useState([])
     const [disableSUbmitButton, setDisableSUbmitButton] = useState(true)
+    const [popUpText, setpopUpText] = useState("")
     // console.log("use", productFromFirebase[0]?.data?.date.tol);
+
+    useEffect(() => {
+        // fetching all public posts
+        db.collection("products").orderBy("date", "desc").onSnapshot(snapshot => {
+            setproductFromFirebase(
+                snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    key: doc.id,
+                    data: doc.data()
+                }
+                ))
+            )
+        })
+        // checking user and his stauts
+        firebase.auth().onAuthStateChanged(User => {
+            if (User) {
+                setuserDetailsFirebase(User)
+                console.log("user found", User);
+            }
+            else {
+                console.log("User not found");
+                // history.push("/Login")
+            }
+        })
+        return () => {
+        }
+    }, [])
+
 
     // firebase setups
     const imagehandleChange = (e) => {
@@ -176,40 +209,13 @@ const ClassifiedHomePageComponent = () => {
 
             }
             else {
-                console.log("User not found");
+                console.log("User not found while trying to send Like");
+                setpopUpText("Please Login.")
+                handleClickPopup()
                 // history.push("/Login")
             }
         })
     }
-
-
-    useEffect(() => {
-        // fetching all public posts
-        db.collection("products").orderBy("date", "desc").onSnapshot(snapshot => {
-            setproductFromFirebase(
-                snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    key: doc.id,
-                    data: doc.data()
-                }
-                ))
-            )
-        })
-        // checking user and his stauts
-        firebase.auth().onAuthStateChanged(User => {
-            if (User) {
-                setuserDetailsFirebase(User)
-                console.log("user found", User);
-            }
-            else {
-                console.log("User not found");
-                // history.push("/Login")
-            }
-        })
-        return () => {
-        }
-    }, [])
-
 
 
     // setup from Material-UI for Grid container and card
@@ -240,6 +246,25 @@ const ClassifiedHomePageComponent = () => {
     const handleChange = (event) => {
         setproducttype(event.target.value);
     };
+
+
+    // popup setups
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClickPopup = (event) => {
+        setAnchorEl(true);
+        setInterval(() => {
+            setAnchorEl(false)
+        }, 2000);
+    };
+
+    const handleClosePopup = () => {
+        setAnchorEl(null);
+        setpopUpText("")
+    };
+
+    const openPopup = Boolean(anchorEl);
+    const id = openPopup ? 'simple-popover' : undefined;
 
 
     return (
@@ -455,6 +480,27 @@ const ClassifiedHomePageComponent = () => {
                         </Grid>
                     ))}
                 </Grid>
+            </div>
+
+            {/* popup sub-component */}
+
+            <div className="popup__div">
+                <Popover
+                    id={id}
+                    open={openPopup}
+                    anchorEl={anchorEl}
+                    onClose={handleClosePopup}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                >
+                    <p className="popup__text" >{popUpText}</p>
+                </Popover>
             </div>
         </div>
     );
