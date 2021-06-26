@@ -1,7 +1,7 @@
 .div__main__grid__productview {
-  display: grid;
+  /* display: grid;
   place-items: center;
-  max-width: 100%;
+  max-width: 100%; */
   /* margin-top: 14px; */
 }
 .image__product {
@@ -81,6 +81,51 @@
   margin-left: auto;
 }
 
+/* copied bullshit from above css page */
+
+#testinLocalCSSusingId__inProductview .MuiGrid-item {
+  /* display: grid;
+  place-items: center;
+  overflow-y: hidden; */
+}
+
+#testinLocalCSSusingId__inProductview .makeStyles-root-51 {
+  width: 345px;
+}
+
+#testinLocalCSSusingId__inProductview .MuiGrid-root > * {
+  min-width: 345px;
+  min-height: 402.062px;
+}
+
+#testinLocalCSSusingId__inProductview .MuiButton-outlinedPrimary {
+  font-weight: bold !important;
+  background-image: linear-gradient(
+    to right top,
+    #3ad29f,
+    #48db8a,
+    #63e270,
+    #84e74d,
+    #a8eb12
+  );
+  color: #fff !important;
+  border: none !important;
+  outline: none !important;
+}
+
+#testinLocalCSSusingId__inProductview .MuiGrid-spacing-xs-2 {
+  width: 100% !important;
+  margin: 0px !important;
+}
+
+#testinLocalCSSusingId__inProductview
+  .MuiPaper-root.MuiPopover-paper.MuiPaper-elevation8.MuiPaper-rounded {
+  top: 55px !important;
+  box-shadow: none !important;
+  background-color: transparent;
+}
+
+/* media queries always at the end */
 @media only screen and (min-width: 600px) {
   .image__product {
     min-width: 100%;
@@ -97,4 +142,8 @@
   .image__product {
     min-width: 100%;
   }
+}
+
+.last {
+  min-width: 100% !important;
 }

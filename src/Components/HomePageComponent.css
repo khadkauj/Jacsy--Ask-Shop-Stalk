@@ -1,12 +1,12 @@
-.mamainfromHomePagein {
-  display: flex;
-  flex-direction: column;
-  margin-top: 40px;
-  max-width: 100%;
+.tets {
+  display: grid;
+  place-items: center;
+  padding: 14px;
 }
 
-.imagehomepage {
-  max-width: 45%;
-  background-size: contain;
-  padding: 10px;
+.bottomBar__main {
+  /* display: grid;
+  place-items: center;
+  width: 50%; */
+  /* height: 50%; */
 }

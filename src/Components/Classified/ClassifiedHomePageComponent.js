@@ -255,7 +255,7 @@ const ClassifiedHomePageComponent = () => {
         setAnchorEl(true);
         setInterval(() => {
             setAnchorEl(false)
-        }, 2000);
+        }, 4000);
     };
 
     const handleClosePopup = () => {
@@ -268,7 +268,7 @@ const ClassifiedHomePageComponent = () => {
 
 
     return (
-        <div className="test">
+        <div className="test" id="testinLocalCSSusingId">
             {/* <div className="Advertisement">
         <img
         src="https://i.kym-cdn.com/,photos/images/newsfeed/000/000/130/disaster-girl.jpg"

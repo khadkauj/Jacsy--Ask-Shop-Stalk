@@ -5,6 +5,7 @@ import FreshiesMainComponents from "./Components/FreshiesMainComponents/Freshies
 import ClassifiedHomePageComponent from "./Components/Classified/ClassifiedHomePageComponent";
 import Login from "./Components/Login And Logout/Login";
 import SignUp from "./Components/Login And Logout/SignUp";
+import ListNews from './Components/ListNews'
 
 import "./App.css";
 import HeaderComponent from "./Components/HeaderComponent";
@@ -25,6 +26,7 @@ function App() {
 						<Route exact path="/">
 							<HeaderComponent />
 							<HomePageComponent />
+							{/* <ListNews /> */}
 						</Route>
 						<Route exact path="/Freshies">
 							<FreshiesMainComponents />
@@ -34,9 +36,11 @@ function App() {
 							<ClassifiedHomePageComponent />
 						</Route>
 						<Route exact path="/Login">
+							<HeaderComponent />
 							<Login />
 						</Route>
 						<Route exact path="/SignUp">
+							<HeaderComponent />
 							<SignUp />
 						</Route>
 						<Route exact path="/Classified/Products/:id">

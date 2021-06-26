@@ -1,14 +1,14 @@
-.MuiGrid-item {
+#testinLocalCSSusingId .MuiGrid-item {
   display: grid;
   place-items: center;
   overflow-y: hidden;
 }
 
-.makeStyles-root-51 {
+#testinLocalCSSusingId .makeStyles-root-51 {
   width: 345px;
 }
 
-.MuiGrid-root > * {
+#testinLocalCSSusingId .MuiGrid-root > * {
   min-width: 345px;
   min-height: 402.062px;
 }
@@ -27,7 +27,7 @@
   cursor: pointer;
 }
 
-.MuiButton-outlinedPrimary {
+#testinLocalCSSusingId .MuiButton-outlinedPrimary {
   font-weight: bold !important;
   background-image: linear-gradient(
     to right top,
@@ -54,12 +54,13 @@
   color: rgba(0, 0, 0, 0.54);
 }
 
-.MuiGrid-spacing-xs-2 {
+#testinLocalCSSusingId .MuiGrid-spacing-xs-2 {
   width: 100% !important;
   margin: 0px !important;
 }
 
-.MuiPaper-root.MuiPopover-paper.MuiPaper-elevation8.MuiPaper-rounded {
+#testinLocalCSSusingId
+  .MuiPaper-root.MuiPopover-paper.MuiPaper-elevation8.MuiPaper-rounded {
   top: 55px !important;
   box-shadow: none !important;
   background-color: transparent;
@@ -79,10 +80,10 @@
 .MuiGrid-root.grid__main.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-sm-6.MuiGrid-grid-md-4.MuiGrid-grid-lg-4:hover {
 } */
 
-.MuiPaper-root.MuiCard-root.makeStyles-root-1.MuiPaper-elevation1.MuiPaper-rounded {
+#testinLocalCSSusingId .MuiCardMedia-root.makeStyles-media-2 {
   transition: all 0.2s ease-in-out;
 }
 
-.MuiPaper-root.MuiCard-root.makeStyles-root-1.MuiPaper-elevation1.MuiPaper-rounded:hover {
+#testinLocalCSSusingId .MuiCardMedia-root.makeStyles-media-2:hover {
   transform: scale(1.1);
 }

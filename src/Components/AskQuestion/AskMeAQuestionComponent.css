@@ -1,0 +1,13 @@
+.appBAr {
+  /* display: none; */
+  height: 220px;
+  position: relative;
+  overflow-y: scroll;
+}
+
+.appBAr__paper {
+}
+.appbar__add {
+  /* position: absolute; */
+  background-color: #1976d2;
+}
