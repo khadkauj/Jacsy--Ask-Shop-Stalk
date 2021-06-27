@@ -66,7 +66,7 @@ const ListNews = () => {
                                 />
                                 <CardContent>
                                     <p gutterBottom variant="h5" component="h2">
-                                        Lizard
+                                        Wolf 🐺
                                     </p>
                                 </CardContent>
                             </CardActionArea>
