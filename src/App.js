@@ -41,6 +41,7 @@ function App() {
 						</Route>
 						<Route exact path="/SignUp">
 							<HeaderComponent />
+
 							<SignUp />
 						</Route>
 						<Route exact path="/Classified/Products/:id">
