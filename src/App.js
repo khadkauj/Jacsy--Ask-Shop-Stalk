@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, HashRouter } from "react-router-dom";
 import HomePageComponent from "./Components/HomePageComponent";
 import FreshiesMainComponents from "./Components/FreshiesMainComponents/FreshiesMainComponents";
 import ClassifiedHomePageComponent from "./Components/Classified/ClassifiedHomePageComponent";
@@ -22,12 +22,8 @@ function App() {
 					{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
 
-					<Switch>
-						<Route path="/">
-							<HeaderComponent />
-							<HomePageComponent />
-							{/* <ListNews /> */}
-						</Route>
+					<HashRouter>
+
 						<Route exact path="/Freshies">
 							<FreshiesMainComponents />
 						</Route>
@@ -48,7 +44,12 @@ function App() {
 							<HeaderComponent />
 							<ClassifiedProductView />
 						</Route>
-					</Switch>
+						<Route exact path="/">
+							<HeaderComponent />
+							<HomePageComponent />
+							{/* <ListNews /> */}
+						</Route>
+					</HashRouter>
 				</div>
 			</Router>
 		</div>
