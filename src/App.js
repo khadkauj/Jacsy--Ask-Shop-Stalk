@@ -10,6 +10,7 @@ import ListNews from './Components/ListNews'
 import "./App.css";
 import HeaderComponent from "./Components/HeaderComponent";
 import ClassifiedProductView from "./Components/Classified/ClassifiedProductView";
+import FooterComponent from "./Components/Footer/FooterComponent";
 
 function App() {
 	document.title = "Abundance"
@@ -26,19 +27,22 @@ function App() {
 
 						<Route exact path="/Freshies">
 							<FreshiesMainComponents />
+							<FooterComponent />
 						</Route>
 						<Route exact path="/Classified">
 							<HeaderComponent />
 							<ClassifiedHomePageComponent />
+							<FooterComponent />
 						</Route>
 						<Route exact path="/Login">
 							<HeaderComponent />
 							<Login />
+							<FooterComponent />
 						</Route>
 						<Route exact path="/SignUp">
 							<HeaderComponent />
-
 							<SignUp />
+							<FooterComponent />
 						</Route>
 						<Route exact path="/Classified/Products/:id">
 							<HeaderComponent />
@@ -47,6 +51,7 @@ function App() {
 						<Route exact path="/">
 							<HeaderComponent />
 							<HomePageComponent />
+							<FooterComponent />
 							{/* <ListNews /> */}
 						</Route>
 					</HashRouter>
