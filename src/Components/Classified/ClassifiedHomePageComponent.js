@@ -362,7 +362,7 @@ const ClassifiedHomePageComponent = () => {
                                 onChange={e => setproductDescription(e.target.value)}
                             />
                             <form style={{ color: "rgb(112 103 103 / 87%)" }}>
-                                <label for="fname" style={{ color: "rgb(112 103 103 / 87%)" }}>Product Image</label>
+                                <label for="fname" style={{ color: "rgb(112 103 103 / 87%)" }}>Product Image</label><br></br>
                                 <input type="file" style={{ color: "rgb(112 103 103 / 87%)" }}
                                     onChange={imagehandleChange} ></input>
                                 {/* <button type="submit" onClick={sendImageToFirebase}>send image</button> */}

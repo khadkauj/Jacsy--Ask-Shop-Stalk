@@ -133,9 +133,9 @@
 }
 
 @media only screen and (min-width: 960px) {
-  .image__product {
+  /* .image__product {
     min-width: 100%;
-  }
+  } */
 }
 
 @media only screen and (min-width: 1250px) {

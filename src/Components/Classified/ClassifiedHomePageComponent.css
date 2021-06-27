@@ -9,7 +9,7 @@
 }
 
 #testinLocalCSSusingId .MuiGrid-root > * {
-  min-width: 345px;
+  /* min-width: 345px; */
   min-height: 402.062px;
 }
 
@@ -86,4 +86,10 @@
 
 #testinLocalCSSusingId .MuiCardMedia-root.makeStyles-media-2:hover {
   transform: scale(1.1);
+}
+
+@media only screen and (min-width: 960px) and (max-width: 1060px) {
+  #testinLocalCSSusingId .MuiGrid-root > * {
+    /* min-width: auto; */
+  }
 }
