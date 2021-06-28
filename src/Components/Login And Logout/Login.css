@@ -17,7 +17,7 @@
   color: #06201b;
   margin-bottom: 10px;
 }
-hr {
+.hr__tag {
   width: 50%;
   margin: auto;
   border: 2px solid;
@@ -79,5 +79,45 @@ hr {
 }
 
 .butt:hover {
+  transform: scale(1.1);
+}
+
+.hr_line {
+  width: 40%;
+  border: 1px solid lightgrey;
+  border: none;
+  height: 1px;
+  background-color: lightgrey;
+}
+
+.hr_right {
+  width: 40%;
+  border: 1px solid lightgrey;
+  border: none;
+  height: 1px;
+  background-color: lightgrey;
+}
+
+.hrs {
+  display: flex;
+  width: 100%;
+  padding: 14px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.coninueGoogle_butt {
+  padding: 1rem 3rem;
+  color: black;
+  border: 1px solid black;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.5sec;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: transparent;
+}
+
+.coninueGoogle_butt:hover {
   transform: scale(1.1);
 }

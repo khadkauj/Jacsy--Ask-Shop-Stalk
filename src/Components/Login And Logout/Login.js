@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import firebase from "firebase";
-
+import { provider } from "../../Firebase/Firebase"
 import "./Login.css";
 // import { Log_in } from "./features/user/userSlice";
 
@@ -26,12 +26,40 @@ const Login = () => {
         })
     }
 
+    // google sign-in authentication
+    const signInWithGoogleAuth = (e) => {
+        e.preventDefault()
+        firebase.auth().signInWithRedirect(provider)
+            .then(result => {
+                console.log("credentials from google auth, ", result.credential)
+                setwrongCredentialsInLogin(false)
+                history.push("/Classified")
+            })
+            .catch(error => {
+                console.log("Error in google sign-in authentication", error)
+                setwrongCredentialsInLogin(true)
+            })
+    }
+
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                history.push("/Classified")
+            } else {
+
+            }
+        })
+        return () => {
+
+        }
+    }, [])
+
     return (
         <div className="main_div__grid" >
 
             <div className="main123">
                 <h1 className="header1">Login</h1>
-                <hr />
+                <hr className="hr__tag" />
                 <h3 className="header3">Welcome to Login page</h3>
 
                 <input className="inp" value={email} onChange={(e) => setemail(e.target.value)} type="email" placeholder="Email" />
@@ -54,7 +82,12 @@ const Login = () => {
                 <button onClick={loginToFirebase} type="submit" className="butt" >
                     Log In
                 </button>
-
+                <div className="hrs">
+                    <hr className="hr_line" /> <p>or</p> <hr className="hr_right" />
+                </div>
+                <button onClick={signInWithGoogleAuth} className="coninueGoogle_butt">
+                    Continue With Google
+                </button>
             </div>
         </div>
     );
