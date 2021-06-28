@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
+import { db } from "../Firebase/Firebase"
 
 import "./ListNews.css"
 import { Grid } from '@material-ui/core';
@@ -52,32 +52,49 @@ const ListNews = () => {
         }
 
     ]
+    const [questionAndAnswerFromFB, setquestionAndAnswerFromFB] = useState([])
+
+    // fetching questions and answers
+    useEffect(() => {
+        db.collection("questions").get().then(snapshot => {
+            // console.log("ques snap, ", snapshot.docs);
+            setquestionAndAnswerFromFB(snapshot.docs.map(doc => ({
+                id: doc.id,
+                key: doc.id,
+                data: doc.data()
+            })))
+        }).catch(error => console.log("error in fetching data from FB, ", error))
+
+        return () => {
+        }
+    }, [])
+
     return (
         <div >
             <Grid container spacing={1} id="newsList__main" >
-                {listOfNews.map(news => (
-                    <Grid item xs={4} sm={4} md={4} lg={4} key={Math.random()}   >
+                {questionAndAnswerFromFB.map(item => (
+                    <Grid item xs={6} sm={4} md={4} lg={3} key={Math.random()}   >
                         <Card className={classes.root}>
                             <CardActionArea>
-                                <CardMedia
+                                {/* <CardMedia
                                     className={classes.media}
                                     image="https://data.whicdn.com/images/167909674/original.jpg"
                                     title="Contemplative Reptile"
-                                />
-                                <CardContent>
-                                    <p gutterBottom variant="h5" component="h2">
-                                        Wolf 🐺
+                                /> */}
+                                <CardContent className="cardContent">
+                                    <p gutterBottom variant="h1" component="h1">
+                                        {item?.data?.question}
                                     </p>
                                 </CardContent>
                             </CardActionArea>
-                            {/* <CardActions>
-                            <Button size="small" color="primary">
+                            <CardActions>
+                                {/* <Button size="small" color="primary">
                                 Share
-                            </Button>
-                            <Button size="small" color="primary">
-                                Learn More
-                            </Button>
-                        </CardActions> */}
+                            </Button> */}
+                                <Button size="small" color="primary">
+                                    Reply.
+                                </Button>
+                            </CardActions>
                         </Card>
                     </Grid>
                 ))}
