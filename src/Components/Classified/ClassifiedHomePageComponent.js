@@ -78,16 +78,17 @@ const ClassifiedHomePageComponent = () => {
     const [nameofProduct, setnameofProduct] = useState("")
     const [producttype, setproducttype] = React.useState('');
     const [productCondition, setproductCondition] = useState("")
-    const [productImage, setproductImage] = useState(null)
+    const [productImage, setproductImage] = useState(undefined)
     const [productPrice, setproductPrice] = useState("")
     const [productDescription, setproductDescription] = useState("")
     const [errorMessgae, seterrorMessgae] = useState(false)
     const history = useHistory()
     const [userDetailsFirebase, setuserDetailsFirebase] = useState("")
-    const [urlForImage, seturlForImage] = useState(null)
+    const [urlForImage, seturlForImage] = useState(undefined)
     const [paymentOptions, setpaymentOptions] = useState([])
     const [disableSUbmitButton, setDisableSUbmitButton] = useState(true)
     const [popUpText, setpopUpText] = useState("")
+    const [stateAfterSubmit, setstateAfterSubmit] = useState(true)
     // console.log("use", productFromFirebase[0]?.data?.date.tol);
 
     useEffect(() => {
@@ -127,6 +128,7 @@ const ClassifiedHomePageComponent = () => {
     }
 
     const sendImageToFirebase = (e) => {
+        setstateAfterSubmit(false)
         // console.log(e.target.files[0]);
         // if (e.target.files[0]) {
         //     setproductImage(e.target.files[0])
@@ -184,9 +186,6 @@ const ClassifiedHomePageComponent = () => {
         }
     }
 
-    const submitToFirebase = () => {
-    }
-
     const addLikeToFirebase = (data, numToAdd) => {
         console.log("id in funciton, ", data, numToAdd);
         firebase.auth().onAuthStateChanged(User => {
@@ -198,14 +197,14 @@ const ClassifiedHomePageComponent = () => {
                         db.collection("products").doc(data?.id).update({
                             like: ++doc.data().like,
                             peopleWhoLiked: firebase.firestore.FieldValue.arrayUnion(User?.email ? User?.email : "joke")
-                        }, { merge: true })
+                        }, { merge: true }).catch(error => console.log("error in updating insideLike toFirebase Funciton, ", error))
                     } else {
                         db.collection("products").doc(data?.id).update({
                             like: --doc.data().like,
                             peopleWhoLiked: firebase.firestore.FieldValue.arrayRemove(User?.email)
-                        }, { merge: true })
+                        }, { merge: true }).catch(error => console.log("error in updating insideLike in -else statement- toFirebase Funciton, ", error))
                     }
-                })
+                }).catch(error => console.log("error in addLiketoFirebase Function, ", error))
 
             }
             else {
@@ -249,7 +248,7 @@ const ClassifiedHomePageComponent = () => {
 
 
     // popup setups
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = React.useState(undefined);
 
     const handleClickPopup = (event) => {
         setAnchorEl(true);
@@ -259,7 +258,7 @@ const ClassifiedHomePageComponent = () => {
     };
 
     const handleClosePopup = () => {
-        setAnchorEl(null);
+        setAnchorEl(undefined);
         setpopUpText("")
     };
 
@@ -288,7 +287,7 @@ const ClassifiedHomePageComponent = () => {
                     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
                         <DialogContent>
-                            {!errorMessgae && <DialogContentText DialogContentText>
+                            {!errorMessgae && <DialogContentText >
                                 Please fill in the details to add your item to the store.
                             </DialogContentText>}
                             {errorMessgae && <DialogContentText style={{ color: "red" }}>
@@ -362,7 +361,7 @@ const ClassifiedHomePageComponent = () => {
                                 onChange={e => setproductDescription(e.target.value)}
                             />
                             <form style={{ color: "rgb(112 103 103 / 87%)" }}>
-                                <label for="fname" style={{ color: "rgb(112 103 103 / 87%)" }}>Product Image</label><br></br>
+                                <label id="fname" style={{ color: "rgb(112 103 103 / 87%)" }}>Product Image</label><br></br>
                                 <input type="file" style={{ color: "rgb(112 103 103 / 87%)" }}
                                     onChange={imagehandleChange} ></input>
                                 {/* <button type="submit" onClick={sendImageToFirebase}>send image</button> */}
@@ -383,11 +382,11 @@ const ClassifiedHomePageComponent = () => {
                             <Button onClick={handleClose} color="primary">
                                 Cancel
                             </Button>
-                            <Button onClick={sendImageToFirebase} color="primary"
-                                disabled={!productImage | !nameofProduct}
+                            {stateAfterSubmit && <Button onClick={sendImageToFirebase} color="primary"
+                                disabled={!productImage || !nameofProduct}
                             >
                                 Submit
-                            </Button>
+                            </Button>}
                         </DialogActions>
                     </Dialog>
                 </div>
@@ -444,11 +443,11 @@ const ClassifiedHomePageComponent = () => {
                                     </CardContent>
                                 </Link>
                                 <CardActions disableSpacing>
-                                    {item.data?.peopleWhoLiked?.includes(userDetailsFirebase?.email) && <IconButton aria-label="add to favorites" style={{ color: "#ed4956" }}>
-                                        <FavoriteIcon onClick={e => addLikeToFirebase(item?.data, -1)} />
+                                    {item.data?.peopleWhoLiked?.includes(userDetailsFirebase?.email) && <IconButton onClick={e => addLikeToFirebase(item?.data, -1)} aria-label="add to favorites" style={{ color: "#ed4956" }}>
+                                        <FavoriteIcon />
                                     </IconButton>}
-                                    {!item.data?.peopleWhoLiked?.includes(userDetailsFirebase?.email) && <IconButton aria-label="add to favorites" >
-                                        <FavoriteBorderOutlined onClick={e => addLikeToFirebase(item?.data, 1)} />
+                                    {!item.data?.peopleWhoLiked?.includes(userDetailsFirebase?.email) && <IconButton aria-label="add to favorites" onClick={e => addLikeToFirebase(item?.data, 1)}>
+                                        <FavoriteBorderOutlined />
                                     </IconButton>}
                                     {/* <IconButton aria-label="add to favorites">
                                         <FavoriteBorderOutlined onClick={e => addLikeToFirebase(item?.data)} />

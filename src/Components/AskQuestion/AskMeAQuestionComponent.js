@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 const AskMeAQuestionComponent = () => {
     const classes = useStyles();
 
-    const [question, setquestion] = useState(null)
+    const [question, setquestion] = useState(undefined)
     // extra state to not allow double clicking of submit
     const [noDoubleSUbmitCLick, setnoDoubleSUbmitCLick] = useState(true)
     const [questionAnswerFromFB, setquestionAnswerFromFB] = useState([{
@@ -59,29 +59,32 @@ const AskMeAQuestionComponent = () => {
         secondary: "I'll be in the neighbourhood this week. Let's grab a bite to eat",
         person: '/static/images/avatar/5.jpg',
     }])
+    const [stateAfterQuestionSubmit, setstateAfterQuestionSubmit] = useState(false)
 
     // all setup for Form Dialog Box
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
-        setquestion(null)
+        setquestion(undefined)
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
-        setquestion(null)
+        setquestion(undefined)
     };
 
     // send question to firebase
 
     const sendQuestionToFirebase = () => {
-        // setnoDoubleSUbmitCLick(false)
+        setnoDoubleSUbmitCLick(false)
+        setstateAfterQuestionSubmit(true)
+        setquestion(undefined)
         db.collection("questions").add({
             question: question,
             date: new Date(),
             answered: false,
-            answer: null,
+            answer: undefined,
             id: uuidv4(),
         }).then(doc => {
             console.log("snap while sending question to FB", doc)
@@ -92,6 +95,7 @@ const AskMeAQuestionComponent = () => {
                 setOpen(false)
             })
     }
+
     // fetching questions and answers
     useEffect(() => {
         db.collection("questions").get().then(snapshot => {
@@ -105,7 +109,7 @@ const AskMeAQuestionComponent = () => {
 
         return () => {
         }
-    }, [])
+    }, [stateAfterQuestionSubmit])
     console.log("useeffect:", questionAnswerFromFB);
     return (
         <div id="main__appbar">
@@ -116,7 +120,7 @@ const AskMeAQuestionComponent = () => {
                     </Typography>
                     <List className={classes.list}>
                         {questionAnswerFromFB.map(query => (
-                            <React.Fragment key={query.data?.question}>
+                            <React.Fragment key={query.id} >
                                 <ListItem button>
                                     <ListItemAvatar>
                                         <Avatar alt="Profile Picture" src={""} />
@@ -163,9 +167,9 @@ const AskMeAQuestionComponent = () => {
                         <Button onClick={handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={sendQuestionToFirebase} color="primary" disabled={!question && noDoubleSUbmitCLick}  >
+                        {noDoubleSUbmitCLick && <Button onClick={sendQuestionToFirebase} color="primary" disabled={!question}  >
                             Submit
-                        </Button>
+                        </Button>}
                     </DialogActions>
                 </Dialog>
             </div>

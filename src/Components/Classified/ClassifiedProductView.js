@@ -45,7 +45,7 @@ const ClassifiedProductView = ({ }) => {
                             />}
                         </Grid>
                         <div className="secondDivInGrid">
-                            <divc className="tophead">
+                            <div className="tophead">
                                 <div>
                                     <h2 className="productViewDetailsFont">{productDataFromFirebase?.name}</h2>
                                     <span className="prodPricedet" >{"€" + productDataFromFirebase?.price}</span>
@@ -59,7 +59,7 @@ const ClassifiedProductView = ({ }) => {
                                         <h4><b style={{ color: "#004180" }}>{productDataFromFirebase?.userEmail}</b><sub>{productDataFromFirebase?.userEmailVerified}</sub></h4>
                                     </div>
                                 </div>
-                            </divc>
+                            </div>
 
                             <div className="productDetails">
                                 <h2 className="productViewDetailsh2">Product Details:</h2>
@@ -70,8 +70,8 @@ const ClassifiedProductView = ({ }) => {
                                 </div>
                             </div>
                             <div className="Payment" >
-                                {productDataFromFirebase?.paymentOptions?.map(option => (
-                                    <button>{option}</button>
+                                {productDataFromFirebase?.paymentOptions?.map((option, i) => (
+                                    <button key={i} >{option}</button>
                                 ))}
                             </div>
                             <div>

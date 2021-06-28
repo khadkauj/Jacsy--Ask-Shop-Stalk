@@ -82,7 +82,7 @@ const ListNews = () => {
                                     title="Contemplative Reptile"
                                 /> */}
                                 <CardContent className="cardContent">
-                                    <p gutterBottom variant="h1" component="h1">
+                                    <p >
                                         {item?.data?.question}
                                     </p>
                                 </CardContent>
