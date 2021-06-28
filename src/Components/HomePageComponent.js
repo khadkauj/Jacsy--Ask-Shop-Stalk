@@ -5,9 +5,9 @@ import './HomePageComponent.css'
 
 const HomePageComponent = () => {
     return (
-        <div>
+        <div id="homepage__main">
             <div className="bottomBar__main">
-                {/* <BottomAppBar /> */}
+                <BottomAppBar />
             </div>
             <div className="tets">
                 <ListNews />

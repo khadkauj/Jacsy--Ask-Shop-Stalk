@@ -10,4 +10,42 @@
 .appbar__add {
   /* position: absolute; */
   background-color: #1976d2;
+  display: flex;
+  justify-content: center;
+  height: 36px;
+}
+
+.fab__icon {
+  /* margin-top: -30px; */
+}
+
+#fab__id .MuiFab-secondary {
+  margin-top: -28px;
+}
+
+#fab__id .MuiListItem-root {
+  padding: 0px;
+  /* padding-bottom: 0px; */
+}
+
+#main__appbar {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  padding: 14px;
+}
+
+#main__appbar .MuiTypography-h6 {
+  margin-left: 14px;
+}
+
+@media screen and (min-width: 600px) {
+  #main__appbar {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  #main__appbar {
+    width: 60%;
+  }
 }

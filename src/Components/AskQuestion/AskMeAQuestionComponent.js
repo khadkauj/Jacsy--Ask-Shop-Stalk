@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,7 +17,15 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
-
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { db } from "../../Firebase/Firebase"
+import { v4 as uuidv4 } from 'uuid';
 import "./AskMeAQuestionComponent.css"
 const messages = [
     {
@@ -25,14 +33,8 @@ const messages = [
         primary: 'Brunch this week?',
         secondary: "I'll be in the neighbourhood this week. Let's grab a bite to eat",
         person: '/static/images/avatar/5.jpg',
-    },
-    {
-        id: 2,
-        primary: 'Birthday Gift',
-        secondary: `Do you have a suggestion for a good present for John on his work
-      anniversary. I am really confused & would love your thoughts on it.`,
-        person: '/static/images/avatar/1.jpg',
     }]
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,21 +50,81 @@ const useStyles = makeStyles((theme) => ({
 const AskMeAQuestionComponent = () => {
     const classes = useStyles();
 
+    const [question, setquestion] = useState(null)
+    // extra state to not allow double clicking of submit
+    const [noDoubleSUbmitCLick, setnoDoubleSUbmitCLick] = useState(true)
+    const [questionAnswerFromFB, setquestionAnswerFromFB] = useState([{
+        id: 1,
+        primary: 'Brunch this week?',
+        secondary: "I'll be in the neighbourhood this week. Let's grab a bite to eat",
+        person: '/static/images/avatar/5.jpg',
+    }])
+
+    // all setup for Form Dialog Box
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setquestion(null)
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        setquestion(null)
+    };
+
+    // send question to firebase
+
+    const sendQuestionToFirebase = () => {
+        // setnoDoubleSUbmitCLick(false)
+        db.collection("questions").add({
+            question: question,
+            date: new Date(),
+            answered: false,
+            answer: null,
+            id: uuidv4(),
+        }).then(doc => {
+            console.log("snap while sending question to FB", doc)
+            setOpen(false)
+        })
+            .catch(error => {
+                console.log("Error while sending question to FB", error)
+                setOpen(false)
+            })
+    }
+    // fetching questions and answers
+    useEffect(() => {
+        db.collection("questions").get().then(snapshot => {
+            // console.log("ques snap, ", snapshot.docs);
+            setquestionAnswerFromFB(snapshot.docs.map(doc => ({
+                id: doc.id,
+                key: doc.id,
+                data: doc.data()
+            })))
+        }).catch(error => console.log("error in fetching data from FB, ", error))
+
+        return () => {
+        }
+    }, [])
+    console.log("useeffect:", questionAnswerFromFB);
     return (
-        <div>
+        <div id="main__appbar">
             <div className="appBAr">
                 <Paper square className={classes.paper}>
                     <Typography className={classes.text} variant="h6" >
-                        Inbox
+                        Ask a Question.
                     </Typography>
                     <List className={classes.list}>
-                        {messages.map(({ id, primary, secondary, person }) => (
-                            <React.Fragment key={id}>
+                        {questionAnswerFromFB.map(query => (
+                            <React.Fragment key={query.data?.question}>
                                 <ListItem button>
                                     <ListItemAvatar>
-                                        <Avatar alt="Profile Picture" src={person} />
+                                        <Avatar alt="Profile Picture" src={""} />
                                     </ListItemAvatar>
-                                    <ListItemText primary={primary} secondary={secondary} />
+                                    {!query.data?.answer?.length && < ListItemText primary={query.data?.question} secondary={"No answer available at the moment."} />}
+                                    {query.data?.answer?.length > 80 && < ListItemText primary={query.data?.question} secondary={query.data?.answer?.slice(0, 75) + "..."} />}
+                                    {query.data?.answer?.length <= 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answer} />}
+                                    {/* {query.data?.answer?.length > 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answer?.slice(0, 80)} /> + "..."} */}
                                 </ListItem>
                             </React.Fragment>
                         ))}
@@ -70,8 +132,42 @@ const AskMeAQuestionComponent = () => {
                 </Paper>
             </div>
 
-            <div className="appbar__add" >
-                hi
+            <div className="appbar__add" id="fab__id" >
+                <Fab color="secondary" aria-label="add" className="fab__icon">
+                    <AddIcon onClick={handleClickOpen} >A</AddIcon>
+                </Fab>
+            </div>
+
+            {/* Form  Popup for a Question */}
+            <div>
+                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                    {/* <DialogTitle id="form-dialog-title">Ask me a question and I will answer it in a thread below.</DialogTitle> */}
+                    <DialogContent>
+                        <DialogContentText>
+                            Ask us a question and we will answer it in a thread below.
+                        </DialogContentText>
+                        <TextField
+                            multiline
+                            rows={7}
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Question?"
+                            type="text"
+                            fullWidth
+                            value={question}
+                            onChange={e => setquestion(e.target.value)}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={sendQuestionToFirebase} color="primary" disabled={!question && noDoubleSUbmitCLick}  >
+                            Submit
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         </div>
     )

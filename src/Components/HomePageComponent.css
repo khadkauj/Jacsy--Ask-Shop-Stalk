@@ -10,3 +10,14 @@
   width: 50%; */
   /* height: 50%; */
 }
+
+@media screen and (min-width: 600px) {
+  .bottomBar__main {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+#homepage__main ::-webkit-scrollbar {
+  display: none;
+}
