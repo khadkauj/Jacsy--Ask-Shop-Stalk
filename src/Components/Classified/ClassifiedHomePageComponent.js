@@ -34,6 +34,7 @@ import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import Snackbar from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 import "./ClassifiedHomePageComponent.css";
 import { useHistory } from "react-router-dom";
@@ -75,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ClassifiedHomePageComponent = () => {
     // initializations
-    const [productFromFirebase, setproductFromFirebase] = useState([])
+    const [productFromFirebase, setproductFromFirebase] = useState(undefined)
     const [nameofProduct, setnameofProduct] = useState("")
     const [producttype, setproducttype] = React.useState('');
     const [productCondition, setproductCondition] = useState("")
@@ -379,7 +380,7 @@ const ClassifiedHomePageComponent = () => {
 
             </div>
 
-            <div className="cards__main">
+            {productFromFirebase ? <div className="cards__main">
                 <Grid container spacing={2} >
                     {productFromFirebase.map((item) => (
                         <Grid className="grid__main" item xs={12} sm={6} md={4} lg={4} key={Math.random()}>
@@ -465,7 +466,9 @@ const ClassifiedHomePageComponent = () => {
                         </Grid>
                     ))}
                 </Grid>
-            </div>
+            </div> : <div className="skeleton__div"  ><Skeleton variant="rect" width="80vw" height="60vh" /></div>
+            }
+
 
             {/* Snackbar sub-component */}
 
@@ -488,7 +491,7 @@ const ClassifiedHomePageComponent = () => {
                     }
                 />
             </div>
-        </div>
+        </div >
     );
 };
 

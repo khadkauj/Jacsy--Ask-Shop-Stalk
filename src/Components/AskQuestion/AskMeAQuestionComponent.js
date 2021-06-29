@@ -55,9 +55,10 @@ const AskMeAQuestionComponent = () => {
     const [noDoubleSUbmitCLick, setnoDoubleSUbmitCLick] = useState(true)
     const [questionAnswerFromFB, setquestionAnswerFromFB] = useState([{
         id: 1,
-        primary: 'Brunch this week?',
-        secondary: "I'll be in the neighbourhood this week. Let's grab a bite to eat",
-        person: '/static/images/avatar/5.jpg',
+        data: {
+            question: 'What are the three Gunas(elements)?',
+            answer: "The three gunas are called: sattva (goodness, calmness, harmonious), rajas (passion, activity, movement), and tamas (ignorance, inertia, laziness). "
+        }
     }])
     const [stateAfterQuestionSubmit, setstateAfterQuestionSubmit] = useState(false)
 

@@ -6,6 +6,7 @@ import './ClassifiedProductView.css';
 import { useParams } from 'react-router-dom';
 import { db } from '../../Firebase/Firebase';
 import { Avatar, CardMedia, IconButton } from '@material-ui/core';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 
 const ClassifiedProductView = ({ }) => {
@@ -34,7 +35,7 @@ const ClassifiedProductView = ({ }) => {
 
     return (
         <div>
-            <div className="div__main__grid__productview  " id="testinLocalCSSusingId__inProductview"  >
+            {productDataFromFirebase?.id ? <div className="div__main__grid__productview  " id="testinLocalCSSusingId__inProductview"  >
                 <div className="productViewMain" >
                     <Grid container spacing={1}>
                         <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -81,7 +82,9 @@ const ClassifiedProductView = ({ }) => {
                     </Grid>
 
                 </div>
-            </div>
+            </div> : <div className="skeleton__div"  ><Skeleton variant="rect" width="80vw" height="60vh" /></div>
+            }
+
         </div>
     )
 }
