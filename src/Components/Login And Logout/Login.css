@@ -28,7 +28,7 @@
 }
 
 .header3 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   text-align: center;
   color: #06201b;
   width: 100%;
@@ -116,6 +116,9 @@
   font-weight: bold;
   font-size: 14px;
   background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
 }
 
 .coninueGoogle_butt:hover {

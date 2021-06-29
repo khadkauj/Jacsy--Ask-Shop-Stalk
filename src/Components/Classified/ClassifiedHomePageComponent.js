@@ -32,7 +32,8 @@ import { v4 as uuidv4 } from 'uuid';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
-import Popover from '@material-ui/core/Popover';
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
 
 import "./ClassifiedHomePageComponent.css";
 import { useHistory } from "react-router-dom";
@@ -119,7 +120,7 @@ const ClassifiedHomePageComponent = () => {
     }, [])
 
 
-    // firebase setups
+    // Image change handel
     const imagehandleChange = (e) => {
         console.log(e.target.files[0]);
         if (e.target.files[0]) {
@@ -210,7 +211,7 @@ const ClassifiedHomePageComponent = () => {
             else {
                 console.log("User not found while trying to send Like");
                 setpopUpText("Please Login.")
-                handleClickPopup()
+                handleClickSnackbar()
                 // history.push("/Login")
             }
         })
@@ -223,6 +224,7 @@ const ClassifiedHomePageComponent = () => {
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+
     // setup for Input dailog box from Material UI
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
@@ -232,8 +234,10 @@ const ClassifiedHomePageComponent = () => {
                 console.log("user found", User);
             }
             else {
-                console.log("User not found");
-                history.push("/Login")
+                handleClickSnackbar()
+                setTimeout(() => {
+                    history.push("/Login")
+                }, 500);
             }
         })
     };
@@ -247,38 +251,20 @@ const ClassifiedHomePageComponent = () => {
     };
 
 
-    // popup setups
-    const [anchorEl, setAnchorEl] = React.useState(undefined);
-
-    const handleClickPopup = (event) => {
-        setAnchorEl(true);
-        setInterval(() => {
-            setAnchorEl(false)
-        }, 4000);
+    // Snackbar setups
+    const [openSnackbar, setOpenSnackbar] = React.useState(false);
+    const handleClickSnackbar = () => {
+        setOpenSnackbar(true);
     };
-
-    const handleClosePopup = () => {
-        setAnchorEl(undefined);
-        setpopUpText("")
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSnackbar(false);
     };
-
-    const openPopup = Boolean(anchorEl);
-    const id = openPopup ? 'simple-popover' : undefined;
-
 
     return (
         <div className="test" id="testinLocalCSSusingId">
-            {/* <div className="Advertisement">
-        <img
-        src="https://i.kym-cdn.com/,photos/images/newsfeed/000/000/130/disaster-girl.jpg"
-        alt="homepagepic"
-        className="imagehomepage"
-        />
-        <div>
-        <h1>A big board to write</h1>
-        </div>
-    </div> */}
-
             <div className="button">
                 <div style={{ margin: "20px" }}>
                     <Button className="addButton" variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -481,25 +467,26 @@ const ClassifiedHomePageComponent = () => {
                 </Grid>
             </div>
 
-            {/* popup sub-component */}
+            {/* Snackbar sub-component */}
 
-            <div className="popup__div">
-                <Popover
-                    id={id}
-                    open={openPopup}
-                    anchorEl={anchorEl}
-                    onClose={handleClosePopup}
+            <div>
+                <Snackbar
                     anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'center',
+                        vertical: 'bottom',
+                        horizontal: 'left',
                     }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'center',
-                    }}
-                >
-                    <p className="popup__text" >{popUpText}</p>
-                </Popover>
+                    open={openSnackbar}
+                    autoHideDuration={6000}
+                    onClose={handleCloseSnackbar}
+                    message="Please Login"
+                    action={
+                        <React.Fragment>
+                            <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseSnackbar}>
+                                <CloseIcon fontSize="small" />
+                            </IconButton>
+                        </React.Fragment>
+                    }
+                />
             </div>
         </div>
     );

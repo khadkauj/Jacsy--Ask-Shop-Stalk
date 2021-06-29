@@ -72,7 +72,7 @@ const Login = () => {
                 />
                 {wrongCredentialsInLogin && <p style={{ color: "#bb2124" }} >Wrong credentials!!!</p>}<br />
                 <p className="para">
-                    Not a member?
+                    Not a member?{" "}
                     <Link to="/SignUp">
                         <span className="span1">
                             <u>Register</u>
@@ -82,10 +82,12 @@ const Login = () => {
                 <button onClick={loginToFirebase} type="submit" className="butt" >
                     Log In
                 </button>
+
                 <div className="hrs">
                     <hr className="hr_line" /> <p>or</p> <hr className="hr_right" />
                 </div>
                 <button onClick={signInWithGoogleAuth} className="coninueGoogle_butt">
+                    <img src={process.env.PUBLIC_URL + '/google-logo.ico'} alt="logo" />
                     Continue With Google
                 </button>
             </div>
