@@ -37,3 +37,7 @@
   justify-content: flex-end;
   padding: 0px;
 }
+
+.link__newsDecoration {
+  text-decoration: none;
+}

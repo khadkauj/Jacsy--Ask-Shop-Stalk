@@ -56,7 +56,7 @@ const AskMeAQuestionComponent = () => {
     const [questionAnswerFromFB, setquestionAnswerFromFB] = useState([{
         id: 1,
         data: {
-            question: 'What are the three Gunas(elements)?',
+            question: 'What are the three Guṇas(elements)?',
             answer: "The three gunas are called: sattva (goodness, calmness, harmonious), rajas (passion, activity, movement), and tamas (ignorance, inertia, laziness). "
         }
     }])

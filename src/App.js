@@ -11,6 +11,7 @@ import "./App.css";
 import HeaderComponent from "./Components/HeaderComponent";
 import ClassifiedProductView from "./Components/Classified/ClassifiedProductView";
 import FooterComponent from "./Components/Footer/FooterComponent";
+import AnswerComponent from "./Components/AskQuestion/AnswerComponent";
 
 function App() {
 	document.title = "Abundance"
@@ -23,7 +24,7 @@ function App() {
 					{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
 
-					<HashRouter>
+					<Switch>
 
 						<Route exact path="/Freshies">
 							<FreshiesMainComponents />
@@ -48,13 +49,18 @@ function App() {
 							<HeaderComponent />
 							<ClassifiedProductView />
 						</Route>
+						<Route exact path="/Answers/:id">
+							<HeaderComponent />
+							<AnswerComponent />
+							<FooterComponent />
+						</Route>
 						<Route exact path="/">
 							<HeaderComponent />
 							<HomePageComponent />
 							<FooterComponent />
 							{/* <ListNews /> */}
 						</Route>
-					</HashRouter>
+					</Switch>
 				</div>
 			</Router>
 		</div>

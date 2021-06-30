@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { db } from "../Firebase/Firebase"
 import Skeleton from '@material-ui/lab/Skeleton';
-
+import { Link } from "react-router-dom"
 import "./ListNews.css"
 import { Grid } from '@material-ui/core';
 
@@ -47,28 +47,30 @@ const ListNews = () => {
                 questionAndAnswerFromFB ? <Grid container spacing={1} id="newsList__main" >
                     {questionAndAnswerFromFB.map(item => (
                         <Grid item xs={6} sm={4} md={4} lg={3} key={Math.random()}   >
-                            <Card className={classes.root}>
-                                <CardActionArea>
-                                    {/* <CardMedia
+                            <Link to={"/Answers/" + item.id} className="link__newsDecoration" >
+                                <Card className={classes.root}>
+                                    <CardActionArea>
+                                        {/* <CardMedia
                                     className={classes.media}
                                     image="https://data.whicdn.com/images/167909674/original.jpg"
                                     title="Contemplative Reptile"
                                 /> */}
-                                    <CardContent className="cardContent">
-                                        <p >
-                                            {item?.data?.question}
-                                        </p>
-                                    </CardContent>
-                                </CardActionArea>
-                                <CardActions>
-                                    {/* <Button size="small" color="primary">
+                                        <CardContent className="cardContent">
+                                            <p >
+                                                {item?.data?.question}
+                                            </p>
+                                        </CardContent>
+                                    </CardActionArea>
+                                    <CardActions>
+                                        {/* <Button size="small" color="primary">
                                 Share
                             </Button> */}
-                                    <Button size="small" color="primary">
-                                        Reply.
-                                    </Button>
-                                </CardActions>
-                            </Card>
+                                        <Button size="small" color="primary">
+                                            Reply.
+                                        </Button>
+                                    </CardActions>
+                                </Card>
+                            </Link>
                         </Grid>
                     ))}
 
