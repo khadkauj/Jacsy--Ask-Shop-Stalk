@@ -59,3 +59,7 @@
   max-width: 900px;
   margin: auto;
 }
+
+#oneIcon__collection .MuiIconButton-root {
+  align-items: flex-end;
+}

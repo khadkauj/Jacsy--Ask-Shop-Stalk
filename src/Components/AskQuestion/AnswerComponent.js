@@ -8,27 +8,71 @@ import Button from '@material-ui/core/Button';
 import { db } from "../../Firebase/Firebase"
 import Skeleton from '@material-ui/lab/Skeleton';
 import { Grid } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import { v4 as uuidv4 } from 'uuid';
 
 import "./AnswerComponent.css"
 import { useParams } from 'react-router-dom';
 const AnswerComponent = () => {
-    const text = "After reading all sorts of comments. The main difference between Europeans and Americans is that in Europe everyone is a smart-ass. We are so proud of our correctness and think highly of our “liberal” values when we are just the opposite. We had such a violent history no American could capture in one movie. I saw here Irish and Swedish people responding that you carry weapons and we don’t. How silly to hear that. Not 20 years ago, Ireland was a synonym for violence. Dutch troops are one of the most responsible for the greatest genocide in Europe after WW2 - Srebrenica, Vukovar, etc… Let’s deconstruct this myth of European “values”: There are no universal European values. Europe is a continent of many ancient civilizations (Hittites, Phoenicians, Greeks, Persians, Sarmatians, Vikings, Ottoman Turks, Basks, Celts, Germans, Slavs, Illyrians, etc…). Following our history, there are no universalities in our society that came before globalization and the internet. There is however one common characteristic and that is Christianity and its values. Although today young Europeans are proud to say they are atheists, Christianity is the core of their value system, the same as it is the core in yours. Free healthcare - this is maybe the only thing that is true. However, there are countries where it is normal that you don’t treat each patient equally. There are lots of things that could ruin the health care system, corruption for example. And it is widespread through half of Europe, specifically Eastern parts. Guns. This is again a matter of perception. Do you perceive only half of Europe as Europe and its eastern parts are not? I know people in my very street that have rocket launchers inside their houses…. Nudity? How strange to say that. But judging from the above comments it would seem that you can walk naked almost everywhere…That is of course not true at all. Nudity in arts, yes… But who doesn’t have it? There is a reason that we have separate nudist beaches… No patriotism? Saying people who live in Europe??? Are you serious? The smallest continent with most countries in the world! No discrimination? Blacks in Saint Dennis would agree with that for sure, as would gipsies… Russians in Baltics, Jews almost everywhere, Polish people in GB, Turkish in Germany in the 90ties, Serbs in Croatia, Croats in Serbia, Bosnia, Turks in Armenia, Armenians in Turkey, Basks and Catalans in Spain… and migrants? No, there is no discrimination at all. Okay, drinking in the street is allowed. However, we have strict policies on the ways how liquor can be both. You can’t buy it after midnight in some countries for example."
 
     const [questionAnswerFromFB, setquestionAnswerFromFB] = useState(undefined)
-
+    const [answerListsOfQuestions, setanswerListsOfQuestions] = useState(undefined)
+    const [stateAfterAnswerSubmit, setstateAfterAnswerSubmit] = useState(false)
     const { id } = useParams()
     useEffect(() => {
+        // the below  function to retreive questions 
         db.collection("questions").doc(id).get().then(snapshot => {
-            // console.log("ques snap, ", snapshot.docs);
             setquestionAnswerFromFB(snapshot.data());
-            // console.log(" doc", snapshot.data());
-            // return snapshot
+        }).catch(error => console.log("error in fetching data from FB, ", error))
+
+        // the below function to get  inner answer collection in question collection
+        db.collection("questions").doc(id).collection("answersList").get().then(snapshot => {
+            setanswerListsOfQuestions(snapshot.docs.map(doc => ({
+                id: doc.id,
+                key: doc.id,
+                data: doc.data()
+            })));
         }).catch(error => console.log("error in fetching data from FB, ", error))
 
         return () => {
         }
-    }, [id])
+    }, [stateAfterAnswerSubmit])
     console.log("*", questionAnswerFromFB, id);
+
+    // all setup for Form Dialog Box
+    const [open, setOpen] = React.useState(false);
+    const [answer, setanswer] = useState(undefined)
+    const handleClickOpen = () => {
+        setanswer(undefined)
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+        setanswer(undefined)
+    };
+
+    // send form to firebase
+    const sendAnswerToFirebase = () => {
+        const idInnerCollection = uuidv4()
+        db.collection("questions").doc(id).collection("answersList").doc(idInnerCollection).set({
+            answer: answer,
+            date: new Date(),
+            id: idInnerCollection,
+            vote: 0,
+            replies: ["No replies"]
+        }).then(data => {
+            console.log("Answer sent to firebase")
+            setOpen(false)
+            setanswer(undefined)
+            setstateAfterAnswerSubmit(true)
+        })
+            .catch(error => console.log("Error  while sending answer to firebase"))
+    }
 
     return (
 
@@ -43,7 +87,7 @@ const AnswerComponent = () => {
                     <Grid item xs={12} sm={12} md={4} lg={4} >
                         <h3>{questionAnswerFromFB?.question}</h3>
                         <div className="icons__QA">
-                            <IconButton aria-label="share">
+                            <IconButton aria-label="share" onClick={handleClickOpen} >
                                 <BorderColorIcon fontSize="large" />
                             </IconButton>
                             <IconButton aria-label="share">
@@ -51,36 +95,36 @@ const AnswerComponent = () => {
                             </IconButton>
                         </div>
                         <div className="dark_greyBox">
-                            <span className="noOfAns">{questionAnswerFromFB?.answer?.length ? questionAnswerFromFB?.answer?.length + " Answers" : "Be the first to reply.🖊"}</span>
+                            <span className="noOfAns">{answerListsOfQuestions?.length ? answerListsOfQuestions?.length + " Answers" : "Be the first to reply.🖊"}</span>
                         </div>
                     </Grid>
 
                     <Grid item xs={12} sm={12} md={8} lg={8}>
-                        {questionAnswerFromFB.answer.map(answer => (
-                            <div className="qa__mainDiv" >
+                        {answerListsOfQuestions?.map((docData, i) => (
+                            <div className="qa__mainDiv" key={i} >
                                 <div className="avatarAndids" >
                                     <ListItemAvatar>
                                         <Avatar alt="Profile Picture" src={""} />
                                     </ListItemAvatar>
                                     <div className="avatarAndids__innner">
-                                        <strong>{questionAnswerFromFB?.email ? questionAnswerFromFB?.email : "Anonymous"}</strong>
-                                        <span>{questionAnswerFromFB?.date.toDate().toLocaleString()}</span>
+                                        <strong>{docData?.data?.email ? docData?.data?.email : "Anonymous"}</strong>
+                                        <span>{docData?.data?.date.toDate().toLocaleString()}</span>
                                     </div>
                                 </div>
 
                                 <div className="inner__answer">
-                                    {answer && answer.length >= 200 && <p>{answer.slice(0, 200) + "..."}</p>}
-                                    {answer && answer.length < 200 && <p>{answer.slice(0, 100) + "***"} </p>}
+                                    {docData?.data?.answer && docData?.data?.answer.length >= 200 && <p>{docData?.data?.answer.slice(0, 200) + "..."}</p>}
+                                    {docData?.data?.answer && docData?.data?.answer.length < 200 && <p>{docData?.data?.answer.slice(0, 100) + "***"} </p>}
                                 </div>
 
 
                                 <div className="qa__footer">
-                                    <div>
+                                    <div id="oneIcon__collection">
                                         <IconButton aria-label="share">
-                                            <ArrowUpwardIcon /> <span className="icon__p">7</span>
+                                            <ArrowUpwardIcon color={docData?.data?.vote >= 0 ? "secondary" : "inherit"} /> {docData?.data?.vote >= 0 && <span className="icon__p">{docData?.data?.vote ? docData?.data?.vote : 0}</span>}
                                         </IconButton>
                                         <IconButton aria-label="share">
-                                            <ArrowDownwardIcon /> <span className="icon__p"></span>
+                                            <ArrowDownwardIcon color={docData?.data?.vote < 0 ? "secondary" : "inherit"} /> {docData?.data?.vote < 0 && <span className="icon__p">{docData?.data.vote} </span>}
                                         </IconButton>
                                     </div>
                                     <Button size="small" color="secondary" >
@@ -97,6 +141,38 @@ const AnswerComponent = () => {
 
                 </Grid>
             </div> : <div className="skeleton__div"  ><Skeleton variant="rect" width="80vw" height="30vh" /></div>}
+
+            {/* Form  Popup for a Question */}
+            <div>
+                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                    {/* <DialogTitle id="form-dialog-title">Ask me a question and I will answer it in a thread below.</DialogTitle> */}
+                    <DialogContent>
+                        <DialogContentText>
+                            Answer it only if you know.
+                        </DialogContentText>
+                        <TextField
+                            multiline
+                            rows={7}
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Answer =>"
+                            type="text"
+                            fullWidth
+                            value={answer}
+                            onChange={e => setanswer(e.target.value)}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                            Cancel
+                        </Button>
+                        {<Button onClick={sendAnswerToFirebase} color="primary" disabled={!answer}  >
+                            Submit
+                        </Button>}
+                    </DialogActions>
+                </Dialog>
+            </div>
         </div>
 
     )

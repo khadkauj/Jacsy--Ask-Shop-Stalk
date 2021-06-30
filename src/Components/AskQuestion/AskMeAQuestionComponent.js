@@ -127,8 +127,8 @@ const AskMeAQuestionComponent = () => {
                                         <Avatar alt="Profile Picture" src={""} />
                                     </ListItemAvatar>
                                     {!query.data?.answer?.length && < ListItemText primary={query.data?.question} secondary={"No answer available at the moment."} />}
-                                    {query.data?.answer?.length > 80 && < ListItemText primary={query.data?.question} secondary={query.data?.answer?.slice(0, 75) + "..."} />}
-                                    {query.data?.answer?.length <= 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answer} />}
+                                    {query.data?.answer?.length && query.data?.answer[0].length > 80 && < ListItemText primary={query.data?.question} secondary={query.data?.answer[0].slice(0, 75) + "..."} />}
+                                    {query.data?.answer?.length && query.data?.answer[0].length <= 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answer[0]} />}
                                     {/* {query.data?.answer?.length > 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answer?.slice(0, 80)} /> + "..."} */}
                                 </ListItem>
                             </React.Fragment>

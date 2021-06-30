@@ -14,7 +14,7 @@ import FooterComponent from "./Components/Footer/FooterComponent";
 import AnswerComponent from "./Components/AskQuestion/AnswerComponent";
 
 function App() {
-	document.title = "Abundance"
+	document.title = "Jwerk Abundance"
 	return (
 		<div className="App">
 			<Router>
@@ -24,7 +24,7 @@ function App() {
 					{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
 
-					<Switch>
+					<HashRouter>
 
 						<Route exact path="/Freshies">
 							<FreshiesMainComponents />
@@ -58,9 +58,8 @@ function App() {
 							<HeaderComponent />
 							<HomePageComponent />
 							<FooterComponent />
-							{/* <ListNews /> */}
 						</Route>
-					</Switch>
+					</HashRouter>
 				</div>
 			</Router>
 		</div>
