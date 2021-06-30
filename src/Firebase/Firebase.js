@@ -24,6 +24,6 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
 const auth = firebase.auth()
 // const storage = firebase.storage()
-var provider = new firebase.auth.GoogleAuthProvider();
-
-export {provider, db, auth}
+const provider = new firebase.auth.GoogleAuthProvider();
+const microSoftAuthProvider = new firebase.auth.OAuthProvider('microsoft.com');
+export { provider, db, auth, microSoftAuthProvider }

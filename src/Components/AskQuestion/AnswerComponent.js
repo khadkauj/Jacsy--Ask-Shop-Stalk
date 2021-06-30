@@ -15,14 +15,26 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { v4 as uuidv4 } from 'uuid';
+import firebase from "firebase"
+import { useParams } from 'react-router-dom';
+import SnackBarComponent from '../SnackBar/SnackBarComponent';
+
 
 import "./AnswerComponent.css"
-import { useParams } from 'react-router-dom';
-const AnswerComponent = () => {
 
+
+
+
+
+
+
+const AnswerComponent = () => {
+    const [user, setUser] = useState(undefined)
     const [questionAnswerFromFB, setquestionAnswerFromFB] = useState(undefined)
     const [answerListsOfQuestions, setanswerListsOfQuestions] = useState(undefined)
     const [stateAfterAnswerSubmit, setstateAfterAnswerSubmit] = useState(false)
+    const [stateAfterVote, setstateAfterVote] = useState(false)
+    const [openSnackbarProps, setopenSnackbarProps] = useState(false)
     const { id } = useParams()
     useEffect(() => {
         // the below  function to retreive questions 
@@ -39,10 +51,17 @@ const AnswerComponent = () => {
             })));
         }).catch(error => console.log("error in fetching data from FB, ", error))
 
+        // checking if user is logged in
+        firebase.auth().onAuthStateChanged(userState => {
+            if (userState) {
+                setUser(userState)
+            } else {
+                setUser(undefined)
+            }
+        })
         return () => {
         }
-    }, [stateAfterAnswerSubmit])
-    console.log("*", questionAnswerFromFB, id);
+    }, [stateAfterAnswerSubmit, stateAfterVote])
 
     // all setup for Form Dialog Box
     const [open, setOpen] = React.useState(false);
@@ -58,21 +77,111 @@ const AnswerComponent = () => {
 
     // send form to firebase
     const sendAnswerToFirebase = () => {
-        const idInnerCollection = uuidv4()
-        db.collection("questions").doc(id).collection("answersList").doc(idInnerCollection).set({
-            answer: answer,
-            date: new Date(),
-            id: idInnerCollection,
-            vote: 0,
-            replies: ["No replies"]
-        }).then(data => {
-            console.log("Answer sent to firebase")
-            setOpen(false)
-            setanswer(undefined)
-            setstateAfterAnswerSubmit(true)
-        })
-            .catch(error => console.log("Error  while sending answer to firebase"))
+        if (user) {
+            const idInnerCollection = uuidv4()
+            db.collection("questions").doc(id).collection("answersList").doc(idInnerCollection).set({
+                answer: answer,
+                date: new Date(),
+                id: idInnerCollection,
+                vote: 0,
+                replies: ["No replies"],
+                peopleWhoDownVoted: ["none"],
+                peopleWhoUpVoted: ["None"]
+            }).then(data => {
+                console.log("Answer sent to firebase")
+                setOpen(false)
+                setanswer(undefined)
+                setstateAfterAnswerSubmit(!stateAfterAnswerSubmit)
+            }).catch(error => console.log("Error  while sending answer to firebase"))
+        } else {
+            console.log("PLease log in");
+            setopenSnackbarProps(true)
+            setTimeout(() => {
+                setopenSnackbarProps(false)
+            }, 1000);
+        }
     }
+
+    // adding upvote/downvote to answers
+    const voteAnswer = (answerId, voteCount) => {
+        console.log("asnwid", answerId, voteCount);
+        console.log("vote answer methid being called");
+
+        if (user) {
+            db.collection("questions").doc(id).collection("answersList").doc(answerId).get().then(snapshot => {
+                console.log("**", snapshot.data().vote);
+                const hasUserUpVoted = snapshot.data()?.peopleWhoUpVoted.includes(user?.email)
+                const hasUserDownVoted = snapshot.data()?.peopleWhoDownVoted.includes(user?.email)
+                if (!hasUserUpVoted && !hasUserDownVoted) {
+                    if (voteCount === 1) {
+                        db.collection("questions").doc(id).collection("answersList").doc(answerId).update({
+                            vote: snapshot.data().vote + voteCount,
+                            peopleWhoUpVoted: firebase.firestore.FieldValue.arrayUnion(user?.email ? user?.email : "Something wrong with firebase apis")
+                        }).then(resp => console.log("success in vote fucntion1")).catch(error => console.log("error in vote function"))
+                    } else if (voteCount === -1) {
+                        db.collection("questions").doc(id).collection("answersList").doc(answerId).update({
+                            vote: snapshot.data().vote + voteCount,
+                            peopleWhoDownVoted: firebase.firestore.FieldValue.arrayUnion(user?.email ? user?.email : "Something wrong with firebase apis")
+                        }).then(resp => console.log("success in vote fucntion2")).catch(error => console.log("error in vote function"))
+                    }
+
+                } else if (hasUserUpVoted && !hasUserDownVoted) {
+                    if (voteCount === 1) {
+                        console.log("You cant vote twice.");
+                        // db.collection("questions").doc(id).collection("answersList").doc(answerId).update({
+                        //     vote: snapshot.data().vote + voteCount
+                        // }).then(resp => console.log("success in vote fucntion3")).catch(error => console.log("error in vote function"))
+                    } else if (voteCount === -1) {
+                        // checking for edge case when vote is 0 and you want user to be nowher in array
+                        if (snapshot.data().vote === 1) {
+                            db.collection("questions").doc(id).collection("answersList").doc(answerId).update({
+                                vote: snapshot.data().vote + voteCount,
+                                peopleWhoUpVoted: firebase.firestore.FieldValue.arrayRemove(user?.email)
+                            }).then(resp => console.log("success in vote fucntion3")).catch(error => console.log("error in vote function"))
+                        } else {
+                            db.collection("questions").doc(id).collection("answersList").doc(answerId).update({
+                                vote: snapshot.data().vote + voteCount,
+                                peopleWhoDownVoted: firebase.firestore.FieldValue.arrayUnion(user?.email ? user?.email : "Something wrong with firebase apis"),
+                                peopleWhoUpVoted: firebase.firestore.FieldValue.arrayRemove(user?.email)
+                            }).then(resp => console.log("success in vote fucntion3")).catch(error => console.log("error in vote function"))
+                        }
+
+                    }
+
+                } else if (!hasUserUpVoted && hasUserDownVoted) {
+                    if (voteCount === -1) {
+                        console.log("You can't downvote twice");
+                    } else if (voteCount === 1) {
+                        // check for edge case when vote is -1 
+                        if (snapshot.data().vote === -1) {
+                            db.collection("questions").doc(id).collection("answersList").doc(answerId).update({
+                                vote: snapshot.data().vote + voteCount,
+                                peopleWhoDownVoted: firebase.firestore.FieldValue.arrayRemove(user?.email)
+                            }).then(resp => console.log("success in vote fucntion")).catch(error => console.log("error in vote function"))
+                        } else {
+                            db.collection("questions").doc(id).collection("answersList").doc(answerId).update({
+                                vote: snapshot.data().vote + voteCount,
+                                peopleWhoUpVoted: firebase.firestore.FieldValue.arrayUnion(user?.email ? user?.email : "Something wrong with firebase apis"),
+                                peopleWhoDownVoted: firebase.firestore.FieldValue.arrayRemove(user?.email)
+                            }).then(resp => console.log("success in vote fucntion")).catch(error => console.log("error in vote function"))
+                        }
+
+                    }
+
+                }
+
+                setstateAfterVote(!stateAfterVote)
+            }).catch(error => console.log("Error in getting vote count."))
+        } else {
+            console.log("Please log in");
+            setopenSnackbarProps(true)
+            setTimeout(() => {
+                setopenSnackbarProps(false)
+            }, 1000);
+        }
+
+    }
+    console.log("the user is, ", user);
 
     return (
 
@@ -120,10 +229,10 @@ const AnswerComponent = () => {
 
                                 <div className="qa__footer">
                                     <div id="oneIcon__collection">
-                                        <IconButton aria-label="share">
-                                            <ArrowUpwardIcon color={docData?.data?.vote >= 0 ? "secondary" : "inherit"} /> {docData?.data?.vote >= 0 && <span className="icon__p">{docData?.data?.vote ? docData?.data?.vote : 0}</span>}
+                                        <IconButton onClick={e => voteAnswer(docData?.data.id, 1)} aria-label="share">
+                                            <ArrowUpwardIcon color={docData?.data?.vote > 0 ? "secondary" : "inherit"} /> {docData?.data?.vote >= 0 && <span className="icon__p">{docData?.data?.vote ? docData?.data?.vote : 0}</span>}
                                         </IconButton>
-                                        <IconButton aria-label="share">
+                                        <IconButton onClick={e => voteAnswer(docData?.data.id, -1)} aria-label="share">
                                             <ArrowDownwardIcon color={docData?.data?.vote < 0 ? "secondary" : "inherit"} /> {docData?.data?.vote < 0 && <span className="icon__p">{docData?.data.vote} </span>}
                                         </IconButton>
                                     </div>
@@ -167,12 +276,13 @@ const AnswerComponent = () => {
                         <Button onClick={handleClose} color="primary">
                             Cancel
                         </Button>
-                        {<Button onClick={sendAnswerToFirebase} color="primary" disabled={!answer}  >
+                        {<Button onClick={sendAnswerToFirebase} color="primary" disabled={!answer} type="submit" >
                             Submit
                         </Button>}
                     </DialogActions>
                 </Dialog>
             </div>
+            <SnackBarComponent open={openSnackbarProps} />
         </div>
 
     )

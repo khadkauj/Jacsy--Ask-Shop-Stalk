@@ -188,6 +188,7 @@ const ClassifiedHomePageComponent = () => {
         }
     }
 
+    // ading like/dis-like in each products
     const addLikeToFirebase = (data, numToAdd) => {
         console.log("id in funciton, ", data, numToAdd);
         firebase.auth().onAuthStateChanged(User => {
@@ -264,6 +265,7 @@ const ClassifiedHomePageComponent = () => {
         setOpenSnackbar(false);
     };
 
+    console.log("the logedinuser is, ", userDetailsFirebase);
     return (
         <div className="test" id="testinLocalCSSusingId">
             <div className="button">

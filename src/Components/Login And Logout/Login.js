@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import firebase from "firebase";
-import { provider } from "../../Firebase/Firebase"
+import { provider, microSoftAuthProvider } from "../../Firebase/Firebase"
 import "./Login.css";
 // import { Log_in } from "./features/user/userSlice";
 
@@ -37,6 +37,20 @@ const Login = () => {
             })
             .catch(error => {
                 console.log("Error in google sign-in authentication", error)
+                setwrongCredentialsInLogin(true)
+            })
+    }
+
+    const signInWithMicrosoftAuth = (e) => {
+        e.preventDefault()
+        firebase.auth().signInWithRedirect(microSoftAuthProvider)
+            .then(result => {
+                console.log("credentials from Microsft auth, ", result.credential)
+                setwrongCredentialsInLogin(false)
+                history.push("/Classified")
+            })
+            .catch(error => {
+                console.log("Error in Microsft sign-in authentication", error)
                 setwrongCredentialsInLogin(true)
             })
     }
@@ -86,9 +100,14 @@ const Login = () => {
                 <div className="hrs">
                     <hr className="hr_line" /> <p>or</p> <hr className="hr_right" />
                 </div>
-                <button onClick={signInWithGoogleAuth} className="coninueGoogle_butt">
+                <button onClick={e => signInWithGoogleAuth(e)} className="coninueGoogle_butt">
                     <img src={process.env.PUBLIC_URL + '/google-logo.ico'} alt="logo" />
                     Continue With Google
+                </button>
+                <div className="smallBreakbetweenAuth" ></div>
+                <button onClick={e => signInWithMicrosoftAuth(e)} className="coninueGoogle_butt">
+                    <img src={process.env.PUBLIC_URL + '/m.png'} alt="logo" />
+                    Continue With Outlook
                 </button>
             </div>
         </div>
