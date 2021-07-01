@@ -17,7 +17,7 @@ const Login = () => {
         firebase.auth().signInWithEmailAndPassword(email, password).then(userCredntials => {
             console.log("User found on firebase, ", userCredntials);
             setwrongCredentialsInLogin(false)
-            history.push("/Classified")
+            history.push("/")
             // console.log("history detials, ", history.goBack());
 
         }).catch(error => {
@@ -33,7 +33,7 @@ const Login = () => {
             .then(result => {
                 console.log("credentials from google auth, ", result.credential)
                 setwrongCredentialsInLogin(false)
-                history.push("/Classified")
+                history.push("/")
             })
             .catch(error => {
                 console.log("Error in google sign-in authentication", error)
@@ -47,7 +47,7 @@ const Login = () => {
             .then(result => {
                 console.log("credentials from Microsft auth, ", result.credential)
                 setwrongCredentialsInLogin(false)
-                history.push("/Classified")
+                history.push("/")
             })
             .catch(error => {
                 console.log("Error in Microsft sign-in authentication", error)
@@ -58,7 +58,7 @@ const Login = () => {
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                history.push("/Classified")
+                history.push("/")
             } else {
 
             }

@@ -26,6 +26,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { db } from "../../Firebase/Firebase"
 import { v4 as uuidv4 } from 'uuid';
+import firebase from "firebase"
+import SnackBarComponent from "../SnackBar/SnackBarComponent"
 import "./AskMeAQuestionComponent.css"
 const messages = [
     {
@@ -52,7 +54,7 @@ const AskMeAQuestionComponent = () => {
 
     const [question, setquestion] = useState(undefined)
     // extra state to not allow double clicking of submit
-    const [noDoubleSUbmitCLick, setnoDoubleSUbmitCLick] = useState(true)
+    const [noDoubleSUbmitCLick, setnoDoubleSUbmitCLick] = useState(false)
     const [questionAnswerFromFB, setquestionAnswerFromFB] = useState([{
         id: 1,
         data: {
@@ -76,27 +78,32 @@ const AskMeAQuestionComponent = () => {
     };
 
     // send question to firebase
-
+    const [useSnackBarState, setUseSnackBarState] = useState(false)
     const sendQuestionToFirebase = () => {
-        setnoDoubleSUbmitCLick(false)
-        setstateAfterQuestionSubmit(true)
-        setquestion(undefined)
-        db.collection("questions").add({
-            question: question,
-            date: new Date(),
-            answered: false,
-            answer: undefined,
-            id: uuidv4(),
-        }).then(doc => {
-            console.log("snap while sending question to FB", doc)
-            setOpen(false)
-        })
-            .catch(error => {
-                console.log("Error while sending question to FB", error)
+        if (user) {
+            setnoDoubleSUbmitCLick(!noDoubleSUbmitCLick)
+            setstateAfterQuestionSubmit(true)
+            setquestion(undefined)
+            db.collection("questions").add({
+                question: question,
+                date: new Date(),
+                answered: false,
+                id: uuidv4(),
+            }).then(doc => {
+                console.log("snap while sending question to FB", doc)
                 setOpen(false)
             })
+                .catch(error => {
+                    console.log("Error while sending question to FB", error)
+                    setOpen(false)
+                })
+        } else {
+            setUseSnackBarState(!useSnackBarState)
+        }
+
     }
 
+    const [user, setUser] = useState(undefined)
     // fetching questions and answers
     useEffect(() => {
         db.collection("questions").get().then(snapshot => {
@@ -107,6 +114,14 @@ const AskMeAQuestionComponent = () => {
                 data: doc.data()
             })))
         }).catch(error => console.log("error in fetching data from FB, ", error))
+
+        firebase.auth().onAuthStateChanged(userState => {
+            if (userState) {
+                setUser(userState)
+            } else {
+                setUser(undefined)
+            }
+        })
 
         return () => {
         }
@@ -168,12 +183,17 @@ const AskMeAQuestionComponent = () => {
                         <Button onClick={handleClose} color="primary">
                             Cancel
                         </Button>
-                        {noDoubleSUbmitCLick && <Button onClick={sendQuestionToFirebase} color="primary" disabled={!question}  >
+                        {<Button onClick={sendQuestionToFirebase} color="primary" disabled={!question}  >
                             Submit
                         </Button>}
                     </DialogActions>
                 </Dialog>
             </div>
+            {/* Signed in as Component */}
+            {user?.email && <div className="signedAs">
+                signed in as {user.email}
+            </div>}
+            <SnackBarComponent open={useSnackBarState} />
         </div>
     )
 }

@@ -18,7 +18,7 @@ import { v4 as uuidv4 } from 'uuid';
 import firebase from "firebase"
 import { useParams } from 'react-router-dom';
 import SnackBarComponent from '../SnackBar/SnackBarComponent';
-
+import { Link } from "react-router-dom"
 
 import "./AnswerComponent.css"
 
@@ -35,6 +35,7 @@ const AnswerComponent = () => {
     const [stateAfterAnswerSubmit, setstateAfterAnswerSubmit] = useState(false)
     const [stateAfterVote, setstateAfterVote] = useState(false)
     const [openSnackbarProps, setopenSnackbarProps] = useState(false)
+    const [seeMoreState, setSeeMoreState] = useState(false) //too see all answer when clicke on see more
     const { id } = useParams()
     useEffect(() => {
         // the below  function to retreive questions 
@@ -221,10 +222,13 @@ const AnswerComponent = () => {
                                     </div>
                                 </div>
 
-                                <div className="inner__answer">
-                                    {docData?.data?.answer && docData?.data?.answer.length >= 200 && <p>{docData?.data?.answer.slice(0, 200) + "..."}</p>}
-                                    {docData?.data?.answer && docData?.data?.answer.length < 200 && <p>{docData?.data?.answer.slice(0, 100) + "***"} </p>}
-                                </div>
+                                {!seeMoreState && <div className="inner__answer">
+                                    {docData?.data?.answer && docData?.data?.answer.length >= 200 && <><p>{docData?.data?.answer.slice(0, 200) + "..."}</p> <span onClick={e => setSeeMoreState(!seeMoreState)}>see more</span></>}
+                                    {docData?.data?.answer && docData?.data?.answer.length < 200 && <p>{docData?.data?.answer.slice(0, 200)} </p>}
+                                </div>}
+                                {seeMoreState && <div className="inner__answer">
+                                    {docData?.data?.answer && <><p>{docData?.data?.answer} </p> <span onClick={e => setSeeMoreState(!seeMoreState)}>see less</span></>}
+                                </div>}
 
 
                                 <div className="qa__footer">

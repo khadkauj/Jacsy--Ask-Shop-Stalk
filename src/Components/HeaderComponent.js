@@ -24,11 +24,11 @@ const HeaderComponent = () => {
         })
     }
 
-    const [userStatus, setuserStatus] = useState(false)
+    const [userStatus, setuserStatus] = useState(undefined)
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                setuserStatus(true)
+                setuserStatus(user)
             } else {
 
             }
@@ -67,6 +67,7 @@ const HeaderComponent = () => {
                     <ExitToAppIcon fontSize="large" />
                 </IconButton>}
             </div>
+
         </div>
     )
 }

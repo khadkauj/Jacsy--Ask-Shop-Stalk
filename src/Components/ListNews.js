@@ -28,7 +28,7 @@ const ListNews = () => {
 
     // fetching questions and answers
     useEffect(() => {
-        db.collection("questions").get().then(snapshot => {
+        db.collection("questions").orderBy("date", "desc").get().then(snapshot => {
             // console.log("ques snap, ", snapshot.docs);
             setquestionAndAnswerFromFB(snapshot.docs.map(doc => ({
                 id: doc.id,

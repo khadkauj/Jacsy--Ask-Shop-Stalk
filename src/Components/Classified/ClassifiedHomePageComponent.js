@@ -458,7 +458,7 @@ const ClassifiedHomePageComponent = () => {
                                 <p className="like">{item?.data?.like + " likes"}</p>
                                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                                     <CardContent>
-                                        <Typography paragraph>Method:</Typography>
+                                        <Typography paragraph>Description:</Typography>
                                         <Typography paragraph>
                                             {item?.data?.productDescription ? item?.data?.productDescription : "NA"}
                                         </Typography>
