@@ -223,11 +223,11 @@ const AnswerComponent = () => {
                                 </div>
 
                                 {!seeMoreState && <div className="inner__answer">
-                                    {docData?.data?.answer && docData?.data?.answer.length >= 200 && <><p>{docData?.data?.answer.slice(0, 200) + "..."}</p> <span onClick={e => setSeeMoreState(!seeMoreState)}>see more</span></>}
+                                    {docData?.data?.answer && docData?.data?.answer.length >= 200 && <div className="answer__seeMore"><p>{docData?.data?.answer.slice(0, 200) + "..."}</p> <span className="seeMoreAnswer__span" onClick={e => setSeeMoreState(!seeMoreState)}>see more</span></div>}
                                     {docData?.data?.answer && docData?.data?.answer.length < 200 && <p>{docData?.data?.answer.slice(0, 200)} </p>}
                                 </div>}
                                 {seeMoreState && <div className="inner__answer">
-                                    {docData?.data?.answer && <><p>{docData?.data?.answer} </p> <span onClick={e => setSeeMoreState(!seeMoreState)}>see less</span></>}
+                                    {docData?.data?.answer && <div div className="answer__seeMore"><p>{docData?.data?.answer} </p> <span className="seeMoreAnswer__span" onClick={e => setSeeMoreState(!seeMoreState)}>see less</span></div>}
                                 </div>}
 
 

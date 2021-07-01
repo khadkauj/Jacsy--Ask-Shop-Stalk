@@ -63,3 +63,16 @@
 #oneIcon__collection .MuiIconButton-root {
   align-items: flex-end;
 }
+
+.answer__seeMore {
+  display: inline;
+}
+.answer__seeMore > p {
+  display: inline;
+}
+.seeMoreAnswer__span {
+  float: right;
+  color: #f50057;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  text-transform: capitalize;
+}
