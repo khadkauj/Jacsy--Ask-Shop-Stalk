@@ -71,8 +71,8 @@
   display: inline;
 }
 .seeMoreAnswer__span {
-  float: right;
   color: #f50057;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   text-transform: capitalize;
+  font-size: 14px;
 }
