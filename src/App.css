@@ -7,3 +7,42 @@
   display: grid;
   place-items: center;
 }
+
+/* CSS appplied gloablly for Signed in as Snackbar */
+.signedAs {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 10000;
+  background-color: #1976d2;
+  color: white;
+  -webkit-animation: cssAnimation 5s forwards;
+  animation: cssAnimation 5s forwards;
+  font-size: 13px;
+  padding: 0px 7px;
+  font-weight: bold;
+  border-bottom-right-radius: 4px;
+}
+
+@keyframes cssAnimation {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes cssAnimation {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
