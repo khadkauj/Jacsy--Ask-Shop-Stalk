@@ -15,6 +15,8 @@ import AnswerComponent from "./Components/AskQuestion/AnswerComponent";
 
 function App() {
 	document.title = "Jwerk Abundance"
+	// "homepage": "https://khadkauj.github.io/Jwork",
+
 	return (
 		<div className="App">
 			<Router>

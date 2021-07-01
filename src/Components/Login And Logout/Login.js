@@ -10,7 +10,6 @@ const Login = () => {
     const [email, setemail] = useState("@gmail.com");
     const [password, setpassword] = useState("");
     const [wrongCredentialsInLogin, setwrongCredentialsInLogin] = useState(false)
-    //   const dispatch = useDispatch();
     const history = useHistory();
     const loginToFirebase = (e) => {
         e.preventDefault()
@@ -18,8 +17,6 @@ const Login = () => {
             console.log("User found on firebase, ", userCredntials);
             setwrongCredentialsInLogin(false)
             history.push("/")
-            // console.log("history detials, ", history.goBack());
-
         }).catch(error => {
             console.log("user not found");
             setwrongCredentialsInLogin(true)
