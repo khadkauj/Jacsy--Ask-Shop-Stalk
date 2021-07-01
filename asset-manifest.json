@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Jwork/static/css/main.64c04042.chunk.css",
+    "main.css": "/Jwork/static/css/main.8d5c085a.chunk.css",
     "main.js": "/Jwork/static/js/main.0133f183.chunk.js",
     "main.js.map": "/Jwork/static/js/main.0133f183.chunk.js.map",
     "runtime-main.js": "/Jwork/static/js/runtime-main.f7dbec62.js",
@@ -8,13 +8,13 @@
     "static/js/2.1f1e273c.chunk.js": "/Jwork/static/js/2.1f1e273c.chunk.js",
     "static/js/2.1f1e273c.chunk.js.map": "/Jwork/static/js/2.1f1e273c.chunk.js.map",
     "index.html": "/Jwork/index.html",
-    "static/css/main.64c04042.chunk.css.map": "/Jwork/static/css/main.64c04042.chunk.css.map",
+    "static/css/main.8d5c085a.chunk.css.map": "/Jwork/static/css/main.8d5c085a.chunk.css.map",
     "static/js/2.1f1e273c.chunk.js.LICENSE.txt": "/Jwork/static/js/2.1f1e273c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.f7dbec62.js",
     "static/js/2.1f1e273c.chunk.js",
-    "static/css/main.64c04042.chunk.css",
+    "static/css/main.8d5c085a.chunk.css",
     "static/js/main.0133f183.chunk.js"
   ]
 }
