@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link, HashRouter } from "react-router-dom";
 import HomePageComponent from "./Components/HomePageComponent";
 import FreshiesMainComponents from "./Components/FreshiesMainComponents/FreshiesMainComponents";
@@ -6,16 +6,21 @@ import ClassifiedHomePageComponent from "./Components/Classified/ClassifiedHomeP
 import Login from "./Components/Login And Logout/Login";
 import SignUp from "./Components/Login And Logout/SignUp";
 import ListNews from './Components/ListNews'
-
-import "./App.css";
 import HeaderComponent from "./Components/HeaderComponent";
 import ClassifiedProductView from "./Components/Classified/ClassifiedProductView";
 import FooterComponent from "./Components/Footer/FooterComponent";
 import AnswerComponent from "./Components/AskQuestion/AnswerComponent";
+// import firebase from "firebas?e"
+import { analytics } from "./Firebase/Firebase"
+import "./App.css";
 
 function App() {
 	document.title = "Jwerk Abundance"
-	// "homepage": "https://khadkauj.github.io/Jwork",
+	useEffect(() => {
+		analytics().logEvent("User is in App Componen")
+		return () => {
+		}
+	}, [])
 
 	return (
 		<div className="App">

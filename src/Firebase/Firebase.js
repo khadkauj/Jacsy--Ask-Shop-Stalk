@@ -26,4 +26,8 @@ const auth = firebase.auth()
 // const storage = firebase.storage()
 const provider = new firebase.auth.GoogleAuthProvider();
 const microSoftAuthProvider = new firebase.auth.OAuthProvider('microsoft.com');
-export { provider, db, auth, microSoftAuthProvider }
+// analytics
+const analytics = firebase.analytics()
+
+
+export { provider, db, auth, microSoftAuthProvider, analytics }

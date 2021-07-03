@@ -33,6 +33,7 @@ const AnswerComponent = () => {
     const [seeMoreState, setSeeMoreState] = useState(false); //too see all answer when clicke on see more
     const { id } = useParams();
     useEffect(() => {
+        firebase.analytics().logEvent("User is in Answer Component")
         // the below  function to retreive questions
         db.collection("questions")
             .doc(id)

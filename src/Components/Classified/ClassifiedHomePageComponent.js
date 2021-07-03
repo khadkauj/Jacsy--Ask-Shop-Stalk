@@ -94,6 +94,7 @@ const ClassifiedHomePageComponent = () => {
     // console.log("use", productFromFirebase[0]?.data?.date.tol);
 
     useEffect(() => {
+        firebase.analytics().logEvent("User is in Main Classified shop Component")
         // fetching all public posts
         db.collection("products").orderBy("date", "desc").onSnapshot(snapshot => {
             setproductFromFirebase(

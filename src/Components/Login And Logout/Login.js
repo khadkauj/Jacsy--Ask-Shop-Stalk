@@ -53,6 +53,7 @@ const Login = () => {
     }
 
     useEffect(() => {
+        firebase.analytics().logEvent("User is in Login Componen")
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 history.push("/")

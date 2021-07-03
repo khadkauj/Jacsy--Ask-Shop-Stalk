@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { db } from '../../Firebase/Firebase';
 import { Avatar, CardMedia, IconButton } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
-
+import firebase from "firebase"
 
 const ClassifiedProductView = ({ }) => {
     const { id } = useParams();
@@ -15,9 +15,8 @@ const ClassifiedProductView = ({ }) => {
     console.log(id);
 
     useEffect(() => {
-
+        firebase.analytics().logEvent("User is in Main Classified shop Component")
         var docRef = db.collection("products").doc(`${id}`);
-
         docRef.get().then((doc) => {
             if (doc.exists) {
                 console.log("Document data:", doc.data());
