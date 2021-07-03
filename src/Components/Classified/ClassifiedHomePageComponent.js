@@ -272,7 +272,7 @@ const ClassifiedHomePageComponent = () => {
             <div className="button">
                 <div style={{ margin: "20px" }}>
                     <Button className="addButton" variant="outlined" color="primary" onClick={handleClickOpen}>
-                        Add items.
+                        Add to Market.
                     </Button>
                     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>

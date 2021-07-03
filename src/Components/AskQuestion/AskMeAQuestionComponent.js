@@ -99,6 +99,9 @@ const AskMeAQuestionComponent = () => {
                 })
         } else {
             setUseSnackBarState(!useSnackBarState)
+            setTimeout(() => {
+                setUseSnackBarState(false)
+            }, 1000);
         }
 
     }
@@ -190,9 +193,9 @@ const AskMeAQuestionComponent = () => {
                 </Dialog>
             </div>
             {/* Signed in as Component */}
-            {user?.email && <div className="signedAs">
+            {/* {user?.email && <div className="signedAs">
                 signed in as {user.email}
-            </div>}
+            </div>} */}
             <SnackBarComponent open={useSnackBarState} />
         </div>
     )

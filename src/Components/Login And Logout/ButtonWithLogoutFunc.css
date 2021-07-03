@@ -1,0 +1,15 @@
+.signedAs__email {
+  font-weight: 500;
+  /* padding: 0px 14px; */
+}
+
+.signedAs__main {
+  padding: 0px 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.signedAs__span {
+  font-weight: 400;
+  opacity: 0.7;
+}

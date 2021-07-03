@@ -147,3 +147,15 @@
 .last {
   min-width: 100% !important;
 }
+
+#Edit__options .MuiGrid-align-items-xs-center {
+  align-items: flex-start;
+  margin-left: 14px;
+}
+
+#Edit__options {
+  position: fixed;
+  bottom: 40px;
+  left: 0px;
+  z-index: 100;
+}

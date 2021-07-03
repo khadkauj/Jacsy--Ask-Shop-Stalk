@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -14,6 +14,9 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import BookIcon from '@material-ui/icons/Book';
 import InfoIcon from '@material-ui/icons/Info';
 import firebase from "firebase"
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import "./ButtonWithLogoutFunc.css"
+import { useHistory } from 'react-router-dom';
 const StyledMenu = withStyles({
     paper: {
         border: '1px solid #d3d4d5',
@@ -46,28 +49,42 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 export default function CustomizedMenus() {
+    // setup for menus
     const [anchorEl, setAnchorEl] = React.useState(null);
-
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
     const handleClose = () => {
         setAnchorEl(null);
     };
 
     // sign out of Firebase
-
+    const history = useHistory()
     const signOutOfFirebase = (e) => {
         e.preventDefault()
         console.log("hahah");
         firebase.auth().signOut().then(user => {
             console.log("user signed out");
+            history.push("/Login")
             // setuserStatus(false)
         }).catch(error => {
             console.log("user signed out");
         })
     }
+    // 
+    const [user, setUser] = useState(undefined)
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                setUser(user)
+            } else {
+                setUser(undefined)
+            }
+        })
+        return () => {
+
+        }
+    }, [])
 
     return (
         <div>
@@ -91,6 +108,12 @@ export default function CustomizedMenus() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
+                <div className="signedAs__main">
+                    <span className="signedAs__span">Signed-in as</span>
+                    <p className="signedAs__email"> {user?.email}</p>
+                </div>
+
+
                 <StyledMenuItem onClick={e => signOutOfFirebase(e)} >
                     <ListItemIcon>
                         <ExitToAppIcon fontSize="small" />
