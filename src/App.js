@@ -10,14 +10,13 @@ import HeaderComponent from "./Components/HeaderComponent";
 import ClassifiedProductView from "./Components/Classified/ClassifiedProductView";
 import FooterComponent from "./Components/Footer/FooterComponent";
 import AnswerComponent from "./Components/AskQuestion/AnswerComponent";
-// import firebase from "firebas?e"
-import { analytics } from "./Firebase/Firebase"
+import firebase from "firebase"
 import "./App.css";
 
 function App() {
 	document.title = "Jwerk Abundance"
 	useEffect(() => {
-		analytics().logEvent("User is in App Componen")
+		firebase.analytics().logEvent("User is in App Componen")
 		return () => {
 		}
 	}, [])
