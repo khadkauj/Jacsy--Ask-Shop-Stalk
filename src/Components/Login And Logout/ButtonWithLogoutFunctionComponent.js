@@ -88,14 +88,14 @@ export default function CustomizedMenus() {
 
     return (
         <div>
-            <IconButton>
+            <IconButton onClick={handleClick}>
                 <SettingsIcon
                     fontSize="large"
                     aria-controls="customized-menu"
                     aria-haspopup="true"
                     variant="contained"
 
-                    onClick={handleClick}
+
                 >
                     Open Menu
                 </SettingsIcon>

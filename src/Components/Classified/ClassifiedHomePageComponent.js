@@ -405,7 +405,7 @@ const ClassifiedHomePageComponent = () => {
                                 <Link to={"/Classified/Products/" + item.data.id} className="linkTextForCard" >
                                     <CardMedia
                                         className={classes.media}
-                                        image={item.data.imageURL ? item.data.imageURL : "https://data.whicdn.com/images/326864042/original.jpg"}
+                                        image={item.data.imageURL ? item.data.imageURL : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
                                         title="Paella dish"
                                     />
                                     <CardContent>

@@ -48,7 +48,7 @@ const ClassifiedProductView = ({ }) => {
 
             {productDataFromFirebase?.id ? <div>
                 <div id="Edit__options">
-                    <SplitButton emailOfProductOwner={productDataFromFirebase?.userEmail} />
+                    <SplitButton emailOfProductOwner={productDataFromFirebase?.userEmail} idOfProduct={productDataFromFirebase?.id} />
                 </div>
                 <div className="div__main__grid__productview  " id="testinLocalCSSusingId__inProductview"  >
                     <div className="productViewMain" >
@@ -56,7 +56,7 @@ const ClassifiedProductView = ({ }) => {
                             <Grid item xs={12} sm={12} md={6} lg={6}>
                                 {productDataFromFirebase.imageURL && <CardMedia
                                     className="image__product"
-                                    image={productDataFromFirebase.imageURL ? productDataFromFirebase.imageURL : "https://data.whicdn.com/images/326864042/original.jpg"}
+                                    image={productDataFromFirebase.imageURL ? productDataFromFirebase.imageURL : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
                                     title="Paella dish"
                                 />}
                             </Grid>

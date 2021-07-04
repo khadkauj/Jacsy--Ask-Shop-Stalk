@@ -10,31 +10,12 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import firebase from "firebase"
+import { db } from '../../Firebase/Firebase';
+import { useHistory } from 'react-router-dom';
 const options = ['Marked as Sold', 'Edit the details', 'Delete'];
 
-export default function SplitButton({ emailOfProductOwner }) {
-    // setup for the Button-Group toogle
-    const [open, setOpen] = React.useState(false);
-    const anchorRef = React.useRef(null);
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
-    const handleClick = () => {
-        console.info(`You clicked ${options[selectedIndex]}`);
-    };
-    const handleMenuItemClick = (event, index) => {
-        console.log(index);
-        setSelectedIndex(index);
-        setOpen(false);
-    };
-    const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
-    };
-    const handleClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-            return;
-        }
-        setOpen(false);
-    };
-
+export default function SplitButton({ emailOfProductOwner, idOfProduct }) {
+    const history = useHistory()
     // checking user state
     const [user, setUser] = useState(undefined)
     useEffect(() => {
@@ -50,7 +31,44 @@ export default function SplitButton({ emailOfProductOwner }) {
         }
     }, [])
 
-    // Deleting the product
+    // setup for the Button-Group toogle
+    const [open, setOpen] = React.useState(false);
+    const anchorRef = React.useRef(null);
+    const [selectedIndex, setSelectedIndex] = React.useState(1);
+    const handleClick = () => {
+        console.info(`You clicked ${options[selectedIndex]}`);
+    };
+    const handleMenuItemClick = (event, index) => {
+        console.log(index);
+        setSelectedIndex(index);
+        setOpen(false);
+        // Deleting the product
+        if (index === 2) {
+            db.collection("products").doc(idOfProduct).delete().then(response => {
+                console.log("Item deleted");
+                history.push("/Classified")
+            }).catch(error => {
+                console.log("error in deleting product", error);
+            })
+        } else if (index === 0) {
+            db.collection("products").doc(idOfProduct).update({
+                markedAsSold: true
+            }, { merge: true }).then(response => {
+                console.log("MArked as sold field updated");
+            }).catch(error => {
+                console.log("Error in marking field as Updated", error);
+            })
+        }
+    };
+    const handleToggle = () => {
+        setOpen((prevOpen) => !prevOpen);
+    };
+    const handleClose = (event) => {
+        if (anchorRef.current && anchorRef.current.contains(event.target)) {
+            return;
+        }
+        setOpen(false);
+    };
 
     return (
         <div>
