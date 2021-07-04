@@ -162,14 +162,8 @@ const ClassifiedHomePageComponent = () => {
 
     const sendImageToFirebase = (e) => {
         setstateAfterSubmit(!stateAfterSubmit)
-        // console.log(e.target.files[0]);
-        // if (e.target.files[0]) {
-        //     setproductImage(e.target.files[0])
-        // }
+
         if (nameofProduct && producttype && productCondition && productPrice && productImage) {
-            // setproductImage(e.target.files[0]);
-            // send pictures
-            // console.log("productImage", e.target.files[0])
             console.log("Trying to send image to firebase");
             var storageRef = firebase.storage().ref();
             var uploadTask = storageRef.child(`${userDetailsFirebase.uid}/` + Math.random()).put(productImage)
