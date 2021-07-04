@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
@@ -12,12 +12,15 @@ import MenuList from '@material-ui/core/MenuList';
 import firebase from "firebase"
 import { db } from '../../Firebase/Firebase';
 import { useHistory } from 'react-router-dom';
-const options = ['Marked as Sold', 'Edit the details', 'Delete'];
 
-export default function SplitButton({ emailOfProductOwner, idOfProduct }) {
+
+export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNot }) {
+    const options = [soldOrNot ? "Marked as Not-Sold" : "Marked as Sold", 'Edit the details', 'Delete'];
+
     const history = useHistory()
     // checking user state
     const [user, setUser] = useState(undefined)
+    const [statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold] = useState(false)
     useEffect(() => {
         firebase.auth().onAuthStateChanged(userstate => {
             if (userstate) {
@@ -52,12 +55,13 @@ export default function SplitButton({ emailOfProductOwner, idOfProduct }) {
             })
         } else if (index === 0) {
             db.collection("products").doc(idOfProduct).update({
-                markedAsSold: true
+                markedAsSold: !soldOrNot
             }, { merge: true }).then(response => {
-                console.log("MArked as sold field updated");
+                console.log("Marked as sold field updated");
             }).catch(error => {
                 console.log("Error in marking field as Updated", error);
             })
+            setStatusOfItemMarkedAsSold(true)
         }
     };
     const handleToggle = () => {
@@ -85,7 +89,7 @@ export default function SplitButton({ emailOfProductOwner, idOfProduct }) {
                             aria-haspopup="menu"
                             onClick={handleToggle}
                         >
-                            <ArrowDropDownIcon />
+                            <ArrowDropUpIcon />
                         </Button>
                     </ButtonGroup>
                     <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>

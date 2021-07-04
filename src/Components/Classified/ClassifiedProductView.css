@@ -159,3 +159,24 @@
   left: 0px;
   z-index: 100;
 }
+
+.alreadySold {
+  padding: 14px;
+  min-width: auto !important;
+  min-height: auto !important;
+  background-image: radial-gradient(
+    circle 597px at 93% 9.8%,
+    rgba(255, 61, 89, 1) 1.7%,
+    rgba(252, 251, 44, 1) 97%
+  );
+  font-size: 18px;
+  font-weight: bolder;
+  text-align: center;
+  /* padding: 0px; */
+  margin-top: 10px;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #06201b;
+  border: 1px solid papayawhip;
+}

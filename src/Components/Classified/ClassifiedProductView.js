@@ -16,7 +16,7 @@ import './ClassifiedProductView.css';
 const ClassifiedProductView = ({ }) => {
     const { id } = useParams();
     const [productDataFromFirebase, setproductDataFromFirebase] = useState([])
-    console.log(id);
+
 
     const [user, setUser] = useState(undefined)
     useEffect(() => {
@@ -48,17 +48,18 @@ const ClassifiedProductView = ({ }) => {
 
             {productDataFromFirebase?.id ? <div>
                 <div id="Edit__options">
-                    <SplitButton emailOfProductOwner={productDataFromFirebase?.userEmail} idOfProduct={productDataFromFirebase?.id} />
+                    <SplitButton emailOfProductOwner={productDataFromFirebase?.userEmail}
+                        idOfProduct={productDataFromFirebase?.id} soldOrNot={productDataFromFirebase?.markedAsSold} />
                 </div>
                 <div className="div__main__grid__productview  " id="testinLocalCSSusingId__inProductview"  >
                     <div className="productViewMain" >
                         <Grid container spacing={1}>
-                            <Grid item xs={12} sm={12} md={6} lg={6}>
-                                {productDataFromFirebase.imageURL && <CardMedia
+                            <Grid item xs={12} sm={12} md={6} lg={6} >
+                                {productDataFromFirebase.imageURL && <><CardMedia
                                     className="image__product"
                                     image={productDataFromFirebase.imageURL ? productDataFromFirebase.imageURL : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
                                     title="Paella dish"
-                                />}
+                                />{productDataFromFirebase?.markedAsSold && <p className="alreadySold">Already Sold.</p>}</>}
                             </Grid>
                             <div className="secondDivInGrid">
                                 <div className="tophead">
