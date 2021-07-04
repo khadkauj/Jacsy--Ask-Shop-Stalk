@@ -35,10 +35,28 @@ import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutline
 import Snackbar from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
 import Skeleton from '@material-ui/lab/Skeleton';
+import Resizer from "react-image-file-resizer";
 
 import "./ClassifiedHomePageComponent.css";
 import { useHistory } from "react-router-dom";
 import FavoriteBorderOutlined from "@material-ui/icons/FavoriteBorderOutlined";
+
+
+const resizeFile = (file) =>
+    new Promise((resolve) => {
+        Resizer.imageFileResizer(
+            file,
+            300,
+            300,
+            "JPEG",
+            100,
+            0,
+            (uri) => {
+                resolve(uri);
+            },
+            "base64"
+        );
+    });
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -123,20 +141,32 @@ const ClassifiedHomePageComponent = () => {
 
 
     // Image change handel
-    const imagehandleChange = (e) => {
+    const imagehandleChange = async (e) => {
         console.log(e.target.files[0]);
         if (e.target.files[0]) {
+            console.log("image is,", e.target.files[0]);
             setproductImage(e.target.files[0])
+
+            // resize
+            // try {
+            //     const file = e.target.files[0];
+            //     const image = await resizeFile(file);
+            //     console.log("imag from resizer", image);
+            //     setproductImage(image)
+            // } catch (err) {
+            //     console.log(err);
+            // }
+
         }
     }
 
     const sendImageToFirebase = (e) => {
-        setstateAfterSubmit(false)
+        setstateAfterSubmit(!stateAfterSubmit)
         // console.log(e.target.files[0]);
         // if (e.target.files[0]) {
         //     setproductImage(e.target.files[0])
         // }
-        if (productImage) {
+        if (nameofProduct && producttype && productCondition && productPrice && productImage) {
             // setproductImage(e.target.files[0]);
             // send pictures
             // console.log("productImage", e.target.files[0])
@@ -178,8 +208,17 @@ const ClassifiedHomePageComponent = () => {
                                 disLike: 0
                             },
                         ).then(e => {
+                            // res-setting everything
                             setOpen(false);
                             seterrorMessgae(false)
+                            setstateAfterSubmit(true)
+                            setnameofProduct(undefined)
+                            setproducttype(undefined)
+                            setproductCondition(undefined)
+                            setproductImage(undefined)
+                            setproductPrice(undefined)
+                            setproductDescription(undefined)
+                            setpaymentOptions(undefined)
                         }).catch(error => console.log("Error while sendig items to Firebase"))
                     } else {
                         seterrorMessgae(true)
@@ -192,32 +231,31 @@ const ClassifiedHomePageComponent = () => {
     // ading like/dis-like in each products
     const addLikeToFirebase = (data, numToAdd) => {
         console.log("id in funciton, ", data, numToAdd);
-        firebase.auth().onAuthStateChanged(User => {
-            if (User) {
-                console.log("user found", User);
-                db.collection("products").doc(data?.id).get().then(doc => {
-                    console.log("chcking array, ", doc.data().peopleWhoLiked?.includes(User?.email));
-                    if (!doc.data().peopleWhoLiked?.includes(User?.email)) {
-                        db.collection("products").doc(data?.id).update({
-                            like: ++doc.data().like,
-                            peopleWhoLiked: firebase.firestore.FieldValue.arrayUnion(User?.email ? User?.email : "joke")
-                        }, { merge: true }).catch(error => console.log("error in updating insideLike toFirebase Funciton, ", error))
-                    } else {
-                        db.collection("products").doc(data?.id).update({
-                            like: --doc.data().like,
-                            peopleWhoLiked: firebase.firestore.FieldValue.arrayRemove(User?.email)
-                        }, { merge: true }).catch(error => console.log("error in updating insideLike in -else statement- toFirebase Funciton, ", error))
-                    }
-                }).catch(error => console.log("error in addLiketoFirebase Function, ", error))
+        if (userDetailsFirebase) {
+            console.log("user found", userDetailsFirebase);
+            db.collection("products").doc(data?.id).get().then(doc => {
+                console.log("chcking array, ", doc.data().peopleWhoLiked?.includes(userDetailsFirebase?.email));
+                if (!doc.data().peopleWhoLiked?.includes(userDetailsFirebase?.email)) {
+                    db.collection("products").doc(data?.id).update({
+                        like: ++doc.data().like,
+                        peopleWhoLiked: firebase.firestore.FieldValue.arrayUnion(userDetailsFirebase?.email ? userDetailsFirebase?.email : "joke")
+                    }, { merge: true }).catch(error => console.log("error in updating insideLike toFirebase Funciton, ", error))
+                } else {
+                    db.collection("products").doc(data?.id).update({
+                        like: --doc.data().like,
+                        peopleWhoLiked: firebase.firestore.FieldValue.arrayRemove(userDetailsFirebase?.email)
+                    }, { merge: true }).catch(error => console.log("error in updating insideLike in -else statement- toFirebase Funciton, ", error))
+                }
+            }).catch(error => console.log("error in addLiketoFirebase Function, ", error))
 
-            }
-            else {
-                console.log("User not found while trying to send Like");
-                setpopUpText("Please Login.")
-                handleClickSnackbar()
-                // history.push("/Login")
-            }
-        })
+        }
+        else {
+            console.log("User not found while trying to send Like");
+            setpopUpText("Please Login.")
+            handleClickSnackbar()
+            // history.push("/Login")
+        }
+
     }
 
 
@@ -231,18 +269,17 @@ const ClassifiedHomePageComponent = () => {
     // setup for Input dailog box from Material UI
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
-        firebase.auth().onAuthStateChanged(User => {
-            if (User) {
-                setOpen(true);
-                console.log("user found", User);
-            }
-            else {
-                handleClickSnackbar()
-                setTimeout(() => {
-                    history.push("/Login")
-                }, 500);
-            }
-        })
+        if (userDetailsFirebase) {
+            setOpen(true);
+            console.log("user found", userDetailsFirebase);
+        }
+        else {
+            handleClickSnackbar()
+            setTimeout(() => {
+                history.push("/Login")
+            }, 500);
+        }
+
     };
     const handleClose = () => {
         setOpen(false);
@@ -271,7 +308,7 @@ const ClassifiedHomePageComponent = () => {
         <div className="test" id="testinLocalCSSusingId">
             <div className="button">
                 <div style={{ margin: "20px" }}>
-                    <Button className="addButton" variant="outlined" color="primary" onClick={handleClickOpen}>
+                    <Button className="addButton" variant="outlined" color="primary" onClick={e => handleClickOpen(e)}>
                         Add to Market.
                     </Button>
                     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -304,8 +341,16 @@ const ClassifiedHomePageComponent = () => {
                                     onChange={handleChange}
                                 >
                                     <MenuItem value={"Automotive, Motorcycle & Industrial"}>Automotive, Motorcycle & Industrial</MenuItem>
+                                    <MenuItem value={"Furniture"}>Furniture</MenuItem>
                                     <MenuItem value={"Apparel, Shoes & Watches"}>Apparel, Shoes & Watches</MenuItem>
                                     <MenuItem value={"Apparel, Shoes & Watches"}>Beauty & Health</MenuItem>
+                                    <MenuItem value={"Books & Audible"}>Books & Audible</MenuItem>
+                                    <MenuItem value={"Electronics & Computers"}>Electronics & Computers</MenuItem>
+                                    <MenuItem value={"Grocery/Food"}>Grocery/Food</MenuItem>
+                                    <MenuItem value={"Home, Garden, Pets & DIY"}>Home, Garden, Pets & DIY</MenuItem>
+                                    <MenuItem value={"Movies, TV, Music & Games"}>Movies, TV, Music & Games</MenuItem>
+                                    <MenuItem value={"Other"}>Other</MenuItem>
+
                                 </Select>
                             </FormControl>
                             <br></br>
@@ -352,7 +397,7 @@ const ClassifiedHomePageComponent = () => {
                             />
                             <form style={{ color: "rgb(112 103 103 / 87%)" }}>
                                 <label id="fname" style={{ color: "rgb(112 103 103 / 87%)" }}>Product Image</label><br></br>
-                                <input type="file" style={{ color: "rgb(112 103 103 / 87%)" }}
+                                <input type="file" style={{ color: "rgb(112 103 103 / 87%)" }} accept="image/png"
                                     onChange={imagehandleChange} ></input>
                                 {/* <button type="submit" onClick={sendImageToFirebase}>send image</button> */}
                             </form>
@@ -369,11 +414,11 @@ const ClassifiedHomePageComponent = () => {
                             />
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleClose} color="primary">
+                            <Button onClick={e => handleClose(e)} color="primary">
                                 Cancel
                             </Button>
-                            {stateAfterSubmit && <Button onClick={sendImageToFirebase} color="primary"
-                                disabled={!productImage || !nameofProduct}
+                            {stateAfterSubmit && <Button onClick={e => sendImageToFirebase(e)} color="primary"
+                                disabled={!productImage || !nameofProduct || !nameofProduct || !producttype || !productCondition || !productPrice || !productImage}
                             >
                                 Submit
                             </Button>}
@@ -449,7 +494,7 @@ const ClassifiedHomePageComponent = () => {
                                         className={clsx(classes.expand, {
                                             [classes.expandOpen]: expanded,
                                         })}
-                                        onClick={handleExpandClick}
+                                        onClick={e => handleExpandClick(e)}
                                         aria-expanded={expanded}
                                         aria-label="show more"
                                     >
@@ -487,7 +532,7 @@ const ClassifiedHomePageComponent = () => {
                     message="Please Login"
                     action={
                         <React.Fragment>
-                            <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseSnackbar}>
+                            <IconButton size="small" aria-label="close" color="inherit" onClick={e => handleCloseSnackbar(e)}>
                                 <CloseIcon fontSize="small" />
                             </IconButton>
                         </React.Fragment>
