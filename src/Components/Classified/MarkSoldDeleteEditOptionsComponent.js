@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -12,15 +12,19 @@ import MenuList from '@material-ui/core/MenuList';
 import firebase from "firebase"
 import { db } from '../../Firebase/Firebase';
 import { useHistory } from 'react-router-dom';
-
+import { userContext } from '../ContextComponent';
 
 export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNot }) {
-    const options = [soldOrNot ? "Marked as Not-Sold" : "Marked as Sold", 'Edit the details', 'Delete'];
 
+    const { statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold } = useContext(userContext)
+    console.log("test", statusOfItemMarkedAsSold);
+
+
+    const options = [soldOrNot ? "Marked as Not-Sold" : "Marked as Sold", 'Edit the details', 'Delete'];
     const history = useHistory()
     // checking user state
     const [user, setUser] = useState(undefined)
-    const [statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold] = useState(false)
+
     useEffect(() => {
         firebase.auth().onAuthStateChanged(userstate => {
             if (userstate) {
@@ -58,10 +62,10 @@ export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNo
                 markedAsSold: !soldOrNot
             }, { merge: true }).then(response => {
                 console.log("Marked as sold field updated");
+                setStatusOfItemMarkedAsSold(!statusOfItemMarkedAsSold)
             }).catch(error => {
                 console.log("Error in marking field as Updated", error);
             })
-            setStatusOfItemMarkedAsSold(true)
         }
     };
     const handleToggle = () => {
