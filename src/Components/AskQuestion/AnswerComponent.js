@@ -33,7 +33,7 @@ const AnswerComponent = () => {
     const [stateAfterVote, setstateAfterVote] = useState(false);
     const [openSnackbarProps, setopenSnackbarProps] = useState(false);
     const [seeMoreState, setSeeMoreState] = useState(false); //too see all answer when clicke on see more
-    const [checkedBox, setCheckedBox] = React.useState(true); //checkbox
+    const [checkedBox, setCheckedBox] = React.useState(false); //checkbox
     const { id } = useParams();
     useEffect(() => {
         firebase.analytics().logEvent("User is in Answer Component")

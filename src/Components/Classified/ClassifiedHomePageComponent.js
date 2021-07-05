@@ -25,36 +25,32 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
-import { auth } from "../../Firebase/Firebase";
 import firebase from "firebase";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import Snackbar from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Resizer from "react-image-file-resizer";
-
-import "./ClassifiedHomePageComponent.css";
 import { useHistory } from "react-router-dom";
 import FavoriteBorderOutlined from "@material-ui/icons/FavoriteBorderOutlined";
 
+import "./ClassifiedHomePageComponent.css";
 
+// image file resizer
 const resizeFile = (file) =>
     new Promise((resolve) => {
         Resizer.imageFileResizer(
             file,
             300,
-            300,
+            400,
             "JPEG",
-            100,
+            80,
             0,
             (uri) => {
                 resolve(uri);
             },
-            "base64"
+            "file"
         );
     });
 
@@ -104,9 +100,7 @@ const ClassifiedHomePageComponent = () => {
     const [errorMessgae, seterrorMessgae] = useState(false)
     const history = useHistory()
     const [userDetailsFirebase, setuserDetailsFirebase] = useState("")
-    const [urlForImage, seturlForImage] = useState(undefined)
     const [paymentOptions, setpaymentOptions] = useState([])
-    const [disableSUbmitButton, setDisableSUbmitButton] = useState(true)
     const [popUpText, setpopUpText] = useState("")
     const [stateAfterSubmit, setstateAfterSubmit] = useState(true)
     // console.log("use", productFromFirebase[0]?.data?.date.tol);
@@ -145,24 +139,21 @@ const ClassifiedHomePageComponent = () => {
         console.log(e.target.files[0]);
         if (e.target.files[0]) {
             console.log("image is,", e.target.files[0]);
-            setproductImage(e.target.files[0])
-
+            // setproductImage(e.target.files[0])
             // resize
-            // try {
-            //     const file = e.target.files[0];
-            //     const image = await resizeFile(file);
-            //     console.log("imag from resizer", image);
-            //     setproductImage(image)
-            // } catch (err) {
-            //     console.log(err);
-            // }
-
+            try {
+                const file = e.target.files[0];
+                const image = await resizeFile(file);
+                console.log("imag from resizer", image);
+                setproductImage(image)
+            } catch (err) {
+                console.log("Error in resizing image, ", err);
+            }
         }
     }
 
     const sendImageToFirebase = (e) => {
         setstateAfterSubmit(!stateAfterSubmit)
-
         if (nameofProduct && producttype && productCondition && productPrice && productImage) {
             console.log("Trying to send image to firebase");
             var storageRef = firebase.storage().ref();
@@ -179,7 +170,6 @@ const ClassifiedHomePageComponent = () => {
                     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                     const downloadurl = await uploadTask.snapshot.ref.getDownloadURL()
                     console.log("rlrurl", downloadurl);
-
                     if (nameofProduct && producttype && productCondition && productPrice) {
                         // send details from form
                         const idGeneratedforProduct = userDetailsFirebase.uid + uuidv4()
@@ -212,7 +202,7 @@ const ClassifiedHomePageComponent = () => {
                             setproductImage(undefined)
                             setproductPrice(undefined)
                             setproductDescription(undefined)
-                            setpaymentOptions(undefined)
+                            setpaymentOptions([])
                         }).catch(error => console.log("Error while sendig items to Firebase"))
                     } else {
                         seterrorMessgae(true)
@@ -241,7 +231,6 @@ const ClassifiedHomePageComponent = () => {
                     }, { merge: true }).catch(error => console.log("error in updating insideLike in -else statement- toFirebase Funciton, ", error))
                 }
             }).catch(error => console.log("error in addLiketoFirebase Function, ", error))
-
         }
         else {
             console.log("User not found while trying to send Like");
@@ -251,7 +240,6 @@ const ClassifiedHomePageComponent = () => {
         }
 
     }
-
 
     // setup from Material-UI for Grid container and card
     const classes = useStyles();
@@ -391,8 +379,8 @@ const ClassifiedHomePageComponent = () => {
                             />
                             <form style={{ color: "rgb(112 103 103 / 87%)" }}>
                                 <label id="fname" style={{ color: "rgb(112 103 103 / 87%)" }}>Product Image</label><br></br>
-                                <input type="file" style={{ color: "rgb(112 103 103 / 87%)" }} accept="image/png"
-                                    onChange={imagehandleChange} ></input>
+                                <input type="file" style={{ color: "rgb(112 103 103 / 87%)" }} accept="image/*"
+                                    onChange={e => imagehandleChange(e)} ></input>
                                 {/* <button type="submit" onClick={sendImageToFirebase}>send image</button> */}
                             </form>
 
