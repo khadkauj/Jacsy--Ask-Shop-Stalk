@@ -28,6 +28,7 @@ import { db } from "../../Firebase/Firebase"
 import { v4 as uuidv4 } from 'uuid';
 import firebase from "firebase"
 import SnackBarComponent from "../SnackBar/SnackBarComponent"
+import { Link } from "react-router-dom"
 import "./AskMeAQuestionComponent.css"
 const messages = [
     {
@@ -140,15 +141,18 @@ const AskMeAQuestionComponent = () => {
                     <List className={classes.list}>
                         {questionAnswerFromFB.map(query => (
                             <React.Fragment key={query.id} >
-                                <ListItem button>
-                                    <ListItemAvatar>
-                                        <Avatar alt="Profile Picture" src={""} />
-                                    </ListItemAvatar>
-                                    {!query.data?.answered && < ListItemText primary={query.data?.question} secondary={"No answer available at the moment."} />}
-                                    {query.data?.answered && < ListItemText primary={query.data?.question} secondary={"Click to view replies."} />}
-                                    {/* {query.data?.answered && query.data?.answered[0] <= 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answered[0]} />} */}
-                                    {/* {query.data?.answer?. > 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answer?.slice(0, 80)} /> + "..."} */}
-                                </ListItem>
+                                <Link to={"/Answers/" + query.id} className="link__newsDecoration">
+                                    <ListItem button>
+                                        <ListItemAvatar>
+                                            <Avatar alt="Profile Picture" src={""} />
+                                        </ListItemAvatar>
+                                        {!query.data?.answered && < ListItemText primary={query.data?.question} secondary={"No answer available at the moment."} />}
+                                        {query.data?.answered && < ListItemText primary={query.data?.question} secondary={"Click to view replies."} />}
+                                        {/* {query.data?.answered && query.data?.answered[0] <= 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answered[0]} />} */}
+                                        {/* {query.data?.answer?. > 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answer?.slice(0, 80)} /> + "..."} */}
+                                    </ListItem>
+                                </Link>
+
                             </React.Fragment>
                         ))}
                     </List>

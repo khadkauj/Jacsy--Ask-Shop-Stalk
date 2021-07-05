@@ -52,50 +52,57 @@ const ClassifiedProductView = () => {
                         <SplitButton emailOfProductOwner={productDataFromFirebase?.userEmail}
                             idOfProduct={productDataFromFirebase?.id} soldOrNot={productDataFromFirebase?.markedAsSold} />
                     </div>
-                    <div className="div__main__grid__productview  " id="testinLocalCSSusingId__inProductview"  >
-                        <div className="productViewMain" >
+                    {/* id="testinLocalCSSusingId__inProductview" */}
+                    <div className="div__main__grid__productview  " >
+                        <div className="productViewMain" id="testinLocalCSSusingId__inProductview">
                             <Grid container spacing={1}>
-                                <Grid item xs={12} sm={12} md={6} lg={6} >
+                                <Grid item xs={12} sm={12} md={6} lg={6} className="GiveWidth" >
                                     {productDataFromFirebase.imageURL && <><CardMedia
-                                        className="image__product"
+                                        className="image__product GiveWidth"
                                         image={productDataFromFirebase.imageURL ? productDataFromFirebase.imageURL : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
                                         title="Paella dish"
                                     />{productDataFromFirebase?.markedAsSold && <p className="alreadySold">Already Sold.</p>}</>}
+                                    <div>
+                                        {/* four image grids */}
+                                    </div>
                                 </Grid>
-                                <div className="secondDivInGrid">
-                                    <div className="tophead">
-                                        <div>
-                                            <h2 className="productViewDetailsFont">{productDataFromFirebase?.name}</h2>
-                                            <span className="prodPricedet" >{"€" + productDataFromFirebase?.price}</span>
-                                        </div>
-                                        <div className="avatarContainer leftAuto">
-                                            <Avatar aria-label="recipe">
-                                                {productDataFromFirebase?.userEmail?.slice(0, 1).toUpperCase()}
-                                            </Avatar>
-                                            <div className="avatarContainer__div">
-                                                <h4 style={{ color: "#06201b" }}>owner</h4>
-                                                <h4><b style={{ color: "#004180" }}>{productDataFromFirebase?.userEmail}</b><sub>{productDataFromFirebase?.userEmailVerified}</sub></h4>
+                                <Grid item xs={12} sm={12} md={6} lg={6}>
+                                    <div className="secondDivInGrid GiveWidth alignCenterForSecondGridwhihhchisInforGrid">
+                                        <div className="tophead">
+                                            <div>
+                                                <h2 className="productViewDetailsFont">{productDataFromFirebase?.name}</h2>
+                                                <span className="prodPricedet" >{"€" + productDataFromFirebase?.price}</span>
+                                            </div>
+                                            <div className="avatarContainer leftAuto">
+                                                <Avatar aria-label="recipe">
+                                                    {productDataFromFirebase?.userEmail?.slice(0, 1).toUpperCase()}
+                                                </Avatar>
+                                                <div className="avatarContainer__div">
+                                                    <h4 style={{ color: "#06201b" }}>owner</h4>
+                                                    <h4><b style={{ color: "#004180" }}>{productDataFromFirebase?.userEmail}</b><sub>{productDataFromFirebase?.userEmailVerified}</sub></h4>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div className="productDetails">
-                                        <h2 className="productViewDetailsh2">Product Details:</h2>
-                                        <div className="productViewDetails">
-                                            {productDataFromFirebase?.category && <h4> Category: {productDataFromFirebase?.category} </h4>}
-                                            {productDataFromFirebase?.productDetails && <h4> Condition: {productDataFromFirebase?.productDetails} </h4>}
-                                            {productDataFromFirebase?.category && <h4> Product: {productDataFromFirebase?.category} </h4>}
+                                        <div className="productDetails">
+                                            <h2 className="productViewDetailsh2">Product Details:</h2>
+                                            <div className="productViewDetails">
+                                                {productDataFromFirebase?.category && <h4> Category: {productDataFromFirebase?.category} </h4>}
+                                                {productDataFromFirebase?.productDetails && <h4> Condition: {productDataFromFirebase?.productDetails} </h4>}
+                                                {productDataFromFirebase?.category && <h4> Product: {productDataFromFirebase?.category} </h4>}
+                                            </div>
+                                        </div>
+                                        <div className="Payment" >
+                                            {productDataFromFirebase?.paymentOptions?.map((option, i) => (
+                                                <button key={i} >{option}</button>
+                                            ))}
+                                        </div>
+                                        <div>
+                                            <h3 className="endtext">{productDataFromFirebase?.productDescription}</h3>
                                         </div>
                                     </div>
-                                    <div className="Payment" >
-                                        {productDataFromFirebase?.paymentOptions?.map((option, i) => (
-                                            <button key={i} >{option}</button>
-                                        ))}
-                                    </div>
-                                    <div>
-                                        <h3 className="endtext">{productDataFromFirebase?.productDescription}</h3>
-                                    </div>
-                                </div>
+                                </Grid>
+
                             </Grid>
 
                         </div>

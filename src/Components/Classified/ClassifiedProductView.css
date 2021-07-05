@@ -15,10 +15,6 @@
   padding: 24px; */
 }
 
-.secondDivInGrid {
-  padding: 0px 24px;
-  width: 40%;
-}
 .avatarContainer {
   display: flex;
 }
@@ -93,9 +89,19 @@
   width: 345px;
 }
 
-#testinLocalCSSusingId__inProductview .MuiGrid-root > * {
+/* #testinLocalCSSusingId__inProductview .MuiGrid-root > * {
   min-width: 345px;
   min-height: 402.062px;
+} */
+
+.GiveWidth {
+  /* min-width: 345px; */
+  min-height: 402.062px;
+}
+.alignCenterForSecondGridwhihhchisInforGrid {
+  margin-left: auto;
+  margin-right: auto;
+  margin: 0px 24px 0px 24px;
 }
 
 #testinLocalCSSusingId__inProductview .MuiButton-outlinedPrimary {
@@ -123,25 +129,6 @@
   top: 55px !important;
   box-shadow: none !important;
   background-color: transparent;
-}
-
-/* media queries always at the end */
-@media only screen and (min-width: 600px) {
-  .image__product {
-    min-width: 100%;
-  }
-}
-
-@media only screen and (min-width: 960px) {
-  /* .image__product {
-    min-width: 100%;
-  } */
-}
-
-@media only screen and (min-width: 1250px) {
-  .image__product {
-    min-width: 100%;
-  }
 }
 
 .last {
@@ -179,4 +166,29 @@
   margin-right: auto;
   color: #06201b;
   border: 1px solid papayawhip;
+}
+
+/* media queries always at the end */
+@media only screen and (max-width: 600px) {
+  .GiveWidth {
+    min-height: 300px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .GiveWidth {
+    /* min-width: 345px; */
+    min-height: 402.062px;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 960px) {
+  .GiveWidth {
+    min-height: 402.062px;
+  }
+  .alignCenterForSecondGridwhihhchisInforGrid {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

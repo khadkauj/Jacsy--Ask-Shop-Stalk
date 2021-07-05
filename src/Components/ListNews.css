@@ -39,5 +39,6 @@
 }
 
 .link__newsDecoration {
-  text-decoration: none;
+  text-decoration: inherit;
+  color: inherit;
 }
