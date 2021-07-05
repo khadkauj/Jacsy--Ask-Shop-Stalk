@@ -109,7 +109,7 @@ const AskMeAQuestionComponent = () => {
     const [user, setUser] = useState(undefined)
     // fetching questions and answers
     useEffect(() => {
-        db.collection("questions").get().then(snapshot => {
+        db.collection("questions").orderBy("date", "desc").get().then(snapshot => {
             // console.log("ques snap, ", snapshot.docs);
             setquestionAnswerFromFB(snapshot.docs.map(doc => ({
                 id: doc.id,
@@ -144,10 +144,10 @@ const AskMeAQuestionComponent = () => {
                                     <ListItemAvatar>
                                         <Avatar alt="Profile Picture" src={""} />
                                     </ListItemAvatar>
-                                    {!query.data?.answer?.length && < ListItemText primary={query.data?.question} secondary={"No answer available at the moment."} />}
-                                    {query.data?.answer?.length && query.data?.answer[0].length > 80 && < ListItemText primary={query.data?.question} secondary={query.data?.answer[0].slice(0, 75) + "..."} />}
-                                    {query.data?.answer?.length && query.data?.answer[0].length <= 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answer[0]} />}
-                                    {/* {query.data?.answer?.length > 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answer?.slice(0, 80)} /> + "..."} */}
+                                    {!query.data?.answered && < ListItemText primary={query.data?.question} secondary={"No answer available at the moment."} />}
+                                    {query.data?.answered && < ListItemText primary={query.data?.question} secondary={"Click to view replies."} />}
+                                    {/* {query.data?.answered && query.data?.answered[0] <= 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answered[0]} />} */}
+                                    {/* {query.data?.answer?. > 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answer?.slice(0, 80)} /> + "..."} */}
                                 </ListItem>
                             </React.Fragment>
                         ))}

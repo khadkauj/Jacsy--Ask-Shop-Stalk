@@ -19,6 +19,8 @@ import firebase from "firebase";
 import { useParams } from "react-router-dom";
 import SnackBarComponent from "../SnackBar/SnackBarComponent";
 import { Link } from "react-router-dom";
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import "./AnswerComponent.css";
 
@@ -31,6 +33,7 @@ const AnswerComponent = () => {
     const [stateAfterVote, setstateAfterVote] = useState(false);
     const [openSnackbarProps, setopenSnackbarProps] = useState(false);
     const [seeMoreState, setSeeMoreState] = useState(false); //too see all answer when clicke on see more
+    const [checkedBox, setCheckedBox] = React.useState(true); //checkbox
     const { id } = useParams();
     useEffect(() => {
         firebase.analytics().logEvent("User is in Answer Component")
@@ -86,6 +89,7 @@ const AnswerComponent = () => {
     const sendAnswerToFirebase = () => {
         if (user) {
             const idInnerCollection = uuidv4();
+            // updating answers
             db.collection("questions")
                 .doc(id)
                 .collection("answersList")
@@ -98,6 +102,8 @@ const AnswerComponent = () => {
                     replies: ["No replies"],
                     peopleWhoDownVoted: ["none"],
                     peopleWhoUpVoted: ["None"],
+                    emailUsedToAnswerSavedForSecurityPurpose: user?.email,
+                    answeredBy: checkedBox ? "" : user?.email
                 })
                 .then((data) => {
                     console.log("Answer sent to firebase");
@@ -107,6 +113,18 @@ const AnswerComponent = () => {
                 })
                 .catch((error) =>
                     console.log("Error  while sending answer to firebase")
+                );
+            // updating answered field for the answer
+            db.collection("questions")
+                .doc(id)
+                .update({
+                    answered: true,
+                })
+                .then((data) => {
+                    console.log("Answered filed updated");
+                })
+                .catch((error) =>
+                    console.log("Error while Answered filed updated")
                 );
         } else {
             console.log("PLease log in");
@@ -168,7 +186,7 @@ const AnswerComponent = () => {
                                 .then((resp) => console.log("success in vote fucntion2"))
                                 .catch((error) => console.log("error in vote function"));
                         }
-                        setstateAfterVote(!stateAfterVote);
+
                     } else if (hasUserUpVoted && !hasUserDownVoted) {
                         if (voteCount === 1) {
                             console.log("You cant vote twice.");
@@ -208,7 +226,7 @@ const AnswerComponent = () => {
                                     .catch((error) => console.log("error in vote function"));
                             }
                         }
-                        setstateAfterVote(!stateAfterVote);
+
                     } else if (!hasUserUpVoted && hasUserDownVoted) {
                         if (voteCount === -1) {
                             console.log("You can't downvote twice");
@@ -245,10 +263,12 @@ const AnswerComponent = () => {
                                     .catch((error) => console.log("error in vote function"));
                             }
                         }
-                        setstateAfterVote(!stateAfterVote);
+
                     }
 
 
+                }).then(changingState => {
+                    setstateAfterVote(!stateAfterVote);
                 })
                 .catch((error) => console.log("Error in getting vote count."));
         } else {
@@ -295,8 +315,8 @@ const AnswerComponent = () => {
                                         </ListItemAvatar>
                                         <div className="avatarAndids__innner">
                                             <strong>
-                                                {docData?.data?.email
-                                                    ? docData?.data?.email
+                                                {docData?.data?.answeredBy
+                                                    ? docData?.data?.answeredBy
                                                     : "Anonymous"}
                                             </strong>
                                             <span>
@@ -372,7 +392,7 @@ const AnswerComponent = () => {
                                                 )}
                                             </IconButton>
                                         </div>
-                                        <Button size="small" color="secondary">
+                                        <Button size="small" color="secondary" disabled={true} >
                                             Reply.
                                         </Button>
                                     </div>
@@ -409,6 +429,10 @@ const AnswerComponent = () => {
                             fullWidth
                             value={answer}
                             onChange={(e) => setanswer(e.target.value)}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox checked={checkedBox} onChange={e => setCheckedBox(!checkedBox)} name="checkedA" />}
+                            label="Anonymous"
                         />
                     </DialogContent>
                     <DialogActions>
