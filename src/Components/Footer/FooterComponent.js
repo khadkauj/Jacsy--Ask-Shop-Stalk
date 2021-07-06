@@ -11,9 +11,9 @@ const FooterComponent = () => {
             <a href="https://www.instagram.com/infintyuj/" className="link__newsDecoration" >
                 <div className="footer__icon12" >
                     <p className="footer__left">Infintyuj</p>
-                    <IconButton >
-                        <InstagramIcon color="error" />
-                    </IconButton>
+                    {/* <IconButton > */}
+                    <InstagramIcon color="error" />
+                    {/* </IconButton> */}
                 </div>
             </a>
             <p className="footer_end">The world is Infinite.</p>
