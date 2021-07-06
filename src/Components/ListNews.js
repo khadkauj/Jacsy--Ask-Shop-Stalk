@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -10,9 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import { db } from "../Firebase/Firebase"
 import Skeleton from '@material-ui/lab/Skeleton';
 import { Link } from "react-router-dom"
-import "./ListNews.css"
 import { Grid } from '@material-ui/core';
+import { HomePageComponentsToSync } from "./ContextComponent"
 
+import "./ListNews.css"
 const useStyles = makeStyles({
     root: {
         maxWidth: 300,
@@ -25,7 +26,8 @@ const useStyles = makeStyles({
 const ListNews = () => {
     const classes = useStyles();
     const [questionAndAnswerFromFB, setquestionAndAnswerFromFB] = useState(undefined)
-
+    // usecontect-stuffs for sync
+    const { stateForHomePageTwoNestedCompToSync, setStateForHomePageTwoNestedCompToSync } = useContext(HomePageComponentsToSync)
     // fetching questions and answers
     useEffect(() => {
         db.collection("questions").orderBy("date", "desc").get().then(snapshot => {
@@ -39,7 +41,7 @@ const ListNews = () => {
 
         return () => {
         }
-    }, [])
+    }, [stateForHomePageTwoNestedCompToSync])
 
     return (
         <div >

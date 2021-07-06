@@ -42,8 +42,8 @@ const resizeFile = (file) =>
     new Promise((resolve) => {
         Resizer.imageFileResizer(
             file,
-            300,
-            400,
+            480,
+            320,
             "JPEG",
             80,
             0,
@@ -388,7 +388,7 @@ const ClassifiedHomePageComponent = () => {
                                 onChange={e => setproductDescription(e.target.value)}
                             />
                             <form style={{ color: "rgb(112 103 103 / 87%)" }}>
-                                <label id="fname" style={{ color: "rgb(112 103 103 / 87%)" }}>Product Image</label><br></br>
+                                <label id="fname" style={{ color: "rgb(112 103 103 / 87%)" }}>Product Image(up to 4 images)</label><br></br>
                                 <input type="file" style={{ color: "rgb(112 103 103 / 87%)" }} accept="image/*" multiple
                                     onChange={e => imagehandleChange(e)} ></input>
                                 {/* <button type="submit" onClick={sendImageToFirebase}>send image</button> */}
@@ -453,13 +453,21 @@ const ClassifiedHomePageComponent = () => {
                                         >
                                             {item?.data.name ? item?.data.name : "NA"}
                                         </Typography>
-                                        <Typography
-                                            variant="body2"
-                                            color="error"
-                                            component="p"
-                                        >
-                                            {item?.data.productDetails ? item?.data?.productDetails + " €" + item?.data?.price : "NA"}
-                                        </Typography>
+                                        <div className="already__sold">
+                                            <Typography
+                                                variant="body2"
+                                                color="error"
+                                                component="p"
+                                            >
+                                                {item?.data.productDetails ? item?.data?.productDetails + " €" + item?.data?.price : "NA"}
+
+                                            </Typography>
+                                            <span
+                                            >
+                                                {item?.data?.markedAsSold && <p>Already Sold😪</p>}
+                                            </span>
+                                        </div>
+
                                         <Typography
                                             variant="body2"
                                             color="textSecondary"

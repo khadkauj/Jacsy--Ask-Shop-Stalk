@@ -93,3 +93,13 @@
     /* min-width: auto; */
   }
 }
+
+.already__sold {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.already__sold > span {
+  color: #f44336;
+  font-weight: bold;
+}

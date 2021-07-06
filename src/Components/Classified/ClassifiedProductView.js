@@ -91,16 +91,24 @@ const ClassifiedProductView = () => {
                                                 {productDataFromFirebase?.category && <h4> Category: {productDataFromFirebase?.category} </h4>}
                                                 {productDataFromFirebase?.productDetails && <h4> Condition: {productDataFromFirebase?.productDetails} </h4>}
                                                 {productDataFromFirebase?.category && <h4> Product: {productDataFromFirebase?.category} </h4>}
+                                                <div className="pay__div" >
+                                                    <h4>Payment by🤑:&nbsp;&nbsp; </h4>
+                                                    <div className="Payment">
+                                                        {productDataFromFirebase?.paymentOptions?.map((option, i) => (
+                                                            <button key={i} >{option}</button>
+                                                        ))}
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="Payment" >
-                                            {productDataFromFirebase?.paymentOptions?.map((option, i) => (
-                                                <button key={i} >{option}</button>
-                                            ))}
-                                        </div>
-                                        <div>
-                                            <h3 className="endtext">{productDataFromFirebase?.productDescription}</h3>
-                                        </div>
+
+                                        <br></br>
+                                        {productDataFromFirebase?.productDescription ? <div>
+                                            <p className="endtext">Description: </p>
+                                            <h3 className="endtext" style={{ marginLeft: "2rem" }} >{productDataFromFirebase?.productDescription}</h3>
+                                        </div> : <p className="endtext">No description Available 😿.</p>}
+                                        <br></br> <br></br>
                                     </div>
                                 </Grid>
 

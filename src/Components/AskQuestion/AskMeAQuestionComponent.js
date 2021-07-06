@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -30,6 +30,7 @@ import firebase from "firebase"
 import SnackBarComponent from "../SnackBar/SnackBarComponent"
 import { Link } from "react-router-dom"
 import "./AskMeAQuestionComponent.css"
+import { HomePageComponentsToSync } from '../ContextComponent';
 const messages = [
     {
         id: 1,
@@ -52,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 const AskMeAQuestionComponent = () => {
     const classes = useStyles();
+    // use-context stuffs
+    const { stateForHomePageTwoNestedCompToSync, setStateForHomePageTwoNestedCompToSync } = useContext(HomePageComponentsToSync)
+    console.log("context is, ", stateForHomePageTwoNestedCompToSync);
 
     const [question, setquestion] = useState(undefined)
     // extra state to not allow double clicking of submit
@@ -67,12 +71,10 @@ const AskMeAQuestionComponent = () => {
 
     // all setup for Form Dialog Box
     const [open, setOpen] = React.useState(false);
-
     const handleClickOpen = () => {
         setquestion(undefined)
         setOpen(true);
     };
-
     const handleClose = () => {
         setOpen(false);
         setquestion(undefined)
@@ -92,6 +94,7 @@ const AskMeAQuestionComponent = () => {
                 id: uuidv4(),
             }).then(doc => {
                 console.log("snap while sending question to FB", doc)
+                setStateForHomePageTwoNestedCompToSync(!stateForHomePageTwoNestedCompToSync)
                 setOpen(false)
             })
                 .catch(error => {
@@ -108,7 +111,7 @@ const AskMeAQuestionComponent = () => {
     }
 
     const [user, setUser] = useState(undefined)
-    // fetching questions and answers
+    // fetching questions and answers + checking user state
     useEffect(() => {
         db.collection("questions").orderBy("date", "desc").get().then(snapshot => {
             // console.log("ques snap, ", snapshot.docs);
@@ -129,8 +132,10 @@ const AskMeAQuestionComponent = () => {
 
         return () => {
         }
-    }, [stateAfterQuestionSubmit])
-    console.log("useeffect:", questionAnswerFromFB);
+    }, [stateForHomePageTwoNestedCompToSync])
+
+
+
     return (
         <div id="main__appbar">
             <div className="appBAr">

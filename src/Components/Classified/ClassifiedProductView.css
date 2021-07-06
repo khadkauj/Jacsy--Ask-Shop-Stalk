@@ -51,16 +51,22 @@
 .Payment {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  /* justify-content: center; */
+  align-items: center;
 }
 .Payment > * {
   background-color: #fff6ff;
   outline: none;
   border: 1px solid #f6d2f6;
-  margin: 10px;
+  /* margin: 10px; */
   border-radius: 10px;
   font-size: 14px;
   color: #e12165;
+}
+
+.pay__div {
+  display: flex;
+  align-items: baseline;
 }
 
 .endtext {
