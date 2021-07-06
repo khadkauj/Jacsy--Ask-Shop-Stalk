@@ -14,6 +14,8 @@ import { db } from '../../Firebase/Firebase';
 import { useHistory } from 'react-router-dom';
 import { userContext } from '../ContextComponent';
 
+import { editProductDetails } from "./ClassifiedProductView"
+
 export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNot }) {
 
     const { statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold } = useContext(userContext)
@@ -66,6 +68,8 @@ export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNo
             }).catch(error => {
                 console.log("Error in marking field as Updated", error);
             })
+        } else if (index === 1) {
+            editProductDetails("horaa")
         }
     };
     const handleToggle = () => {

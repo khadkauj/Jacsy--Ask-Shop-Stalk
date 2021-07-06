@@ -13,6 +13,12 @@ import SplitButton from "./MarkSoldDeleteEditOptionsComponent"
 import { userContext } from "../ContextComponent"
 
 import './ClassifiedProductView.css';
+
+// testing with extra Functions
+export const editProductDetails = (text) => {
+    console.log("haha- hora ayo?? , ", text);
+}
+
 const ClassifiedProductView = () => {
     const { id } = useParams();
     const [productDataFromFirebase, setproductDataFromFirebase] = useState([])
@@ -70,19 +76,22 @@ const ClassifiedProductView = () => {
                                 <Grid item xs={12} sm={12} md={6} lg={6}>
                                     <div className="secondDivInGrid GiveWidth alignCenterForSecondGridwhihhchisInforGrid">
                                         <div className="tophead">
-                                            <div>
-                                                <h2 className="productViewDetailsFont">{productDataFromFirebase?.name}</h2>
-                                                <span className="prodPricedet" >{"€" + productDataFromFirebase?.price}</span>
-                                            </div>
-                                            <div className="avatarContainer leftAuto">
-                                                <Avatar aria-label="recipe">
-                                                    {productDataFromFirebase?.userEmail?.slice(0, 1).toUpperCase()}
-                                                </Avatar>
-                                                <div className="avatarContainer__div">
-                                                    <h4 style={{ color: "#06201b" }}>owner</h4>
-                                                    <h4><b style={{ color: "#004180" }}>{productDataFromFirebase?.userEmail}</b><sub>{productDataFromFirebase?.userEmailVerified}</sub></h4>
-                                                </div>
-                                            </div>
+                                            <Grid container id="name__avatar__div" >
+                                                <Grid item sm={4} md={4} lg={4} >
+                                                    <h2 className="productViewDetailsFont">{productDataFromFirebase?.name}</h2>
+                                                    <span className="prodPricedet" >{"€" + productDataFromFirebase?.price}</span>
+                                                </Grid>
+                                                <Grid item sm={8} md={8} lg={8} className="avatarContainer leftAuto">
+                                                    <Avatar aria-label="recipe">
+                                                        {productDataFromFirebase?.userEmail?.slice(0, 1).toUpperCase()}
+                                                    </Avatar>
+                                                    <div className="avatarContainer__div">
+                                                        <h4 style={{ color: "#06201b" }}>owner</h4>
+                                                        <h4><b style={{ color: "#004180" }}>{productDataFromFirebase?.userEmail}</b><sub>{productDataFromFirebase?.userEmailVerified}</sub></h4>
+                                                    </div>
+                                                </Grid>
+                                            </Grid>
+
                                         </div>
 
                                         <div className="productDetails">
