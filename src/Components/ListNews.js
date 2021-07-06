@@ -53,10 +53,10 @@ const ListNews = () => {
                                 <Card className={classes.root} id="minWidth__card">
                                     <CardActionArea>
                                         {/* <CardMedia
-                                    className={classes.media}
-                                    image="https://data.whicdn.com/images/167909674/original.jpg"
-                                    title="Contemplative Reptile"
-                                /> */}
+                    className={classes.media}
+                    image="https://data.whicdn.com/images/167909674/original.jpg"
+                    title="Contemplative Reptile"
+                /> */}
                                         <CardContent className="cardContent">
                                             <p >
                                                 {item?.data?.question.length < 65 ? item?.data?.question : item?.data?.question.slice(0, 60) + "...?"}
@@ -65,10 +65,10 @@ const ListNews = () => {
                                     </CardActionArea>
                                     <CardActions>
                                         {/* <Button size="small" color="primary">
-                                Share
-                            </Button> */}
+                Share
+            </Button> */}
                                         <Button size="small" color="primary">
-                                            Reply.
+                                            Answer.
                                         </Button>
                                     </CardActions>
                                 </Card>

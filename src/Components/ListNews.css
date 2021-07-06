@@ -43,6 +43,21 @@
   color: inherit;
 }
 
-#minWidth__card .makeStyles-root-2 {
-  min-width: 120px;
+#newsList__main
+  .MuiPaper-root
+  .MuiCard-root
+  .makeStyles-root-2
+  .MuiPaper-elevation1
+  .MuiPaper-rounded {
+  min-width: 120px !important;
+}
+
+#newsList__main
+  .MuiGrid-root
+  .MuiGrid-item
+  .MuiGrid-grid-xs-6
+  .MuiGrid-grid-sm-4
+  .MuiGrid-grid-md-4
+  .MuiGrid-grid-lg-3 {
+  min-width: 120px !important;
 }

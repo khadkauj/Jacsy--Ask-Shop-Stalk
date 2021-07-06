@@ -82,9 +82,9 @@ const AskMeAQuestionComponent = () => {
     // send question to firebase
     const [useSnackBarState, setUseSnackBarState] = useState(false)
     const sendQuestionToFirebase = () => {
+        setstateAfterQuestionSubmit(true)
         if (user) {
             setnoDoubleSUbmitCLick(!noDoubleSUbmitCLick)
-            setstateAfterQuestionSubmit(true)
             db.collection("questions").add({
                 question: question,
                 date: new Date(),
@@ -162,8 +162,8 @@ const AskMeAQuestionComponent = () => {
                                         <ListItemAvatar>
                                             <Avatar alt="Profile Picture" src={""} />
                                         </ListItemAvatar>
-                                        {!query.data?.answered && < ListItemText primary={query.data?.question.length < 65 ? query.data?.question : query.data?.question.slice(0, 60) + "...?"} secondary={"No answer available at the moment."} />}
-                                        {query.data?.answered && < ListItemText primary={query.data?.question.length < 65 ? query.data?.question : query.data?.question.slice(0, 60) + "...?"} secondary={"Click to view replies."} />}
+                                        {!query.data?.answered && < ListItemText primary={query.data?.question.length < 120 ? query.data?.question : query.data?.question.slice(0, 112) + "...?"} secondary={"No answer available at the moment."} />}
+                                        {query.data?.answered && < ListItemText primary={query.data?.question.length < 120 ? query.data?.question : query.data?.question.slice(0, 112) + "...?"} secondary={"Click to view replies."} />}
                                         {/* {query.data?.answered && query.data?.answered[0] <= 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answered[0]} />} */}
                                         {/* {query.data?.answer?. > 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answer?.slice(0, 80)} /> + "..."} */}
                                     </ListItem>
@@ -195,12 +195,12 @@ const AskMeAQuestionComponent = () => {
                             autoFocus
                             margin="dense"
                             id="name"
-                            label="Question?"
+                            label="Question?(min 20 words and max 200 words)"
                             type="text"
                             fullWidth
                             value={question}
                             onChange={e => handlesetErrorForMaxCharInput(e)}
-                            inputProps={{ maxLength: 200 }}
+                            inputProps={{ maxLength: 200, minLength: 100, required: true, placeholder: "Put your question here." }}
                         />
                     </DialogContent>
                     {/* {ErrorForMaxCharInput && <p>No more than 200 chars allowed</p>} */}
@@ -208,9 +208,9 @@ const AskMeAQuestionComponent = () => {
                         <Button onClick={e => handleClose()} color="primary">
                             Cancel
                         </Button>
-                        {<Button onClick={e => sendQuestionToFirebase(e)} color="primary" disabled={!question}  >
+                        <Button onClick={e => sendQuestionToFirebase(e)} color="primary" disabled={stateAfterQuestionSubmit | question?.length < 20}  >
                             Submit
-                        </Button>}
+                        </Button>
                     </DialogActions>
                 </Dialog>
             </div>
