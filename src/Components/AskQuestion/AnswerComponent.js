@@ -27,14 +27,17 @@ import "./AnswerComponent.css";
 const AnswerComponent = () => {
     const [user, setUser] = useState(undefined);
     const [questionAnswerFromFB, setquestionAnswerFromFB] = useState(undefined);
-    const [answerListsOfQuestions, setanswerListsOfQuestions] =
-        useState(undefined);
+    const [answerListsOfQuestions, setanswerListsOfQuestions] = useState(undefined);
     const [stateAfterAnswerSubmit, setstateAfterAnswerSubmit] = useState(false);
+    const [stateAfterQuestionSubmit, setstateAfterQuestionSubmit] = useState(false)
+    const [stateAfterAnswerDelete, setStateAfterAnswerDelete] = useState(false)
     const [stateAfterVote, setstateAfterVote] = useState(false);
     const [openSnackbarProps, setopenSnackbarProps] = useState(false);
     const [seeMoreState, setSeeMoreState] = useState(false); //too see all answer when clicke on see more
     const [checkedBox, setCheckedBox] = React.useState(false); //checkbox
+    const [questionId, setquestionId] = useState("")
     const { id } = useParams();
+
     useEffect(() => {
         firebase.analytics().logEvent("User is in Answer Component")
         // the below  function to retreive questions
@@ -43,6 +46,8 @@ const AnswerComponent = () => {
             .get()
             .then((snapshot) => {
                 setquestionAnswerFromFB(snapshot.data());
+                setquestionId(snapshot.id)
+                setquestion(snapshot.data().question)
             })
             .catch((error) => console.log("error in fetching data from FB, ", error));
 
@@ -50,6 +55,7 @@ const AnswerComponent = () => {
         db.collection("questions")
             .doc(id)
             .collection("answersList")
+            .orderBy("date", "desc")
             .get()
             .then((snapshot) => {
                 setanswerListsOfQuestions(
@@ -61,7 +67,6 @@ const AnswerComponent = () => {
                 );
             })
             .catch((error) => console.log("error in fetching data from FB, ", error));
-
         // checking if user is logged in
         firebase.auth().onAuthStateChanged((userState) => {
             if (userState) {
@@ -71,7 +76,7 @@ const AnswerComponent = () => {
             }
         });
         return () => { };
-    }, [stateAfterAnswerSubmit, stateAfterVote]);
+    }, [stateAfterAnswerSubmit, stateAfterVote, stateAfterQuestionSubmit, stateAfterAnswerDelete]);
 
     // all setup for Form Dialog Box
     const [open, setOpen] = React.useState(false);
@@ -281,6 +286,67 @@ const AnswerComponent = () => {
     };
     console.log("the user is, ", user);
 
+    // ******************
+    // Edit answer -- many componets here are borowwwed from AskMeAquestionComponent
+    // all setup for Form Dialog Box
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const handleEditAsnwer = () => {
+        if (user?.email === questionAnswerFromFB?.questionPostedby) {
+            setOpenDialog(true);
+        }
+    };
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+        setquestion("")
+    };
+    // send question to firebase
+    const [noDoubleSUbmitCLick, setnoDoubleSUbmitCLick] = useState(false)
+    const [useSnackBarState, setUseSnackBarState] = useState(false)
+    const [question, setquestion] = useState("")
+    const sendQuestionToFirebase = () => {
+        // setstateAfterQuestionSubmit(true)
+        if (user?.email === questionAnswerFromFB?.questionPostedby) {
+            setnoDoubleSUbmitCLick(!noDoubleSUbmitCLick)
+            db.collection("questions").doc(questionId).update({
+                question: question,
+                date: new Date(),
+            }).then(doc => {
+                console.log("snap while sending question to FB", doc)
+                // setStateForHomePageTwoNestedCompToSync(!stateForHomePageTwoNestedCompToSync)
+                setOpenDialog(false)
+                setquestion("")
+                setstateAfterQuestionSubmit(true)
+            })
+                .catch(error => {
+                    console.log("Error while sending question to FB", error)
+                    setOpen(false)
+                })
+        } else {
+            setUseSnackBarState(!useSnackBarState)
+            setTimeout(() => {
+                setUseSnackBarState(false)
+            }, 1000);
+        }
+    }
+
+    // delete answer
+    const deleteAnswer = (idToDel, emailofAnswer) => {
+        if (user?.email === emailofAnswer) {
+            console.log("id to del", idToDel);
+            db.collection("questions")
+                .doc(id)
+                .collection("answersList")
+                .doc(idToDel)
+                .delete()
+                .then((snapshot) => {
+                    console.log("Delete your reply");
+                    setStateAfterAnswerDelete(!stateAfterAnswerDelete)
+                })
+                .catch((error) => console.log("Unable to delete reply ", error));
+        }
+
+    }
+
     return (
         <div className="answerComponetn__topMainDiv">
             <div className="dark_greyBox"></div>
@@ -290,10 +356,10 @@ const AnswerComponent = () => {
                         <Grid item xs={12} sm={12} md={4} lg={4}>
                             <h3>{questionAnswerFromFB?.question}</h3>
                             <div className="icons__QA">
-                                <IconButton aria-label="share" onClick={handleClickOpen}>
+                                <IconButton aria-label="share" onClick={e => handleClickOpen(e)}>
                                     <BorderColorIcon fontSize="large" />
                                 </IconButton>
-                                <IconButton aria-label="share">
+                                <IconButton aria-label="share" onClick={e => handleEditAsnwer(e)} >
                                     <MoreHorizIcon fontSize="large" />
                                 </IconButton>
                             </div>
@@ -392,9 +458,16 @@ const AnswerComponent = () => {
                                                 )}
                                             </IconButton>
                                         </div>
-                                        <Button size="small" color="secondary" disabled={true} >
-                                            Reply.
-                                        </Button>
+                                        <div>
+                                            {user?.email === docData.data.emailUsedToAnswerSavedForSecurityPurpose &&
+                                                <Button size="small" color="secondary" onClick={e => deleteAnswer(docData?.data?.id, docData?.data?.answeredBy)}  >
+                                                    Delete.
+                                                </Button>
+                                            }
+                                            <Button size="small" color="secondary" disabled={true} >
+                                                Reply.
+                                            </Button>
+                                        </div>
                                     </div>
                                     <div className="dark_greyBox"></div>
                                 </div>
@@ -453,6 +526,39 @@ const AnswerComponent = () => {
                 </Dialog>
             </div>
             <SnackBarComponent open={openSnackbarProps} />
+            {/* Form  Popup for a Question */}
+            <div>
+                <Dialog open={openDialog} onClose={e => handleCloseDialog()} aria-labelledby="form-dialog-title">
+                    {/* <DialogTitle id="form-dialog-title">Ask me a question and I will answer it in a thread below.</DialogTitle> */}
+                    <DialogContent>
+                        <DialogContentText>
+                            Ask me anything.
+                        </DialogContentText>
+                        <TextField
+                            multiline
+                            rows={7}
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Question?(20 to 200 words)"
+                            type="text"
+                            fullWidth
+                            value={question}
+                            onChange={e => setquestion(e.target.value)}
+                            inputProps={{ maxLength: 200, minLength: 100, required: true, placeholder: "Put your question here." }}
+                        />
+                    </DialogContent>
+                    {/* {ErrorForMaxCharInput && <p>No more than 200 chars allowed</p>} */}
+                    <DialogActions>
+                        <Button onClick={e => handleCloseDialog()} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={e => sendQuestionToFirebase(e)} color="primary" disabled={question?.length < 20 || user?.email !== questionAnswerFromFB?.questionPostedby}  >
+                            Submit
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
         </div>
     );
 };

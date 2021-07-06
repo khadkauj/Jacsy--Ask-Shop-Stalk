@@ -48,7 +48,7 @@ const ListNews = () => {
             {
                 questionAndAnswerFromFB ? <Grid container spacing={1} id="newsList__main" >
                     {questionAndAnswerFromFB.map(item => (
-                        <Grid item xs={6} sm={4} md={4} lg={3} key={Math.random()}   >
+                        item?.data.answered && <Grid item xs={6} sm={4} md={4} lg={3} key={Math.random()}   >
                             <Link to={"/Answers/" + item.id} className="link__newsDecoration" >
                                 <Card className={classes.root} id="minWidth__card">
                                     <CardActionArea>

@@ -90,6 +90,7 @@ const AskMeAQuestionComponent = () => {
                 date: new Date(),
                 answered: false,
                 id: uuidv4(),
+                questionPostedby: user.email
             }).then(doc => {
                 console.log("snap while sending question to FB", doc)
                 setStateForHomePageTwoNestedCompToSync(!stateForHomePageTwoNestedCompToSync)
