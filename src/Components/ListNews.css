@@ -38,11 +38,6 @@
   padding: 0px;
 }
 
-.link__newsDecoration {
-  text-decoration: inherit;
-  color: inherit;
-}
-
 #newsList__main
   .MuiPaper-root
   .MuiCard-root

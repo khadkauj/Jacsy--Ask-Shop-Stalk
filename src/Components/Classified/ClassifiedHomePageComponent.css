@@ -42,11 +42,6 @@
   outline: none !important;
 }
 
-.linkTextForCard {
-  text-decoration: none !important;
-  height: fit-content;
-}
-
 .like {
   padding: 0px 10px;
   margin-top: -14px;

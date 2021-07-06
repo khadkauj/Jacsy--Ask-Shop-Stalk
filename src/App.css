@@ -46,3 +46,12 @@
     opacity: 0;
   }
 }
+.linkTextForCard {
+  text-decoration: none !important;
+  height: fit-content;
+}
+
+.link__newsDecoration {
+  text-decoration: inherit;
+  color: inherit;
+}
