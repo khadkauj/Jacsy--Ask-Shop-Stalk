@@ -90,11 +90,11 @@ const useStyles = makeStyles((theme) => ({
 
 const ClassifiedHomePageComponent = () => {
     // initializations
-    const [productFromFirebase, setproductFromFirebase] = useState(undefined)
+    const [productFromFirebase, setproductFromFirebase] = useState("")
     const [nameofProduct, setnameofProduct] = useState("")
     const [producttype, setproducttype] = React.useState('');
     const [productCondition, setproductCondition] = useState("")
-    const [productImage, setproductImage] = useState(undefined)
+    const [productImage, setproductImage] = useState([])
     const [productPrice, setproductPrice] = useState("")
     const [productDescription, setproductDescription] = useState("")
     const [errorMessgae, seterrorMessgae] = useState(false)
@@ -136,79 +136,89 @@ const ClassifiedHomePageComponent = () => {
 
     // Image change handel
     const imagehandleChange = async (e) => {
-        console.log(e.target.files[0]);
-        if (e.target.files[0]) {
-            console.log("image is,", e.target.files[0]);
-            // setproductImage(e.target.files[0])
-            // resize
-            try {
-                const file = e.target.files[0];
-                const image = await resizeFile(file);
-                console.log("imag from resizer", image);
-                setproductImage(image)
-            } catch (err) {
-                console.log("Error in resizing image, ", err);
+        console.log(e.target.files.length);
+        // if (e.target.files[0]) {
+
+
+        if (e.target.files) {
+            // const files = []
+            for (let index = 0; index < e.target.files.length && index < 4; index++) {
+                console.log("image is,", e.target.files[0]);
+                // setproductImage(e.target.files[0])
+                // resize
+                try {
+                    const file = e.target.files[index];
+                    const image = await resizeFile(file);
+                    console.log("imag from resizer", image);
+                    setproductImage(img => [...img, image])
+                } catch (err) {
+                    console.log("Error in resizing image, ", err);
+                }
             }
-        }
+        }        // }
     }
 
-    const sendImageToFirebase = (e) => {
+
+    const uploadFileAndGetDownloadURL = async (ref, file) => {
+        const snap = await ref.put(file);
+        const downloadURL = await snap.ref.getDownloadURL();
+
+        return downloadURL;
+    };
+
+    const sendImageToFirebase = async (e) => {
         setstateAfterSubmit(!stateAfterSubmit)
         if (nameofProduct && producttype && productCondition && productPrice && productImage) {
             console.log("Trying to send image to firebase");
-            var storageRef = firebase.storage().ref();
-            var uploadTask = storageRef.child(`${userDetailsFirebase.uid}/` + Math.random()).put(productImage)
-            uploadTask.on('state_changed',
-                (snapshot) => {
-                },
-                (error) => {
-                    // Handle unsuccessful uploads
-                    console.log("error");
-                },
-                async () => {
-                    // Handle successful uploads on complete
-                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                    const downloadurl = await uploadTask.snapshot.ref.getDownloadURL()
-                    console.log("rlrurl", downloadurl);
-                    if (nameofProduct && producttype && productCondition && productPrice) {
-                        // send details from form
-                        const idGeneratedforProduct = userDetailsFirebase.uid + uuidv4()
-                        db.collection("products").doc(idGeneratedforProduct).set(
-                            {
-                                id: idGeneratedforProduct,
-                                date: new Date(),
-                                name: nameofProduct,
-                                price: productPrice,
-                                category: producttype,
-                                productDetails: productCondition,
-                                productDescription: productDescription,
-                                imageURL: downloadurl,
-                                userEmail: userDetailsFirebase.email,
-                                userEmailVerified: userDetailsFirebase.emailVerified,
-                                userDisplayName: userDetailsFirebase.displayName,
-                                paymentOptions: paymentOptions,
-                                like: 0,
-                                peopleWhoLiked: ["ds@gmial.com", "djs.com"],
-                                disLike: 0
-                            },
-                        ).then(e => {
-                            // res-setting everything
-                            setOpen(false);
-                            seterrorMessgae(false)
-                            setstateAfterSubmit(true)
-                            setnameofProduct(undefined)
-                            setproducttype(undefined)
-                            setproductCondition(undefined)
-                            setproductImage(undefined)
-                            setproductPrice(undefined)
-                            setproductDescription(undefined)
-                            setpaymentOptions([])
-                        }).catch(error => console.log("Error while sendig items to Firebase"))
-                    } else {
-                        seterrorMessgae(true)
-                    }
+
+            const promises = []
+            productImage.forEach((image, i) => {
+                var storageRef = firebase.storage().ref();
+                var ref = storageRef.child(`${userDetailsFirebase.uid}/` + Math.random())
+                promises.push(uploadFileAndGetDownloadURL(ref, image));
+            })
+            const res = await Promise.all(promises).then(urlsArray => {
+                // send details from form
+                console.log("rlrurl", urlsArray);
+                if (nameofProduct && producttype && productCondition && productPrice) {
+                    console.log("urls, ", urlsArray);
+                    const idGeneratedforProduct = userDetailsFirebase.uid + uuidv4()
+                    db.collection("products").doc(idGeneratedforProduct).set(
+                        {
+                            id: idGeneratedforProduct,
+                            date: new Date(),
+                            name: nameofProduct,
+                            price: productPrice,
+                            category: producttype,
+                            productDetails: productCondition,
+                            productDescription: productDescription,
+                            imageURL: urlsArray,
+                            userEmail: userDetailsFirebase.email,
+                            userEmailVerified: userDetailsFirebase.emailVerified,
+                            userDisplayName: userDetailsFirebase.displayName,
+                            paymentOptions: paymentOptions,
+                            like: 0,
+                            peopleWhoLiked: ["ds@gmial.com", "djs.com"],
+                            disLike: 0
+                        },
+                    ).then(e => {
+                        // res-setting everything
+                        setOpen(false);
+                        seterrorMessgae(false)
+                        setstateAfterSubmit(true)
+                        setnameofProduct('')
+                        setproducttype("")
+                        setproductCondition("")
+                        setproductImage([])
+                        setproductPrice("")
+                        setproductDescription("")
+                        setpaymentOptions([])
+                    }).catch(error => console.log("Error while sendig items to Firebase"))
+                } else {
+                    seterrorMessgae(true)
                 }
-            );
+            })
+
         }
     }
 
@@ -379,7 +389,7 @@ const ClassifiedHomePageComponent = () => {
                             />
                             <form style={{ color: "rgb(112 103 103 / 87%)" }}>
                                 <label id="fname" style={{ color: "rgb(112 103 103 / 87%)" }}>Product Image</label><br></br>
-                                <input type="file" style={{ color: "rgb(112 103 103 / 87%)" }} accept="image/*"
+                                <input type="file" style={{ color: "rgb(112 103 103 / 87%)" }} accept="image/*" multiple
                                     onChange={e => imagehandleChange(e)} ></input>
                                 {/* <button type="submit" onClick={sendImageToFirebase}>send image</button> */}
                             </form>
@@ -432,7 +442,7 @@ const ClassifiedHomePageComponent = () => {
                                 <Link to={"/Classified/Products/" + item.data.id} className="linkTextForCard" >
                                     <CardMedia
                                         className={classes.media}
-                                        image={item.data.imageURL ? item.data.imageURL : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
+                                        image={item.data.imageURL ? item.data.imageURL[0] : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
                                         title="Paella dish"
                                     />
                                     <CardContent>
