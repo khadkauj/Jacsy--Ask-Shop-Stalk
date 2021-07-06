@@ -1,6 +1,5 @@
 #QA__main h3 {
   padding: 14px;
-  font-size: 21px;
 }
 
 .icons__QA {
@@ -75,4 +74,12 @@
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   text-transform: capitalize;
   font-size: 14px;
+}
+
+.no__answers {
+  margin: 14px;
+  color: #06201b;
+  font-weight: 600;
+  margin-left: auto;
+  margin-right: auto;
 }

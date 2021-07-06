@@ -42,3 +42,7 @@
   text-decoration: inherit;
   color: inherit;
 }
+
+#minWidth__card .makeStyles-root-2 {
+  min-width: 120px;
+}

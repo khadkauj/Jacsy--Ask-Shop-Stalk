@@ -50,7 +50,7 @@ const ListNews = () => {
                     {questionAndAnswerFromFB.map(item => (
                         <Grid item xs={6} sm={4} md={4} lg={3} key={Math.random()}   >
                             <Link to={"/Answers/" + item.id} className="link__newsDecoration" >
-                                <Card className={classes.root}>
+                                <Card className={classes.root} id="minWidth__card">
                                     <CardActionArea>
                                         {/* <CardMedia
                                     className={classes.media}
@@ -59,7 +59,7 @@ const ListNews = () => {
                                 /> */}
                                         <CardContent className="cardContent">
                                             <p >
-                                                {item?.data?.question}
+                                                {item?.data?.question.length < 65 ? item?.data?.question : item?.data?.question.slice(0, 60) + "...?"}
                                             </p>
                                         </CardContent>
                                     </CardActionArea>

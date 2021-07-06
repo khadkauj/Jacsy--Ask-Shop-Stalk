@@ -57,7 +57,6 @@ const AskMeAQuestionComponent = () => {
     const { stateForHomePageTwoNestedCompToSync, setStateForHomePageTwoNestedCompToSync } = useContext(HomePageComponentsToSync)
     console.log("context is, ", stateForHomePageTwoNestedCompToSync);
 
-    const [question, setquestion] = useState(undefined)
     // extra state to not allow double clicking of submit
     const [noDoubleSUbmitCLick, setnoDoubleSUbmitCLick] = useState(false)
     const [questionAnswerFromFB, setquestionAnswerFromFB] = useState([{
@@ -72,12 +71,12 @@ const AskMeAQuestionComponent = () => {
     // all setup for Form Dialog Box
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
-        setquestion(undefined)
+        setquestion("")
         setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
-        setquestion(undefined)
+        setquestion("")
     };
 
     // send question to firebase
@@ -86,7 +85,6 @@ const AskMeAQuestionComponent = () => {
         if (user) {
             setnoDoubleSUbmitCLick(!noDoubleSUbmitCLick)
             setstateAfterQuestionSubmit(true)
-            setquestion(undefined)
             db.collection("questions").add({
                 question: question,
                 date: new Date(),
@@ -96,6 +94,7 @@ const AskMeAQuestionComponent = () => {
                 console.log("snap while sending question to FB", doc)
                 setStateForHomePageTwoNestedCompToSync(!stateForHomePageTwoNestedCompToSync)
                 setOpen(false)
+                setquestion("")
             })
                 .catch(error => {
                     console.log("Error while sending question to FB", error)
@@ -134,6 +133,18 @@ const AskMeAQuestionComponent = () => {
         }
     }, [stateForHomePageTwoNestedCompToSync])
 
+    // setting question checking for more than 120 chars
+    const [question, setquestion] = useState("")
+    const [ErrorForMaxCharInput, setErrorForMaxCharInput] = useState(false)
+    const handlesetErrorForMaxCharInput = (e) => {
+        setquestion(e.target.value)
+        // if (question?.length === 200) {
+        //     console.log("elmgth is, ", question?.length);
+        //     setErrorForMaxCharInput(true)
+        // } else {
+        //     setErrorForMaxCharInput(false)
+        // }
+    }
 
 
     return (
@@ -151,8 +162,8 @@ const AskMeAQuestionComponent = () => {
                                         <ListItemAvatar>
                                             <Avatar alt="Profile Picture" src={""} />
                                         </ListItemAvatar>
-                                        {!query.data?.answered && < ListItemText primary={query.data?.question} secondary={"No answer available at the moment."} />}
-                                        {query.data?.answered && < ListItemText primary={query.data?.question} secondary={"Click to view replies."} />}
+                                        {!query.data?.answered && < ListItemText primary={query.data?.question.length < 65 ? query.data?.question : query.data?.question.slice(0, 60) + "...?"} secondary={"No answer available at the moment."} />}
+                                        {query.data?.answered && < ListItemText primary={query.data?.question.length < 65 ? query.data?.question : query.data?.question.slice(0, 60) + "...?"} secondary={"Click to view replies."} />}
                                         {/* {query.data?.answered && query.data?.answered[0] <= 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answered[0]} />} */}
                                         {/* {query.data?.answer?. > 80 && <ListItemText primary={query.data?.question} secondary={query.data?.answer?.slice(0, 80)} /> + "..."} */}
                                     </ListItem>
@@ -166,13 +177,13 @@ const AskMeAQuestionComponent = () => {
 
             <div className="appbar__add" id="fab__id" >
                 <Fab color="secondary" aria-label="add" className="fab__icon">
-                    <AddIcon onClick={handleClickOpen} >A</AddIcon>
+                    <AddIcon onClick={e => handleClickOpen()} >A</AddIcon>
                 </Fab>
             </div>
 
             {/* Form  Popup for a Question */}
             <div>
-                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <Dialog open={open} onClose={e => handleClose()} aria-labelledby="form-dialog-title">
                     {/* <DialogTitle id="form-dialog-title">Ask me a question and I will answer it in a thread below.</DialogTitle> */}
                     <DialogContent>
                         <DialogContentText>
@@ -188,14 +199,16 @@ const AskMeAQuestionComponent = () => {
                             type="text"
                             fullWidth
                             value={question}
-                            onChange={e => setquestion(e.target.value)}
+                            onChange={e => handlesetErrorForMaxCharInput(e)}
+                            inputProps={{ maxLength: 200 }}
                         />
                     </DialogContent>
+                    {/* {ErrorForMaxCharInput && <p>No more than 200 chars allowed</p>} */}
                     <DialogActions>
-                        <Button onClick={handleClose} color="primary">
+                        <Button onClick={e => handleClose()} color="primary">
                             Cancel
                         </Button>
-                        {<Button onClick={sendQuestionToFirebase} color="primary" disabled={!question}  >
+                        {<Button onClick={e => sendQuestionToFirebase(e)} color="primary" disabled={!question}  >
                             Submit
                         </Button>}
                     </DialogActions>

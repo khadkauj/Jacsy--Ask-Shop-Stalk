@@ -306,7 +306,7 @@ const AnswerComponent = () => {
                             </div>
                         </Grid>
 
-                        <Grid item xs={12} sm={12} md={8} lg={8}>
+                        {answerListsOfQuestions?.length > 0 ? <Grid item xs={12} sm={12} md={8} lg={8}>
                             {answerListsOfQuestions?.map((docData, i) => (
                                 <div className="qa__mainDiv" key={i}>
                                     <div className="avatarAndids">
@@ -399,7 +399,7 @@ const AnswerComponent = () => {
                                     <div className="dark_greyBox"></div>
                                 </div>
                             ))}
-                        </Grid>
+                        </Grid> : <p className="no__answers">No Answers Available at the moment.</p>}
                     </Grid>
                 </div>
             ) : (
