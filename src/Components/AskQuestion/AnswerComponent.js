@@ -443,6 +443,7 @@ const AnswerComponent = () => {
                                                     <div className="answer__seeMore">
                                                         <p>{docData?.data?.answer.slice(0, 200) + "..."}</p>{" "}
                                                         <span
+                                                            style={{ cursor: "pointer" }}
                                                             className="seeMoreAnswer__span"
                                                             onClick={(e) => setSeeMoreState(!seeMoreState)}
                                                         >
@@ -462,6 +463,7 @@ const AnswerComponent = () => {
                                                 <div div className="answer__seeMore">
                                                     <p>{docData?.data?.answer} </p>{" "}
                                                     <span
+                                                        style={{ cursor: "pointer" }}
                                                         className="seeMoreAnswer__span"
                                                         onClick={(e) => setSeeMoreState(!seeMoreState)}
                                                     >
