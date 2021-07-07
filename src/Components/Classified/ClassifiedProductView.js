@@ -96,8 +96,8 @@ const ClassifiedProductView = () => {
                                                         {productDataFromFirebase?.userEmail?.slice(0, 1).toUpperCase()}
                                                     </Avatar>
                                                     <div className="avatarContainer__div">
-                                                        <h4 style={{ color: "#06201b" }}>owner</h4>
-                                                        <h4><b style={{ color: "#004180" }}>{productDataFromFirebase?.userEmail}</b><sub>{productDataFromFirebase?.userEmailVerified}</sub></h4>
+                                                        <h4 style={{ color: "#06201b" }}>owner <span style={{ fontSize: "18px" }} >📧</span></h4>
+                                                        <a href={`mailto:${productDataFromFirebase.userEmail}`} > <h4><b style={{ color: "#004180" }}>{productDataFromFirebase?.userEmail}</b><sub>{productDataFromFirebase?.userEmailVerified}</sub></h4></a>
                                                     </div>
                                                 </Grid>
                                             </Grid>

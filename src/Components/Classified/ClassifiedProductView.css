@@ -206,6 +206,7 @@
 @media only screen and (max-width: 600px) {
   .secondDivInGrid {
     font-size: 15px !important;
+    margin-bottom: 40px;
   }
 
   #name__avatar__div .avatarContainer__div {

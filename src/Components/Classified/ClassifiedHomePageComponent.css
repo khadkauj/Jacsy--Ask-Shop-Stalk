@@ -98,3 +98,7 @@
   color: #f44336;
   font-weight: bold;
 }
+
+.cards__main {
+  margin-bottom: 80px;
+}

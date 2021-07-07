@@ -1,6 +1,8 @@
 .App {
-  display: grid;
-  place-items: center;
+  /* display: grid;
+  place-items: center; */
+  min-height: 100vh;
+  position: relative;
 }
 
 .skeleton__div {

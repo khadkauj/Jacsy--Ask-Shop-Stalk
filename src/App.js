@@ -54,7 +54,6 @@ function App() {
 						<Route exact path="/Classified/Products/:id">
 							<HeaderComponent />
 							<ClassifiedProductView />
-							<FooterComponent />
 						</Route>
 						<Route exact path="/Answers/:id">
 							<HeaderComponent />
