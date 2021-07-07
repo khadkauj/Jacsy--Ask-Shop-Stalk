@@ -142,7 +142,7 @@ const ClassifiedHomePageComponent = () => {
 
         if (e.target.files) {
             // const files = []
-            for (let index = 0; index < e.target.files.length && index < 4; index++) {
+            for (let index = 0; index < e.target.files.length && index < 5; index++) {
                 console.log("image is,", e.target.files[0]);
                 // setproductImage(e.target.files[0])
                 // resize
@@ -388,7 +388,7 @@ const ClassifiedHomePageComponent = () => {
                                 onChange={e => setproductDescription(e.target.value)}
                             />
                             <form style={{ color: "rgb(112 103 103 / 87%)" }}>
-                                <label id="fname" style={{ color: "rgb(112 103 103 / 87%)" }}>Product Image(up to 4 images)</label><br></br>
+                                <label id="fname" style={{ color: "rgb(112 103 103 / 87%)" }}>Product Image(up to 5 images)</label><br></br>
                                 <input type="file" style={{ color: "rgb(112 103 103 / 87%)" }} accept="image/*" multiple
                                     onChange={e => imagehandleChange(e)} ></input>
                                 {/* <button type="submit" onClick={sendImageToFirebase}>send image</button> */}

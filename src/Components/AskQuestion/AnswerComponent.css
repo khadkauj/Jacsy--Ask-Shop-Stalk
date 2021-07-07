@@ -42,6 +42,7 @@
 .qa__footer {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
 }
 .icon__p {
   color: #f50057;
@@ -61,6 +62,7 @@
 
 #oneIcon__collection .MuiIconButton-root {
   align-items: flex-end;
+  padding: 0px;
 }
 
 .answer__seeMore {

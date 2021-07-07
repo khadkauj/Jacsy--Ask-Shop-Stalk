@@ -49,6 +49,12 @@ const ClassifiedProductView = () => {
         }
     }, [id, statusOfItemMarkedAsSold])
 
+    // new image for product
+    const [imageIndex, setImageIndex] = useState(0)
+    const setNewImage = (i) => {
+        setImageIndex(i)
+    }
+
     return (
         <userContext.Provider value={{ statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold }}>
             <div>
@@ -66,12 +72,16 @@ const ClassifiedProductView = () => {
                                     {/* imageURL is an array of images */}
                                     {productDataFromFirebase.imageURL && <><CardMedia
                                         className="image__product GiveWidth"
-                                        image={productDataFromFirebase.imageURL ? productDataFromFirebase.imageURL[0] : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
+                                        image={productDataFromFirebase.imageURL ? productDataFromFirebase.imageURL[imageIndex] : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
                                         title="Paella dish"
                                     />{productDataFromFirebase?.markedAsSold && <p className="alreadySold">Already Sold.</p>}</>}
-                                    <div>
-                                        {/* four image grids */}
+                                    <div className="product__image__grid">
+                                        {productDataFromFirebase.imageURL.map((url, i) => (
+                                            < img src={url} alt="" onClick={e => setNewImage(i)} />
+                                        ))}
                                     </div>
+
+
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={6} lg={6}>
                                     <div className="secondDivInGrid GiveWidth alignCenterForSecondGridwhihhchisInforGrid">

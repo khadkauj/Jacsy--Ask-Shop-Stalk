@@ -21,6 +21,10 @@ import SnackBarComponent from "../SnackBar/SnackBarComponent";
 import { Link } from "react-router-dom";
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import CardActions from "@material-ui/core/CardActions";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ShareIcon from "@material-ui/icons/Share";
+import FavoriteBorderOutlined from "@material-ui/icons/FavoriteBorderOutlined";
 
 import "./AnswerComponent.css";
 
@@ -31,6 +35,7 @@ const AnswerComponent = () => {
     const [stateAfterAnswerSubmit, setstateAfterAnswerSubmit] = useState(false);
     const [stateAfterQuestionSubmit, setstateAfterQuestionSubmit] = useState(false)
     const [stateAfterAnswerDelete, setStateAfterAnswerDelete] = useState(false)
+    const [updateAfterSendingLike, setupdateAfterSendingLike] = useState(false)
     const [stateAfterVote, setstateAfterVote] = useState(false);
     const [openSnackbarProps, setopenSnackbarProps] = useState(false);
     const [seeMoreState, setSeeMoreState] = useState(false); //too see all answer when clicke on see more
@@ -76,7 +81,7 @@ const AnswerComponent = () => {
             }
         });
         return () => { };
-    }, [stateAfterAnswerSubmit, stateAfterVote, stateAfterQuestionSubmit, stateAfterAnswerDelete]);
+    }, [stateAfterAnswerSubmit, stateAfterVote, stateAfterQuestionSubmit, stateAfterAnswerDelete, updateAfterSendingLike]);
 
     // all setup for Form Dialog Box
     const [open, setOpen] = React.useState(false);
@@ -108,7 +113,12 @@ const AnswerComponent = () => {
                     peopleWhoDownVoted: ["none"],
                     peopleWhoUpVoted: ["None"],
                     emailUsedToAnswerSavedForSecurityPurpose: user?.email,
-                    answeredBy: checkedBox ? "" : user?.email
+                    answeredBy: checkedBox ? "" : user?.email,
+                    like: 0,
+                    peopleWhoLiked: ["ds@gmial.com", "djs.com"],
+                    disLike: 0,
+                    userEmailVerified: user.emailVerified,
+                    userDisplayName: user?.displayName,
                 })
                 .then((data) => {
                     console.log("Answer sent to firebase");
@@ -141,150 +151,185 @@ const AnswerComponent = () => {
     };
 
     // adding upvote/downvote to answers
-    const voteAnswer = (answerId, voteCount) => {
-        console.log("asnwid", answerId, voteCount);
-        console.log("vote answer methid being called");
+    // const voteAnswer = (answerId, voteCount) => {
+    //     console.log("asnwid", answerId, voteCount);
+    //     console.log("vote answer methid being called");
 
+    //     if (user) {
+    //         db.collection("questions")
+    //             .doc(id)
+    //             .collection("answersList")
+    //             .doc(answerId)
+    //             .get()
+    //             .then((snapshot) => {
+    //                 console.log("**", snapshot.data().vote);
+    //                 const hasUserUpVoted = snapshot
+    //                     .data()
+    //                     ?.peopleWhoUpVoted.includes(user?.email);
+    //                 const hasUserDownVoted = snapshot
+    //                     .data()
+    //                     ?.peopleWhoDownVoted.includes(user?.email);
+    //                 if (!hasUserUpVoted && !hasUserDownVoted) {
+    //                     if (voteCount === 1) {
+    //                         db.collection("questions")
+    //                             .doc(id)
+    //                             .collection("answersList")
+    //                             .doc(answerId)
+    //                             .update({
+    //                                 vote: snapshot.data().vote + voteCount,
+    //                                 peopleWhoUpVoted: firebase.firestore.FieldValue.arrayUnion(
+    //                                     user?.email
+    //                                         ? user?.email
+    //                                         : "Something wrong with firebase apis"
+    //                                 ),
+    //                             })
+    //                             .then((resp) => console.log("success in vote fucntion1"))
+    //                             .catch((error) => console.log("error in vote function"));
+    //                     } else if (voteCount === -1) {
+    //                         db.collection("questions")
+    //                             .doc(id)
+    //                             .collection("answersList")
+    //                             .doc(answerId)
+    //                             .update({
+    //                                 vote: snapshot.data().vote + voteCount,
+    //                                 peopleWhoDownVoted: firebase.firestore.FieldValue.arrayUnion(
+    //                                     user?.email
+    //                                         ? user?.email
+    //                                         : "Something wrong with firebase apis"
+    //                                 ),
+    //                             })
+    //                             .then((resp) => console.log("success in vote fucntion2"))
+    //                             .catch((error) => console.log("error in vote function"));
+    //                     }
+
+    //                 } else if (hasUserUpVoted && !hasUserDownVoted) {
+    //                     if (voteCount === 1) {
+    //                         console.log("You cant vote twice.");
+    //                     } else if (voteCount === -1) {
+    //                         // checking for edge case when vote is 0 and you want user to be nowher in array
+    //                         if (snapshot.data().vote === 1) {
+    //                             db.collection("questions")
+    //                                 .doc(id)
+    //                                 .collection("answersList")
+    //                                 .doc(answerId)
+    //                                 .update({
+    //                                     vote: snapshot.data().vote + voteCount,
+    //                                     peopleWhoUpVoted: firebase.firestore.FieldValue.arrayRemove(
+    //                                         user?.email
+    //                                     ),
+    //                                 })
+    //                                 .then((resp) => console.log("success in vote fucntion3"))
+    //                                 .catch((error) => console.log("error in vote function"));
+    //                         } else {
+    //                             db.collection("questions")
+    //                                 .doc(id)
+    //                                 .collection("answersList")
+    //                                 .doc(answerId)
+    //                                 .update({
+    //                                     vote: snapshot.data().vote + voteCount,
+    //                                     peopleWhoDownVoted:
+    //                                         firebase.firestore.FieldValue.arrayUnion(
+    //                                             user?.email
+    //                                                 ? user?.email
+    //                                                 : "Something wrong with firebase apis"
+    //                                         ),
+    //                                     peopleWhoUpVoted: firebase.firestore.FieldValue.arrayRemove(
+    //                                         user?.email
+    //                                     ),
+    //                                 })
+    //                                 .then((resp) => console.log("success in vote fucntion3"))
+    //                                 .catch((error) => console.log("error in vote function"));
+    //                         }
+    //                     }
+
+    //                 } else if (!hasUserUpVoted && hasUserDownVoted) {
+    //                     if (voteCount === -1) {
+    //                         console.log("You can't downvote twice");
+    //                     } else if (voteCount === 1) {
+    //                         // check for edge case when vote is -1
+    //                         if (snapshot.data().vote === -1) {
+    //                             db.collection("questions")
+    //                                 .doc(id)
+    //                                 .collection("answersList")
+    //                                 .doc(answerId)
+    //                                 .update({
+    //                                     vote: snapshot.data().vote + voteCount,
+    //                                     peopleWhoDownVoted:
+    //                                         firebase.firestore.FieldValue.arrayRemove(user?.email),
+    //                                 })
+    //                                 .then((resp) => console.log("success in vote fucntion"))
+    //                                 .catch((error) => console.log("error in vote function"));
+    //                         } else {
+    //                             db.collection("questions")
+    //                                 .doc(id)
+    //                                 .collection("answersList")
+    //                                 .doc(answerId)
+    //                                 .update({
+    //                                     vote: snapshot.data().vote + voteCount,
+    //                                     peopleWhoUpVoted: firebase.firestore.FieldValue.arrayUnion(
+    //                                         user?.email
+    //                                             ? user?.email
+    //                                             : "Something wrong with firebase apis"
+    //                                     ),
+    //                                     peopleWhoDownVoted:
+    //                                         firebase.firestore.FieldValue.arrayRemove(user?.email),
+    //                                 })
+    //                                 .then((resp) => console.log("success in vote fucntion"))
+    //                                 .catch((error) => console.log("error in vote function"));
+    //                         }
+    //                     }
+
+    //                 }
+
+
+    //             }).then(changingState => {
+    //                 setstateAfterVote(!stateAfterVote);
+    //             })
+    //             .catch((error) => console.log("Error in getting vote count."));
+    //     } else {
+    //         console.log("Please log in");
+    //         setopenSnackbarProps(true);
+    //         setTimeout(() => {
+    //             setopenSnackbarProps(false);
+    //         }, 1000);
+    //     }
+    // };
+    // console.log("the user is, ", user);
+
+
+    // adding love to answer // ading like/dis-like in each products
+
+    // like-dislike answers
+
+
+    const addLikeToFirebase = (data, numToAdd) => {
+        console.log("id in funciton, ", data, numToAdd);
         if (user) {
-            db.collection("questions")
-                .doc(id)
-                .collection("answersList")
-                .doc(answerId)
-                .get()
-                .then((snapshot) => {
-                    console.log("**", snapshot.data().vote);
-                    const hasUserUpVoted = snapshot
-                        .data()
-                        ?.peopleWhoUpVoted.includes(user?.email);
-                    const hasUserDownVoted = snapshot
-                        .data()
-                        ?.peopleWhoDownVoted.includes(user?.email);
-                    if (!hasUserUpVoted && !hasUserDownVoted) {
-                        if (voteCount === 1) {
-                            db.collection("questions")
-                                .doc(id)
-                                .collection("answersList")
-                                .doc(answerId)
-                                .update({
-                                    vote: snapshot.data().vote + voteCount,
-                                    peopleWhoUpVoted: firebase.firestore.FieldValue.arrayUnion(
-                                        user?.email
-                                            ? user?.email
-                                            : "Something wrong with firebase apis"
-                                    ),
-                                })
-                                .then((resp) => console.log("success in vote fucntion1"))
-                                .catch((error) => console.log("error in vote function"));
-                        } else if (voteCount === -1) {
-                            db.collection("questions")
-                                .doc(id)
-                                .collection("answersList")
-                                .doc(answerId)
-                                .update({
-                                    vote: snapshot.data().vote + voteCount,
-                                    peopleWhoDownVoted: firebase.firestore.FieldValue.arrayUnion(
-                                        user?.email
-                                            ? user?.email
-                                            : "Something wrong with firebase apis"
-                                    ),
-                                })
-                                .then((resp) => console.log("success in vote fucntion2"))
-                                .catch((error) => console.log("error in vote function"));
-                        }
-
-                    } else if (hasUserUpVoted && !hasUserDownVoted) {
-                        if (voteCount === 1) {
-                            console.log("You cant vote twice.");
-                        } else if (voteCount === -1) {
-                            // checking for edge case when vote is 0 and you want user to be nowher in array
-                            if (snapshot.data().vote === 1) {
-                                db.collection("questions")
-                                    .doc(id)
-                                    .collection("answersList")
-                                    .doc(answerId)
-                                    .update({
-                                        vote: snapshot.data().vote + voteCount,
-                                        peopleWhoUpVoted: firebase.firestore.FieldValue.arrayRemove(
-                                            user?.email
-                                        ),
-                                    })
-                                    .then((resp) => console.log("success in vote fucntion3"))
-                                    .catch((error) => console.log("error in vote function"));
-                            } else {
-                                db.collection("questions")
-                                    .doc(id)
-                                    .collection("answersList")
-                                    .doc(answerId)
-                                    .update({
-                                        vote: snapshot.data().vote + voteCount,
-                                        peopleWhoDownVoted:
-                                            firebase.firestore.FieldValue.arrayUnion(
-                                                user?.email
-                                                    ? user?.email
-                                                    : "Something wrong with firebase apis"
-                                            ),
-                                        peopleWhoUpVoted: firebase.firestore.FieldValue.arrayRemove(
-                                            user?.email
-                                        ),
-                                    })
-                                    .then((resp) => console.log("success in vote fucntion3"))
-                                    .catch((error) => console.log("error in vote function"));
-                            }
-                        }
-
-                    } else if (!hasUserUpVoted && hasUserDownVoted) {
-                        if (voteCount === -1) {
-                            console.log("You can't downvote twice");
-                        } else if (voteCount === 1) {
-                            // check for edge case when vote is -1
-                            if (snapshot.data().vote === -1) {
-                                db.collection("questions")
-                                    .doc(id)
-                                    .collection("answersList")
-                                    .doc(answerId)
-                                    .update({
-                                        vote: snapshot.data().vote + voteCount,
-                                        peopleWhoDownVoted:
-                                            firebase.firestore.FieldValue.arrayRemove(user?.email),
-                                    })
-                                    .then((resp) => console.log("success in vote fucntion"))
-                                    .catch((error) => console.log("error in vote function"));
-                            } else {
-                                db.collection("questions")
-                                    .doc(id)
-                                    .collection("answersList")
-                                    .doc(answerId)
-                                    .update({
-                                        vote: snapshot.data().vote + voteCount,
-                                        peopleWhoUpVoted: firebase.firestore.FieldValue.arrayUnion(
-                                            user?.email
-                                                ? user?.email
-                                                : "Something wrong with firebase apis"
-                                        ),
-                                        peopleWhoDownVoted:
-                                            firebase.firestore.FieldValue.arrayRemove(user?.email),
-                                    })
-                                    .then((resp) => console.log("success in vote fucntion"))
-                                    .catch((error) => console.log("error in vote function"));
-                            }
-                        }
-
-                    }
-
-
-                }).then(changingState => {
-                    setstateAfterVote(!stateAfterVote);
-                })
-                .catch((error) => console.log("Error in getting vote count."));
-        } else {
-            console.log("Please log in");
-            setopenSnackbarProps(true);
-            setTimeout(() => {
-                setopenSnackbarProps(false);
-            }, 1000);
+            console.log("user found", user);
+            db.collection("questions").doc(questionId).collection("answersList").doc(data?.id).get().then(doc => {
+                console.log("chcking array, ", doc.data());
+                if (!doc.data().peopleWhoLiked?.includes(user?.email)) {
+                    db.collection("questions").doc(questionId).collection("answersList").doc(data?.id).update({
+                        like: ++doc.data().like,
+                        peopleWhoLiked: firebase.firestore.FieldValue.arrayUnion(user?.email ? user?.email : "joke")
+                    }, { merge: true }).catch(error => console.log("error in updating insideLike toFirebase Funciton, ", error))
+                } else {
+                    db.collection("questions").doc(questionId).collection("answersList").doc(data?.id).update({
+                        like: --doc.data().like,
+                        peopleWhoLiked: firebase.firestore.FieldValue.arrayRemove(user?.email)
+                    }, { merge: true }).catch(error => console.log("error in updating insideLike in -else statement- toFirebase Funciton, ", error))
+                }
+            }).catch(error => console.log("error in addLiketoFirebase Function, ", error))
+            setupdateAfterSendingLike(!updateAfterSendingLike)
         }
-    };
-    console.log("the user is, ", user);
+        else {
+            console.log("User not found while trying to send Like");
+            // setpopUpText("Please Login.")
+            // handleClickSnackbar()
+            // history.push("/Login")
+        }
+
+    }
 
     // ******************
     // Edit answer -- many componets here are borowwwed from AskMeAquestionComponent
@@ -429,7 +474,7 @@ const AnswerComponent = () => {
 
                                     <div className="qa__footer">
                                         <div id="oneIcon__collection">
-                                            <IconButton
+                                            {/* <IconButton
                                                 onClick={(e) => voteAnswer(docData?.data.id, 1)}
                                                 aria-label="share"
                                             >
@@ -456,7 +501,19 @@ const AnswerComponent = () => {
                                                 {docData?.data?.vote < 0 && (
                                                     <span className="icon__p">{docData?.data.vote} </span>
                                                 )}
-                                            </IconButton>
+                                            </IconButton> */}
+                                            <CardActions disableSpacing>
+                                                {docData?.data.peopleWhoLiked?.includes(user?.email) && <IconButton onClick={e => addLikeToFirebase(docData?.data, -1)} aria-label="add to favorites" style={{ color: "#ed4956" }}>
+                                                    <FavoriteIcon /><p className="like">{docData?.data?.like + " likes"}</p>
+                                                </IconButton>}
+                                                {!docData?.data?.peopleWhoLiked?.includes(user?.email) && <IconButton aria-label="add to favorites" onClick={e => addLikeToFirebase(docData?.data, 1)}>
+                                                    <FavoriteBorderOutlined /><p className="like">{docData?.data?.like + " likes"}</p>
+                                                </IconButton>}
+                                                {/* <IconButton aria-label="add to favorites">
+                                        <FavoriteBorderOutlined onClick={e => addLikeToFirebase(item?.data)} />
+                                    </IconButton> */}
+
+                                            </CardActions>
                                         </div>
                                         <div>
                                             {user?.email === docData.data.emailUsedToAnswerSavedForSecurityPurpose &&
