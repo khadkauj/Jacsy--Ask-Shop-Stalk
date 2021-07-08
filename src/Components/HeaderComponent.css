@@ -10,6 +10,7 @@
   /* height: 10vh; */
   display: flex;
   place-items: center;
+  border-bottom: 1px solid #eadddd;
 }
 
 .ul__list {

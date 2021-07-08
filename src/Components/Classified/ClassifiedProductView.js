@@ -88,7 +88,7 @@ const ClassifiedProductView = () => {
                                         <div className="tophead">
                                             <Grid container id="name__avatar__div" >
                                                 <Grid item sm={4} md={3} lg={4} >
-                                                    <h2 className="productViewDetailsFont">{productDataFromFirebase?.name}</h2>
+                                                    <h2 className="productViewDetailsFont" style={{ textTransform: "capitalize" }} >{productDataFromFirebase?.name}</h2>
                                                     <span className="prodPricedet" >{"€" + productDataFromFirebase?.price}</span>
                                                 </Grid>
                                                 <Grid item sm={8} md={9} lg={8} className="avatarContainer leftAuto">
