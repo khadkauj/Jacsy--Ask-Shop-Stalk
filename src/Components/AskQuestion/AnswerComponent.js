@@ -436,6 +436,15 @@ const AnswerComponent = () => {
                                         </div>
                                     </div>
 
+
+                                    <div className="inner__answer">
+                                        {docData?.data?.answer &&
+                                            docData?.data?.answer.length < 200 && (
+                                                <p>{docData?.data?.answer.slice(0, 200)} </p>
+                                            )}
+                                    </div>
+
+
                                     {!seeMoreState && (
                                         <div className="inner__answer">
                                             {docData?.data?.answer &&
@@ -451,15 +460,12 @@ const AnswerComponent = () => {
                                                         </span>
                                                     </div>
                                                 )}
-                                            {docData?.data?.answer &&
-                                                docData?.data?.answer.length < 200 && (
-                                                    <p>{docData?.data?.answer.slice(0, 200)} </p>
-                                                )}
+
                                         </div>
                                     )}
                                     {seeMoreState && (
                                         <div className="inner__answer">
-                                            {docData?.data?.answer && (
+                                            {docData?.data?.answer && docData?.data?.answer.length >= 200 && (
                                                 <div div className="answer__seeMore">
                                                     <p>{docData?.data?.answer} </p>{" "}
                                                     <span

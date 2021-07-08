@@ -15,10 +15,13 @@
   /* margin-left: auto;
   margin-right: auto; */
   /* the above two css is equivalent to margin : auto */
-  position: fixed;
-  bottom: 24px;
+  /* position: fixed;
+  bottom: 24px; */
+  margin-bottom: 14px;
   left: 10%;
   right: 10%;
+  position: absolute;
+  bottom: 0;
 }
 .footer__left {
   color: var(--main-color);
@@ -47,4 +50,7 @@
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+#footer__end {
 }

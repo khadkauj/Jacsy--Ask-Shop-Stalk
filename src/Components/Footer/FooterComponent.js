@@ -7,7 +7,7 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import "./FooterComponent.css";
 const FooterComponent = () => {
     return (
-        <div className="footer">
+        <div className="footer" id="footer__end">
             <a href="https://www.instagram.com/infintyuj/" className="link__newsDecoration" >
                 <div className="footer__icon12" >
                     <p className="footer__left" style={{ marginRight: "5px" }}>Infintyuj</p>
