@@ -21,7 +21,7 @@ const ClassifiedProductView = () => {
     const { id } = useParams();
     const [productDataFromFirebase, setproductDataFromFirebase] = useState([])
     const [statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold] = useState(false) //
-
+    const [productEditedInMArkSoldComponent, setProductEditedInMArkSoldComponent] = useState(false)
     const [user, setUser] = useState(undefined)
     useEffect(() => {
         // firebase analytics
@@ -45,7 +45,7 @@ const ClassifiedProductView = () => {
 
         return () => {
         }
-    }, [id, statusOfItemMarkedAsSold])
+    }, [id, statusOfItemMarkedAsSold, productEditedInMArkSoldComponent])
 
     // new image for product
     const [imageIndex, setImageIndex] = useState(0)
@@ -54,7 +54,7 @@ const ClassifiedProductView = () => {
     }
 
     return (
-        <userContext.Provider value={{ statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold }}>
+        <userContext.Provider value={{ statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold, productEditedInMArkSoldComponent, setProductEditedInMArkSoldComponent }}>
             <div>
 
                 {productDataFromFirebase?.id ? <div>
@@ -105,6 +105,7 @@ const ClassifiedProductView = () => {
                                         <div className="productDetails">
                                             <h2 className="productViewDetailsh2">Product Details:</h2>
                                             <div className="productViewDetails">
+                                                {productDataFromFirebase?.date && <h4> Posted on: {productDataFromFirebase?.date.toDate().toLocaleString()} </h4>}
                                                 {productDataFromFirebase?.category && <h4> Category: {productDataFromFirebase?.category} </h4>}
                                                 {productDataFromFirebase?.productDetails && <h4> Condition: {productDataFromFirebase?.productDetails} </h4>}
                                                 {productDataFromFirebase?.category && <h4> Product: {productDataFromFirebase?.category} </h4>}

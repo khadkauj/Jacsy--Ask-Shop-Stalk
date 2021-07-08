@@ -308,7 +308,7 @@ const ClassifiedHomePageComponent = () => {
                         <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
                         <DialogContent>
                             {!errorMessgae && <DialogContentText >
-                                Please fill in the details to add your item to the store.
+                                Please fill in the details and submit.
                             </DialogContentText>}
                             {errorMessgae && <DialogContentText style={{ color: "red" }}>
                                 Please fill in the required.
