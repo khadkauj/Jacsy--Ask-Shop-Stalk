@@ -34,6 +34,8 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import Resizer from "react-image-file-resizer";
 import { useHistory } from "react-router-dom";
 import FavoriteBorderOutlined from "@material-ui/icons/FavoriteBorderOutlined";
+import EuroIcon from '@material-ui/icons/Euro';
+
 
 import "./ClassifiedHomePageComponent.css";
 
@@ -393,17 +395,20 @@ const ClassifiedHomePageComponent = () => {
                                     onChange={e => imagehandleChange(e)} ></input>
                                 {/* <button type="submit" onClick={sendImageToFirebase}>send image</button> */}
                             </form>
+                            <div id="price__icon">
+                                <EuroIcon id="price__icon__euro" />
+                                <TextField
 
-                            <TextField
+                                    margin="dense"
+                                    id="name"
+                                    label="&nbsp; &nbsp; &nbsp; Price"
+                                    type="text"
+                                    fullWidth
+                                    value={productPrice}
+                                    onChange={e => setproductPrice(e.target.value)}
+                                />
+                            </div>
 
-                                margin="dense"
-                                id="name"
-                                label="Price"
-                                type="Number"
-                                fullWidth
-                                value={productPrice}
-                                onChange={e => setproductPrice(e.target.value)}
-                            />
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={e => handleClose(e)} color="primary">

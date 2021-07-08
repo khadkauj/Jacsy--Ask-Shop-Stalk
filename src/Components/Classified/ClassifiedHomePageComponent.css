@@ -106,3 +106,13 @@
 #testinLocalCSSusingId .MuiButton-containedSecondary {
   background: #f44336 !important;
 }
+
+#price__icon {
+  display: flex;
+}
+
+#price__icon .MuiSvgIcon-root {
+  align-self: center;
+  padding: 4px 0px;
+  margin-bottom: -15px;
+}
