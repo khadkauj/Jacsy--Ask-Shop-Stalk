@@ -15,9 +15,7 @@ import { userContext } from "../ContextComponent"
 import './ClassifiedProductView.css';
 
 // testing with extra Functions
-export const editProductDetails = (text) => {
-    console.log("haha- hora ayo?? , ", text);
-}
+
 
 const ClassifiedProductView = () => {
     const { id } = useParams();

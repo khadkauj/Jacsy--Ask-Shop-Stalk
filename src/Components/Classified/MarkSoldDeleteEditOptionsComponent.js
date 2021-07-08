@@ -14,7 +14,6 @@ import { db } from '../../Firebase/Firebase';
 import { useHistory } from 'react-router-dom';
 import { userContext } from '../ContextComponent';
 
-import { editProductDetails } from "./ClassifiedProductView"
 
 export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNot }) {
 
@@ -43,7 +42,7 @@ export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNo
     // setup for the Button-Group toogle
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
     const handleClick = () => {
         console.info(`You clicked ${options[selectedIndex]}`);
     };
@@ -69,7 +68,7 @@ export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNo
                 console.log("Error in marking field as Updated", error);
             })
         } else if (index === 1) {
-            editProductDetails("horaa")
+            console.log("index 1");
         }
     };
     const handleToggle = () => {

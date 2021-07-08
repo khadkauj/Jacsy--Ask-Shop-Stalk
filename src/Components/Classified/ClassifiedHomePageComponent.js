@@ -38,7 +38,6 @@ import EuroIcon from '@material-ui/icons/Euro';
 
 
 import "./ClassifiedHomePageComponent.css";
-
 // image file resizer
 const resizeFile = (file) =>
     new Promise((resolve) => {
