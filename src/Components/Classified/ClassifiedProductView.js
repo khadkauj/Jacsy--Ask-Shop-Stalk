@@ -77,7 +77,7 @@ const ClassifiedProductView = () => {
                                     />{productDataFromFirebase?.markedAsSold && <p className="alreadySold">Already Sold.</p>}</>}
                                     <div className="product__image__grid">
                                         {productDataFromFirebase.imageURL.map((url, i) => (
-                                            < img src={url} alt="" onClick={e => setNewImage(i)} />
+                                            < img src={url} alt="" onClick={e => setNewImage(i)} key={i} />
                                         ))}
                                     </div>
 
