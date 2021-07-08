@@ -216,6 +216,13 @@
     display: flex;
     justify-content: space-between;
   }
+
+  .Payment > * {
+    font-size: 13px;
+  }
+  #name__avatar__div .productViewDetailsFont {
+    font-weight: 500;
+  }
 }
 
 .product__image__grid {

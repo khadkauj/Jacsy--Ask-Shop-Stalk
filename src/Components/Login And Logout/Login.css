@@ -22,7 +22,7 @@
   margin: auto;
   border: 2px solid;
   padding: 5px;
-  background-color: #3ad29f;
+  background-color: #1976d2;
   border: none;
   margin-bottom: 10px;
 }
@@ -70,8 +70,8 @@
 .butt {
   padding: 1rem 3rem;
   border-radius: 50px;
-  color: black;
-  background-color: #3ad29f;
+  color: white;
+  background-color: #1976d2;
   border: none;
   font-size: 1rem;
   cursor: pointer;

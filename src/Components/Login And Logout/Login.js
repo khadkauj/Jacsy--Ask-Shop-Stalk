@@ -7,7 +7,7 @@ import "./Login.css";
 // import { Log_in } from "./features/user/userSlice";
 
 const Login = () => {
-    const [email, setemail] = useState("@gmail.com");
+    const [email, setemail] = useState("@jacobs-universtiy.de");
     const [password, setpassword] = useState("");
     const [wrongCredentialsInLogin, setwrongCredentialsInLogin] = useState(false)
     const history = useHistory();
@@ -74,7 +74,7 @@ const Login = () => {
                 <hr className="hr__tag" />
                 <h3 className="header3">Welcome to Login page</h3>
 
-                <input className="inp" value={email} onChange={(e) => setemail(e.target.value)} type="email" placeholder="Email" />
+                <input className="inp" value={email} onChange={(e) => setemail(e.target.value)} type="email" placeholder="Email" autoFocus="true" />
                 <input
                     className="inp"
                     value={password}

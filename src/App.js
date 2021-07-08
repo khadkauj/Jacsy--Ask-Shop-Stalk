@@ -14,7 +14,7 @@ import firebase from "firebase"
 import "./App.css";
 
 function App() {
-	document.title = "Jwerk Abundance"
+
 	useEffect(() => {
 		firebase.analytics().logEvent("User is in App Componen")
 		return () => {

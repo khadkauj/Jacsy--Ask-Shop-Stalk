@@ -300,7 +300,7 @@ const ClassifiedHomePageComponent = () => {
         <div className="test" id="testinLocalCSSusingId">
             <div className="button">
                 <div style={{ margin: "20px" }}>
-                    <Button className="addButton" variant="outlined" color="primary" onClick={e => handleClickOpen(e)}>
+                    <Button id="addButton" variant="contained" color="secondary" onClick={e => handleClickOpen(e)}>
                         Add to Market.
                     </Button>
                     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

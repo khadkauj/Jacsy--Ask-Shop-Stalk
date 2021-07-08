@@ -28,6 +28,7 @@
 
 .header__Icons {
   margin-left: auto;
+  padding: 14px;
 }
 
 .linkText {
@@ -61,4 +62,10 @@
 .userAuthEmail {
   font-size: 10px;
   font-weight: bold;
+}
+
+#singIn__button__homepage .MuiButton-containedPrimary {
+  background-color: #1976d2;
+  background: linear-gradient(230deg, #a24bcf, #4b79cf, #4bc5cf);
+  background-size: 300% 300%;
 }

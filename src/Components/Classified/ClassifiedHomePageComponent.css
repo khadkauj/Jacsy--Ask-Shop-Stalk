@@ -28,7 +28,7 @@
 }
 
 #testinLocalCSSusingId .MuiButton-outlinedPrimary {
-  font-weight: bold !important;
+  /* font-weight: bold !important;
   background-image: linear-gradient(
     to right top,
     #3ad29f,
@@ -39,7 +39,7 @@
   );
   color: #fff !important;
   border: none !important;
-  outline: none !important;
+  outline: none !important; */
 }
 
 .like {
@@ -101,4 +101,8 @@
 
 .cards__main {
   padding-bottom: 80px;
+}
+
+#testinLocalCSSusingId .MuiButton-containedSecondary {
+  background: #f44336 !important;
 }

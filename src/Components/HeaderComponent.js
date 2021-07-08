@@ -5,6 +5,8 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import firebase from 'firebase';
 import ButtonWithLogoutFunctionComponent from "./Login And Logout/ButtonWithLogoutFunctionComponent"
+import Button from '@material-ui/core/Button';
+
 import "./HeaderComponent.css"
 
 const HeaderComponent = () => {
@@ -50,10 +52,20 @@ const HeaderComponent = () => {
                     </li>
                 </ul>
             </nav>
-            <div className="header__Icons"  >
-                {!userStatus && <IconButton aria-label="Sign" onClick={signToFirebase}  >
+            <div className="header__Icons" id="singIn__button__homepage"  >
+                {/* {!userStatus && <IconButton aria-label="Sign" onClick={signToFirebase}  >
                     <PersonAddIcon fontSize="large" />
-                </IconButton>}
+                </IconButton>} */}
+                {!userStatus &&
+                    <Button
+                        onClick={e => signToFirebase(e)}
+                        variant="contained"
+                        color="primary"
+                        startIcon={<PersonAddIcon />}
+                    >
+                        Log in
+                    </Button>
+                }
                 {/* {userStatus && <IconButton aria-label="add to favorites" onClick={signOutOfFirebase} >
                     <ExitToAppIcon fontSize="large" />
                 </IconButton>} */}

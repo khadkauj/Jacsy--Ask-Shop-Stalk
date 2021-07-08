@@ -87,11 +87,11 @@ const ClassifiedProductView = () => {
                                     <div className="secondDivInGrid GiveWidth alignCenterForSecondGridwhihhchisInforGrid">
                                         <div className="tophead">
                                             <Grid container id="name__avatar__div" >
-                                                <Grid item sm={4} md={4} lg={4} >
+                                                <Grid item sm={4} md={3} lg={4} >
                                                     <h2 className="productViewDetailsFont">{productDataFromFirebase?.name}</h2>
                                                     <span className="prodPricedet" >{"€" + productDataFromFirebase?.price}</span>
                                                 </Grid>
-                                                <Grid item sm={8} md={8} lg={8} className="avatarContainer leftAuto">
+                                                <Grid item sm={8} md={9} lg={8} className="avatarContainer leftAuto">
                                                     <Avatar aria-label="recipe">
                                                         {productDataFromFirebase?.userEmail?.slice(0, 1).toUpperCase()}
                                                     </Avatar>
@@ -111,7 +111,7 @@ const ClassifiedProductView = () => {
                                                 {productDataFromFirebase?.productDetails && <h4> Condition: {productDataFromFirebase?.productDetails} </h4>}
                                                 {productDataFromFirebase?.category && <h4> Product: {productDataFromFirebase?.category} </h4>}
                                                 <div className="pay__div" >
-                                                    <h4>Payment by🤑:&nbsp;&nbsp; </h4>
+                                                    <h4>Pay by🤑:&nbsp;&nbsp; </h4>
                                                     <div className="Payment">
                                                         {productDataFromFirebase?.paymentOptions?.map((option, i) => (
                                                             <button key={i} >{option}</button>
