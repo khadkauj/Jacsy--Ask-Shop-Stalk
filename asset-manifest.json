@@ -1,13 +1,15 @@
 {
   "files": {
     "main.css": "/Jwork/static/css/main.9ec2b27c.chunk.css",
-    "main.js": "/Jwork/static/js/main.31fbdac5.chunk.js",
-    "main.js.map": "/Jwork/static/js/main.31fbdac5.chunk.js.map",
+    "main.js": "/Jwork/static/js/main.b112f445.chunk.js",
+    "main.js.map": "/Jwork/static/js/main.b112f445.chunk.js.map",
     "runtime-main.js": "/Jwork/static/js/runtime-main.f7dbec62.js",
     "runtime-main.js.map": "/Jwork/static/js/runtime-main.f7dbec62.js.map",
     "static/js/2.71658a11.chunk.js": "/Jwork/static/js/2.71658a11.chunk.js",
     "static/js/2.71658a11.chunk.js.map": "/Jwork/static/js/2.71658a11.chunk.js.map",
     "index.html": "/Jwork/index.html",
+    "service-worker.js": "/Jwork/service-worker.js",
+    "service-worker.js.map": "/Jwork/service-worker.js.map",
     "static/css/main.9ec2b27c.chunk.css.map": "/Jwork/static/css/main.9ec2b27c.chunk.css.map",
     "static/js/2.71658a11.chunk.js.LICENSE.txt": "/Jwork/static/js/2.71658a11.chunk.js.LICENSE.txt"
   },
@@ -15,6 +17,6 @@
     "static/js/runtime-main.f7dbec62.js",
     "static/js/2.71658a11.chunk.js",
     "static/css/main.9ec2b27c.chunk.css",
-    "static/js/main.31fbdac5.chunk.js"
+    "static/js/main.b112f445.chunk.js"
   ]
 }
