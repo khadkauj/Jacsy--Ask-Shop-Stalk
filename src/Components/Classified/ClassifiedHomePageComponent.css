@@ -116,3 +116,10 @@
   padding: 4px 0px;
   margin-bottom: -15px;
 }
+
+#image__onHoverGrow .MuiCardMedia-root {
+  transition: all 0.2s ease-in-out;
+}
+#image__onHoverGrow .MuiCardMedia-root:hover {
+  transform: scale(1.1);
+}

@@ -443,7 +443,7 @@ const ClassifiedHomePageComponent = () => {
                                     title={item.data.userEmail}
                                     subheader={"posted at " + item.data.date.toDate().toLocaleString()}
                                 />
-                                <Link to={"/Classified/Products/" + item.data.id} className="linkTextForCard" >
+                                <Link to={"/Classified/Products/" + item.data.id} className="linkTextForCard" id="image__onHoverGrow" >
                                     <CardMedia
                                         className={classes.media}
                                         image={item.data.imageURL ? item.data.imageURL[0] : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
