@@ -21,6 +21,16 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+firebase.firestore().enablePersistence()
+    .catch(function (err) {
+        if (err.code == 'unimplemented') {
+            // The current browser does not support all of the
+            // features required to enable persistence
+        }
+    });
+
+
+
 const db = firebaseApp.firestore();
 const auth = firebase.auth()
 // const storage = firebase.storage()
