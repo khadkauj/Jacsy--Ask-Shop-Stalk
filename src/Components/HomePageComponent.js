@@ -20,7 +20,7 @@ const HomePageComponent = () => {
                     <BottomAppBar />
                 </div>
                 {/* the below is grid in main homepage */}
-                <div className="tets">
+                <div className="tets" id="tets__id">
                     <ListNews />
                 </div>
             </div>

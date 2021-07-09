@@ -1,14 +1,7 @@
 .tets {
   /* display: grid;
   place-items: center; */
-  padding: 24px;
-}
-
-.bottomBar__main {
-  /* display: grid;
-  place-items: center;
-  width: 50%; */
-  /* height: 50%; */
+  padding: 14px;
 }
 
 @media screen and (min-width: 600px) {
@@ -20,4 +13,8 @@
 
 #homepage__main ::-webkit-scrollbar {
   display: none;
+}
+
+#tets__id .MuiGrid-spacing-xs-1 {
+  margin-bottom: 80px;
 }
