@@ -20,9 +20,9 @@ const HomePageComponent = () => {
                     <BottomAppBar />
                 </div>
                 {/* the below is grid in main homepage */}
-                <div className="tets" id="tets__id">
+                {/* <div className="tets" id="tets__id">
                     <ListNews />
-                </div>
+                </div> */}
             </div>
         </HomePageComponentsToSync.Provider>
 

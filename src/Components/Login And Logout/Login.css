@@ -1,6 +1,7 @@
 .main_div__grid {
   display: grid;
   place-items: center;
+  padding-bottom: 80px;
 }
 
 .main123 {

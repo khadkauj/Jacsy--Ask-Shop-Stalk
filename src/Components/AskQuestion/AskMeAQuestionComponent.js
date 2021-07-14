@@ -41,16 +41,35 @@ const messages = [
 
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        '& > *': {
-            margin: theme.spacing(1),
-            width: theme.spacing(16),
-            height: theme.spacing(16),
-        },
+    text: {
+        padding: theme.spacing(2, 2, 0),
+    },
+    paper: {
+        paddingBottom: 50,
+    },
+    list: {
+        marginBottom: theme.spacing(2),
+    },
+    subheader: {
+        backgroundColor: theme.palette.background.paper,
+    },
+    appBar: {
+        top: 'auto',
+        bottom: 0,
+    },
+    grow: {
+        flexGrow: 1,
+    },
+    fabButton: {
+        position: 'absolute',
+        zIndex: 1,
+        top: -30,
+        left: 0,
+        right: 0,
+        margin: '0 auto',
     },
 }));
+
 const AskMeAQuestionComponent = () => {
     const classes = useStyles();
     // use-context stuffs
@@ -176,11 +195,31 @@ const AskMeAQuestionComponent = () => {
                 </Paper>
             </div>
 
-            <div className="appbar__add" id="fab__id" >
+            {/* <div className="appbar__add" id="fab__id" >
                 <Fab color="secondary" aria-label="add" className="fab__icon">
                     <AddIcon onClick={e => handleClickOpen()} >A</AddIcon>
                 </Fab>
+            </div> */}
+            <div >
+                <AppBar id="appbar__bottom__div" position="fixed" color="primary" className={classes.appBar}  >
+                    <Toolbar>
+                        <IconButton edge="start" color="inherit" aria-label="open drawer">
+                            <MenuIcon />
+                        </IconButton>
+                        <Fab color="secondary" aria-label="add" className={classes.fabButton} onClick={e => handleClickOpen()} >
+                            <AddIcon />
+                        </Fab>
+                        <div className={classes.grow} />
+                        <IconButton color="inherit">
+                            <SearchIcon />
+                        </IconButton>
+                        <IconButton edge="end" color="inherit">
+                            <MoreIcon />
+                        </IconButton>
+                    </Toolbar>
+                </AppBar>
             </div>
+
 
             {/* Form  Popup for a Question */}
             <div>

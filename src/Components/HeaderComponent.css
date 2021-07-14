@@ -1,16 +1,15 @@
 .router__div {
-  background-image: linear-gradient(
-    to right top,
-    #fff5ff,
-    #fef8ff,
-    #fdfaff,
-    #fefdff,
-    #ffffff
-  );
-  /* height: 10vh; */
   display: flex;
   place-items: center;
-  border-bottom: 1px solid #eadddd;
+  z-index: 400;
+  font-family: "Libre Franklin", sans-serif;
+  transition: transform 0.25s ease-in-out;
+  transform: translate3d(0, 0, 0);
+  -webkit-font-smoothing: antialiased;
+  background: #fff;
+  box-shadow: 0 2px 6px 0 rgb(0 0 0 / 15%);
+  height: 80px;
+  margin-bottom: 14px;
 }
 
 .ul__list {

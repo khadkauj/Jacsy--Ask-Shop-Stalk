@@ -394,7 +394,6 @@ const AnswerComponent = () => {
 
     return (
         <div className="answerComponetn__topMainDiv">
-            <div className="dark_greyBox"></div>
             {questionAnswerFromFB ? (
                 <div id="QA__main">
                     <Grid container spacing={1}>
