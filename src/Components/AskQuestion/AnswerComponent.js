@@ -391,6 +391,10 @@ const AnswerComponent = () => {
         }
 
     }
+    // vote question
+    const voteQuestion = (e) => {
+
+    }
 
     return (
         <div className="answerComponetn__topMainDiv">
@@ -403,10 +407,24 @@ const AnswerComponent = () => {
                                 <IconButton aria-label="share" onClick={e => handleClickOpen(e)}>
                                     <BorderColorIcon fontSize="large" />
                                 </IconButton>
-                                <IconButton aria-label="share" onClick={e => handleEditAsnwer(e)} >
-                                    <MoreHorizIcon fontSize="large" />
-                                </IconButton>
+                                {0 === 1 ? <IconButton aria-label="share" onClick={e => handleEditAsnwer(e)}>
+                                    <div style={{ display: "flex", flexDirection: "column" }} >
+                                        <FavoriteIcon fontSize="large" /> <span style={{ fontSize: "12px" }}>{questionAnswerFromFB.vote} Votes</span>
+                                    </div>
+                                </IconButton> :
+                                    <IconButton aria-label="share" onClick={e => voteQuestion(e)} >
+                                        <div style={{ display: "flex", flexDirection: "column" }} >
+                                            <FavoriteBorderOutlined fontSize="large" /> <span style={{ fontSize: "12px" }}>{questionAnswerFromFB.vote} Votes</span>
+                                        </div>
+                                    </IconButton>}
+                                {questionAnswerFromFB.questionPostedby === user?.email &&
+                                    <IconButton aria-label="share" onClick={e => handleEditAsnwer(e)} >
+                                        <MoreHorizIcon fontSize="large" />
+                                    </IconButton>
+                                }
+
                             </div>
+                            <p id="question__Tag">#{questionAnswerFromFB.tag}</p>
                             <div className="dark_greyBox">
                                 <span className="noOfAns">
                                     {answerListsOfQuestions?.length
@@ -416,72 +434,73 @@ const AnswerComponent = () => {
                             </div>
                         </Grid>
 
-                        {answerListsOfQuestions?.length > 0 ? <Grid item xs={12} sm={12} md={8} lg={8}>
-                            {answerListsOfQuestions?.map((docData, i) => (
-                                <div className="qa__mainDiv" key={i}>
-                                    <div className="avatarAndids">
-                                        <ListItemAvatar>
-                                            <Avatar alt="Profile Picture" src={""} />
-                                        </ListItemAvatar>
-                                        <div className="avatarAndids__innner">
-                                            <strong>
-                                                {docData?.data?.answeredBy
-                                                    ? docData?.data?.answeredBy
-                                                    : "Anonymous"}
-                                            </strong>
-                                            <span>
-                                                {docData?.data?.date.toDate().toLocaleString()}
-                                            </span>
+                        {answerListsOfQuestions?.length > 0 ?
+                            <Grid item xs={12} sm={12} md={8} lg={8}>
+                                {answerListsOfQuestions?.map((docData, i) => (
+                                    <div className="qa__mainDiv" key={i}>
+                                        <div className="avatarAndids">
+                                            <ListItemAvatar>
+                                                <Avatar alt="Profile Picture" src={""} />
+                                            </ListItemAvatar>
+                                            <div className="avatarAndids__innner">
+                                                <strong>
+                                                    {docData?.data?.answeredBy
+                                                        ? docData?.data?.answeredBy
+                                                        : "Anonymous"}
+                                                </strong>
+                                                <span>
+                                                    {docData?.data?.date.toDate().toLocaleString()}
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
 
 
-                                    <div className="inner__answer">
-                                        {docData?.data?.answer &&
-                                            docData?.data?.answer.length < 200 && (
-                                                <p>{docData?.data?.answer.slice(0, 200)} </p>
-                                            )}
-                                    </div>
-
-
-                                    {!seeMoreState && (
                                         <div className="inner__answer">
                                             {docData?.data?.answer &&
-                                                docData?.data?.answer.length >= 200 && (
-                                                    <div className="answer__seeMore">
-                                                        <p>{docData?.data?.answer.slice(0, 200) + "..."}</p>{" "}
+                                                docData?.data?.answer.length < 200 && (
+                                                    <p>{docData?.data?.answer.slice(0, 200)} </p>
+                                                )}
+                                        </div>
+
+
+                                        {!seeMoreState && (
+                                            <div className="inner__answer">
+                                                {docData?.data?.answer &&
+                                                    docData?.data?.answer.length >= 200 && (
+                                                        <div className="answer__seeMore">
+                                                            <p>{docData?.data?.answer.slice(0, 200) + "..."}</p>{" "}
+                                                            <span
+                                                                style={{ cursor: "pointer" }}
+                                                                className="seeMoreAnswer__span"
+                                                                onClick={(e) => setSeeMoreState(!seeMoreState)}
+                                                            >
+                                                                see more
+                                                            </span>
+                                                        </div>
+                                                    )}
+
+                                            </div>
+                                        )}
+                                        {seeMoreState && (
+                                            <div className="inner__answer">
+                                                {docData?.data?.answer && docData?.data?.answer.length >= 200 && (
+                                                    <div div className="answer__seeMore">
+                                                        <p>{docData?.data?.answer} </p>{" "}
                                                         <span
                                                             style={{ cursor: "pointer" }}
                                                             className="seeMoreAnswer__span"
                                                             onClick={(e) => setSeeMoreState(!seeMoreState)}
                                                         >
-                                                            see more
+                                                            see less
                                                         </span>
                                                     </div>
                                                 )}
+                                            </div>
+                                        )}
 
-                                        </div>
-                                    )}
-                                    {seeMoreState && (
-                                        <div className="inner__answer">
-                                            {docData?.data?.answer && docData?.data?.answer.length >= 200 && (
-                                                <div div className="answer__seeMore">
-                                                    <p>{docData?.data?.answer} </p>{" "}
-                                                    <span
-                                                        style={{ cursor: "pointer" }}
-                                                        className="seeMoreAnswer__span"
-                                                        onClick={(e) => setSeeMoreState(!seeMoreState)}
-                                                    >
-                                                        see less
-                                                    </span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
-
-                                    <div className="qa__footer">
-                                        <div id="oneIcon__collection">
-                                            {/* <IconButton
+                                        <div className="qa__footer">
+                                            <div id="oneIcon__collection">
+                                                {/* <IconButton
                                                 onClick={(e) => voteAnswer(docData?.data.id, 1)}
                                                 aria-label="share"
                                             >
@@ -509,34 +528,34 @@ const AnswerComponent = () => {
                                                     <span className="icon__p">{docData?.data.vote} </span>
                                                 )}
                                             </IconButton> */}
-                                            <CardActions disableSpacing>
-                                                {docData?.data.peopleWhoLiked?.includes(user?.email) && <IconButton onClick={e => addLikeToFirebase(docData?.data, -1)} aria-label="add to favorites" style={{ color: "#ed4956" }}>
-                                                    <FavoriteIcon /><p className="like">{docData?.data?.like + " likes"}</p>
-                                                </IconButton>}
-                                                {!docData?.data?.peopleWhoLiked?.includes(user?.email) && <IconButton aria-label="add to favorites" onClick={e => addLikeToFirebase(docData?.data, 1)}>
-                                                    <FavoriteBorderOutlined /><p className="like">{docData?.data?.like + " likes"}</p>
-                                                </IconButton>}
-                                                {/* <IconButton aria-label="add to favorites">
+                                                <CardActions disableSpacing>
+                                                    {docData?.data.peopleWhoLiked?.includes(user?.email) && <IconButton onClick={e => addLikeToFirebase(docData?.data, -1)} aria-label="add to favorites" style={{ color: "#ed4956" }}>
+                                                        <FavoriteIcon /><p className="like">{docData?.data?.like + " likes"}</p>
+                                                    </IconButton>}
+                                                    {!docData?.data?.peopleWhoLiked?.includes(user?.email) && <IconButton aria-label="add to favorites" onClick={e => addLikeToFirebase(docData?.data, 1)}>
+                                                        <FavoriteBorderOutlined /><p className="like">{docData?.data?.like + " likes"}</p>
+                                                    </IconButton>}
+                                                    {/* <IconButton aria-label="add to favorites">
                                         <FavoriteBorderOutlined onClick={e => addLikeToFirebase(item?.data)} />
                                     </IconButton> */}
 
-                                            </CardActions>
-                                        </div>
-                                        <div>
-                                            {user?.email === docData.data.emailUsedToAnswerSavedForSecurityPurpose &&
-                                                <Button size="small" color="secondary" onClick={e => deleteAnswer(docData?.data?.id, docData?.data?.answeredBy)}  >
-                                                    Delete.
+                                                </CardActions>
+                                            </div>
+                                            <div>
+                                                {user?.email === docData.data.emailUsedToAnswerSavedForSecurityPurpose &&
+                                                    <Button size="small" color="secondary" onClick={e => deleteAnswer(docData?.data?.id, docData?.data?.answeredBy)}  >
+                                                        Delete.
+                                                    </Button>
+                                                }
+                                                <Button size="small" color="secondary" disabled={true} >
+                                                    Reply.
                                                 </Button>
-                                            }
-                                            <Button size="small" color="secondary" disabled={true} >
-                                                Reply.
-                                            </Button>
+                                            </div>
                                         </div>
+                                        <div className="dark_greyBox"></div>
                                     </div>
-                                    <div className="dark_greyBox"></div>
-                                </div>
-                            ))}
-                        </Grid> : <p className="no__answers">No Answers Available at the moment.</p>}
+                                ))}
+                            </Grid> : <p className="no__answers">No Answers Available at the moment.</p>}
                     </Grid>
                 </div>
             ) : (

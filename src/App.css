@@ -1,8 +1,15 @@
+#OutsideApp {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .App {
   /* display: grid;
   place-items: center; */
-  min-height: 100vh;
+
   position: relative;
+  flex-grow: 1;
 }
 
 .skeleton__div {

@@ -48,7 +48,10 @@ const HeaderComponent = () => {
             <Link to="/Notes" style={{ color: "white"}}>Notes</Link>
         </li> */}
                     <li>
-                        <Link to="/Classified" className="linkText" style={{ color: "#06201b" }}>Classified</Link>
+                        <Link to="/Classified" className="linkText" style={{ color: "#06201b" }}>Store</Link>
+                    </li>
+                    <li>
+                        <Link to="/Classified" className="linkText" style={{ color: "#06201b" }}>Stalk</Link>
                     </li>
                 </ul>
             </nav>
