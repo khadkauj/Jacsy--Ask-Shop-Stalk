@@ -59,7 +59,6 @@ function App() {
 						</Route>
 						<Route exact path="/">
 							<HomePageComponent />
-							<FooterComponent />
 						</Route>
 					</div>
 				</HashRouter>
