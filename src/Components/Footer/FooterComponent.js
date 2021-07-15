@@ -1,8 +1,4 @@
-
-import { Typography } from "@material-ui/core";
 import React from "react";
-import { NavLink } from "react-router-dom";
-import IconButton from '@material-ui/core/IconButton';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import "./FooterComponent.css";
 const FooterComponent = () => {

@@ -1,8 +1,6 @@
-import { IconButton } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from "react-router-dom"
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import firebase from 'firebase';
 import ButtonWithLogoutFunctionComponent from "./Login And Logout/ButtonWithLogoutFunctionComponent"
 import Button from '@material-ui/core/Button';

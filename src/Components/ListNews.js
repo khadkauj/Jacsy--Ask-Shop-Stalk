@@ -4,9 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import { db } from "../Firebase/Firebase"
 import Skeleton from '@material-ui/lab/Skeleton';
 import { Link } from "react-router-dom"
@@ -52,11 +50,7 @@ const ListNews = () => {
                             <Link to={"/Answers/" + item.id} className="link__newsDecoration" >
                                 <Card className={classes.root} id="minWidth__card">
                                     <CardActionArea>
-                                        {/* <CardMedia
-                    className={classes.media}
-                    image="https://data.whicdn.com/images/167909674/original.jpg"
-                    title="Contemplative Reptile"
-                /> */}
+
                                         <CardContent className="cardContent">
                                             <p >
                                                 {item?.data?.question.length < 65 ? item?.data?.question : item?.data?.question.slice(0, 60) + "...?"}
@@ -64,9 +58,7 @@ const ListNews = () => {
                                         </CardContent>
                                     </CardActionArea>
                                     <CardActions>
-                                        {/* <Button size="small" color="primary">
-                Share
-            </Button> */}
+
                                         <Button size="small" color="primary">
                                             Answer.
                                         </Button>

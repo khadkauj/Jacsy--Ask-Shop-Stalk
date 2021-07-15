@@ -33,15 +33,6 @@ import Select from "@material-ui/core/Select";
 import { HomePageComponentsToSync } from "../ContextComponent";
 
 import "./AskMeAQuestionComponent.css";
-const messages = [
-    {
-        id: 1,
-        primary: "Brunch this week?",
-        secondary:
-            "I'll be in the neighbourhood this week. Let's grab a bite to eat",
-        person: "/static/images/avatar/5.jpg",
-    },
-];
 
 const useStyles = makeStyles((theme) => ({
     text: {
@@ -156,7 +147,6 @@ const AskMeAQuestionComponent = () => {
 
     const [user, setUser] = useState(undefined);
     const [noOfQuestionToShow, setNoOfQuestionToShow] = useState(25)
-    const [dateRefOfLastObject, setDateRefOfLastObject] = useState(null)
     // fetching questions and answers + checking user state
     useEffect(() => {
         db.collection("questions")

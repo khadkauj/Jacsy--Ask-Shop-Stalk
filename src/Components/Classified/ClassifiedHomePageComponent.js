@@ -138,8 +138,6 @@ const ClassifiedHomePageComponent = () => {
     // Image change handel
     const imagehandleChange = async (e) => {
         console.log(e.target.files.length);
-        // if (e.target.files[0]) {
-
 
         if (e.target.files) {
             // const files = []
@@ -156,10 +154,8 @@ const ClassifiedHomePageComponent = () => {
                     console.log("Error in resizing image, ", err);
                 }
             }
-        }        // }
+        }
     }
-
-
     const uploadFileAndGetDownloadURL = async (ref, file) => {
         const snap = await ref.put(file);
         const downloadURL = await snap.ref.getDownloadURL();
@@ -520,10 +516,7 @@ const ClassifiedHomePageComponent = () => {
                 </Grid>
             </div> : <div className="skeleton__div"  ><Skeleton variant="rect" width="80vw" height="60vh" /></div>
             }
-
-
             {/* Snackbar sub-component */}
-
             <div>
                 <Snackbar
                     anchorOrigin={{

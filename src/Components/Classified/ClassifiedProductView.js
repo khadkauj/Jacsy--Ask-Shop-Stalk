@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import { useParams } from 'react-router-dom';
 import { db } from '../../Firebase/Firebase';
-import { Avatar, CardMedia, IconButton } from '@material-ui/core';
+import { Avatar, CardMedia } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import firebase from "firebase"
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import SplitButton from "./MarkSoldDeleteEditOptionsComponent"
 import { userContext } from "../ContextComponent"
 
 import './ClassifiedProductView.css';
-
-// testing with extra Functions
-
 
 const ClassifiedProductView = () => {
     const { id } = useParams();
     const [productDataFromFirebase, setproductDataFromFirebase] = useState([])
     const [statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold] = useState(false) //
     const [productEditedInMArkSoldComponent, setProductEditedInMArkSoldComponent] = useState(false)
-    const [user, setUser] = useState(undefined)
     useEffect(() => {
         // firebase analytics
         firebase.analytics().logEvent("User is in Main Classified shop Component")
@@ -78,7 +70,6 @@ const ClassifiedProductView = () => {
                                             < img src={url} alt="" onClick={e => setNewImage(i)} key={i} />
                                         ))}
                                     </div>
-
 
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={6} lg={6}>
