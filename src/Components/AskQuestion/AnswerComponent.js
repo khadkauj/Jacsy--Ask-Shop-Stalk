@@ -41,6 +41,7 @@ const AnswerComponent = () => {
     const [seeMoreState, setSeeMoreState] = useState(false); //too see all answer when clicke on see more
     const [checkedBox, setCheckedBox] = React.useState(false); //checkbox
     const [questionId, setquestionId] = useState("")
+    const [stateAfterVotingQuestion, setStateAfterVotingQuestion] = useState(false)
     const { id } = useParams();
 
     useEffect(() => {
@@ -81,7 +82,9 @@ const AnswerComponent = () => {
             }
         });
         return () => { };
-    }, [stateAfterAnswerSubmit, stateAfterVote, stateAfterQuestionSubmit, stateAfterAnswerDelete, updateAfterSendingLike]);
+    }, [stateAfterAnswerSubmit, stateAfterVote,
+        stateAfterQuestionSubmit, stateAfterAnswerDelete,
+        updateAfterSendingLike, stateAfterVotingQuestion, id]);
 
     // all setup for Form Dialog Box
     const [open, setOpen] = React.useState(false);
@@ -150,158 +153,8 @@ const AnswerComponent = () => {
         }
     };
 
-    // adding upvote/downvote to answers
-    // const voteAnswer = (answerId, voteCount) => {
-    //     console.log("asnwid", answerId, voteCount);
-    //     console.log("vote answer methid being called");
-
-    //     if (user) {
-    //         db.collection("questions")
-    //             .doc(id)
-    //             .collection("answersList")
-    //             .doc(answerId)
-    //             .get()
-    //             .then((snapshot) => {
-    //                 console.log("**", snapshot.data().vote);
-    //                 const hasUserUpVoted = snapshot
-    //                     .data()
-    //                     ?.peopleWhoUpVoted.includes(user?.email);
-    //                 const hasUserDownVoted = snapshot
-    //                     .data()
-    //                     ?.peopleWhoDownVoted.includes(user?.email);
-    //                 if (!hasUserUpVoted && !hasUserDownVoted) {
-    //                     if (voteCount === 1) {
-    //                         db.collection("questions")
-    //                             .doc(id)
-    //                             .collection("answersList")
-    //                             .doc(answerId)
-    //                             .update({
-    //                                 vote: snapshot.data().vote + voteCount,
-    //                                 peopleWhoUpVoted: firebase.firestore.FieldValue.arrayUnion(
-    //                                     user?.email
-    //                                         ? user?.email
-    //                                         : "Something wrong with firebase apis"
-    //                                 ),
-    //                             })
-    //                             .then((resp) => console.log("success in vote fucntion1"))
-    //                             .catch((error) => console.log("error in vote function"));
-    //                     } else if (voteCount === -1) {
-    //                         db.collection("questions")
-    //                             .doc(id)
-    //                             .collection("answersList")
-    //                             .doc(answerId)
-    //                             .update({
-    //                                 vote: snapshot.data().vote + voteCount,
-    //                                 peopleWhoDownVoted: firebase.firestore.FieldValue.arrayUnion(
-    //                                     user?.email
-    //                                         ? user?.email
-    //                                         : "Something wrong with firebase apis"
-    //                                 ),
-    //                             })
-    //                             .then((resp) => console.log("success in vote fucntion2"))
-    //                             .catch((error) => console.log("error in vote function"));
-    //                     }
-
-    //                 } else if (hasUserUpVoted && !hasUserDownVoted) {
-    //                     if (voteCount === 1) {
-    //                         console.log("You cant vote twice.");
-    //                     } else if (voteCount === -1) {
-    //                         // checking for edge case when vote is 0 and you want user to be nowher in array
-    //                         if (snapshot.data().vote === 1) {
-    //                             db.collection("questions")
-    //                                 .doc(id)
-    //                                 .collection("answersList")
-    //                                 .doc(answerId)
-    //                                 .update({
-    //                                     vote: snapshot.data().vote + voteCount,
-    //                                     peopleWhoUpVoted: firebase.firestore.FieldValue.arrayRemove(
-    //                                         user?.email
-    //                                     ),
-    //                                 })
-    //                                 .then((resp) => console.log("success in vote fucntion3"))
-    //                                 .catch((error) => console.log("error in vote function"));
-    //                         } else {
-    //                             db.collection("questions")
-    //                                 .doc(id)
-    //                                 .collection("answersList")
-    //                                 .doc(answerId)
-    //                                 .update({
-    //                                     vote: snapshot.data().vote + voteCount,
-    //                                     peopleWhoDownVoted:
-    //                                         firebase.firestore.FieldValue.arrayUnion(
-    //                                             user?.email
-    //                                                 ? user?.email
-    //                                                 : "Something wrong with firebase apis"
-    //                                         ),
-    //                                     peopleWhoUpVoted: firebase.firestore.FieldValue.arrayRemove(
-    //                                         user?.email
-    //                                     ),
-    //                                 })
-    //                                 .then((resp) => console.log("success in vote fucntion3"))
-    //                                 .catch((error) => console.log("error in vote function"));
-    //                         }
-    //                     }
-
-    //                 } else if (!hasUserUpVoted && hasUserDownVoted) {
-    //                     if (voteCount === -1) {
-    //                         console.log("You can't downvote twice");
-    //                     } else if (voteCount === 1) {
-    //                         // check for edge case when vote is -1
-    //                         if (snapshot.data().vote === -1) {
-    //                             db.collection("questions")
-    //                                 .doc(id)
-    //                                 .collection("answersList")
-    //                                 .doc(answerId)
-    //                                 .update({
-    //                                     vote: snapshot.data().vote + voteCount,
-    //                                     peopleWhoDownVoted:
-    //                                         firebase.firestore.FieldValue.arrayRemove(user?.email),
-    //                                 })
-    //                                 .then((resp) => console.log("success in vote fucntion"))
-    //                                 .catch((error) => console.log("error in vote function"));
-    //                         } else {
-    //                             db.collection("questions")
-    //                                 .doc(id)
-    //                                 .collection("answersList")
-    //                                 .doc(answerId)
-    //                                 .update({
-    //                                     vote: snapshot.data().vote + voteCount,
-    //                                     peopleWhoUpVoted: firebase.firestore.FieldValue.arrayUnion(
-    //                                         user?.email
-    //                                             ? user?.email
-    //                                             : "Something wrong with firebase apis"
-    //                                     ),
-    //                                     peopleWhoDownVoted:
-    //                                         firebase.firestore.FieldValue.arrayRemove(user?.email),
-    //                                 })
-    //                                 .then((resp) => console.log("success in vote fucntion"))
-    //                                 .catch((error) => console.log("error in vote function"));
-    //                         }
-    //                     }
-
-    //                 }
-
-
-    //             }).then(changingState => {
-    //                 setstateAfterVote(!stateAfterVote);
-    //             })
-    //             .catch((error) => console.log("Error in getting vote count."));
-    //     } else {
-    //         console.log("Please log in");
-    //         setopenSnackbarProps(true);
-    //         setTimeout(() => {
-    //             setopenSnackbarProps(false);
-    //         }, 1000);
-    //     }
-    // };
-    // console.log("the user is, ", user);
-
-
     // adding love to answer // ading like/dis-like in each products
-
     // like-dislike answers
-
-
     const addLikeToFirebase = (data, numToAdd) => {
         console.log("id in funciton, ", data, numToAdd);
         if (user) {
@@ -331,7 +184,6 @@ const AnswerComponent = () => {
 
     }
 
-    // ******************
     // Edit answer -- many componets here are borowwwed from AskMeAquestionComponent
     // all setup for Form Dialog Box
     const [openDialog, setOpenDialog] = React.useState(false);
@@ -367,9 +219,9 @@ const AnswerComponent = () => {
                     setOpen(false)
                 })
         } else {
-            setUseSnackBarState(!useSnackBarState)
+            setopenSnackbarProps(true);
             setTimeout(() => {
-                setUseSnackBarState(false)
+                setopenSnackbarProps(false);
             }, 1000);
         }
     }
@@ -393,6 +245,32 @@ const AnswerComponent = () => {
     }
     // vote question
     const voteQuestion = (e) => {
+        if (user) {
+            console.log("user found", user);
+            db.collection("questions").doc(questionId).get().then(doc => {
+                console.log("chcking array, ", doc.data());
+                if (!doc.data().peopleWhoVoted?.includes(user?.email)) {
+                    db.collection("questions").doc(questionId).update({
+                        vote: ++doc.data().vote,
+                        peopleWhoVoted: firebase.firestore.FieldValue.arrayUnion(user?.email ? user?.email : "joke")
+                    }, { merge: true }).catch(error => console.log("error in updating insideLike toFirebase Funciton, ", error))
+                } else {
+                    db.collection("questions").doc(questionId).update({
+                        vote: --doc.data().vote,
+                        peopleWhoVoted: firebase.firestore.FieldValue.arrayRemove(user?.email)
+                    }, { merge: true }).catch(error => console.log("error in updating insideLike in -else statement- toFirebase Funciton, ", error))
+                }
+            })
+                .then(nthg => setStateAfterVotingQuestion(!stateAfterVotingQuestion))
+                .catch(error => console.log("error in addLiketoFirebase Function, ", error))
+
+        } else {
+            console.log("User not found while trying to send Like");
+            setopenSnackbarProps(true);
+            setTimeout(() => {
+                setopenSnackbarProps(false);
+            }, 1000);
+        }
 
     }
 
@@ -407,16 +285,18 @@ const AnswerComponent = () => {
                                 <IconButton aria-label="share" onClick={e => handleClickOpen(e)}>
                                     <BorderColorIcon fontSize="large" />
                                 </IconButton>
-                                {0 === 1 ? <IconButton aria-label="share" onClick={e => handleEditAsnwer(e)}>
-                                    <div style={{ display: "flex", flexDirection: "column" }} >
-                                        <FavoriteIcon fontSize="large" /> <span style={{ fontSize: "12px" }}>{questionAnswerFromFB.vote} Votes</span>
-                                    </div>
-                                </IconButton> :
-                                    <IconButton aria-label="share" onClick={e => voteQuestion(e)} >
+                                {questionAnswerFromFB.peopleWhoVoted?.includes(user?.email) ?
+                                    <IconButton aria-label="share" onClick={e => voteQuestion(1, -1)}>
+                                        <div style={{ display: "flex", flexDirection: "column" }} >
+                                            <FavoriteIcon fontSize="large" /> <span style={{ fontSize: "12px" }}>{questionAnswerFromFB.vote} Votes</span>
+                                        </div>
+                                    </IconButton> :
+                                    <IconButton aria-label="share" onClick={e => voteQuestion(1, -1)} >
                                         <div style={{ display: "flex", flexDirection: "column" }} >
                                             <FavoriteBorderOutlined fontSize="large" /> <span style={{ fontSize: "12px" }}>{questionAnswerFromFB.vote} Votes</span>
                                         </div>
                                     </IconButton>}
+
                                 {questionAnswerFromFB.questionPostedby === user?.email &&
                                     <IconButton aria-label="share" onClick={e => handleEditAsnwer(e)} >
                                         <MoreHorizIcon fontSize="large" />
@@ -453,7 +333,6 @@ const AnswerComponent = () => {
                                                 </span>
                                             </div>
                                         </div>
-
 
                                         <div className="inner__answer">
                                             {docData?.data?.answer &&
@@ -500,34 +379,7 @@ const AnswerComponent = () => {
 
                                         <div className="qa__footer">
                                             <div id="oneIcon__collection">
-                                                {/* <IconButton
-                                                onClick={(e) => voteAnswer(docData?.data.id, 1)}
-                                                aria-label="share"
-                                            >
-                                                <ArrowUpwardIcon
-                                                    color={
-                                                        docData?.data?.vote > 0 ? "secondary" : "inherit"
-                                                    }
-                                                />{" "}
-                                                {docData?.data?.vote >= 0 && (
-                                                    <span className="icon__p">
-                                                        {docData?.data?.vote ? docData?.data?.vote : 0}
-                                                    </span>
-                                                )}
-                                            </IconButton>
-                                            <IconButton
-                                                onClick={(e) => voteAnswer(docData?.data.id, -1)}
-                                                aria-label="share"
-                                            >
-                                                <ArrowDownwardIcon
-                                                    color={
-                                                        docData?.data?.vote < 0 ? "secondary" : "inherit"
-                                                    }
-                                                />{" "}
-                                                {docData?.data?.vote < 0 && (
-                                                    <span className="icon__p">{docData?.data.vote} </span>
-                                                )}
-                                            </IconButton> */}
+
                                                 <CardActions disableSpacing>
                                                     {docData?.data.peopleWhoLiked?.includes(user?.email) && <IconButton onClick={e => addLikeToFirebase(docData?.data, -1)} aria-label="add to favorites" style={{ color: "#ed4956" }}>
                                                         <FavoriteIcon /><p className="like">{docData?.data?.like + " likes"}</p>
@@ -536,8 +388,8 @@ const AnswerComponent = () => {
                                                         <FavoriteBorderOutlined /><p className="like">{docData?.data?.like + " likes"}</p>
                                                     </IconButton>}
                                                     {/* <IconButton aria-label="add to favorites">
-                                        <FavoriteBorderOutlined onClick={e => addLikeToFirebase(item?.data)} />
-                                    </IconButton> */}
+                                                                <FavoriteBorderOutlined onClick={e => addLikeToFirebase(item?.data)} />
+                                                            </IconButton> */}
 
                                                 </CardActions>
                                             </div>

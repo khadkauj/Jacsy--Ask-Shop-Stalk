@@ -127,6 +127,12 @@ const AskMeAQuestionComponent = () => {
                     vote: 0,
                     tag: FilterTag,
                     noOfAnswers: 0,
+                    emailUsedToAnswerSavedForSecurityPurpose: user?.email,
+                    answeredBy: user?.email,
+                    peopleWhoVoted: ["ds@gmial.com", "djs.com"],
+                    unVote: 0,
+                    userEmailVerified: user.emailVerified,
+                    userDisplayName: user?.displayName,
                 })
                 .then((doc) => {
                     console.log("snap while sending question to FB", doc);

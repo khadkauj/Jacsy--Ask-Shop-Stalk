@@ -60,6 +60,7 @@ const HeaderComponent = () => {
                     <PersonAddIcon fontSize="large" />
                 </IconButton>} */}
                 {!userStatus &&
+
                     <Button
                         onClick={e => signToFirebase(e)}
                         variant="contained"
