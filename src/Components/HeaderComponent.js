@@ -49,7 +49,7 @@ const HeaderComponent = () => {
                         <Link to="/Classified" className="linkText" style={{ color: "#06201b" }}>Store</Link>
                     </li>
                     <li>
-                        <Link to="/Classified" className="linkText" style={{ color: "#06201b" }}>Stalk</Link>
+                        <Link to="/Stalk" className="linkText" style={{ color: "#06201b" }}>Stalk</Link>
                     </li>
                 </ul>
             </nav>

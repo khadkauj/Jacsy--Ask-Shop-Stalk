@@ -17,6 +17,7 @@ import FooterComponent from "./Components/Footer/FooterComponent";
 import AnswerComponent from "./Components/AskQuestion/AnswerComponent";
 import firebase from "firebase";
 import "./App.css";
+import StalkComponent from "./Components/Stalk/StalkComponent";
 
 function App() {
 	useEffect(() => {
@@ -55,6 +56,9 @@ function App() {
 						<Route exact path="/Answers/:id">
 							<AnswerComponent />
 							<FooterComponent />
+						</Route>
+						<Route exact path="/Stalk">
+							<StalkComponent />
 						</Route>
 						<Route exact path="/">
 							<HomePageComponent />

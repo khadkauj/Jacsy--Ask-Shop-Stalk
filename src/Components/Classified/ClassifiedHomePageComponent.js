@@ -24,7 +24,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
+import { FormControl, Input, InputAdornment, InputLabel, MenuItem, Select } from "@material-ui/core";
 import firebase from "firebase";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
@@ -390,19 +390,23 @@ const ClassifiedHomePageComponent = () => {
                                     onChange={e => imagehandleChange(e)} ></input>
                                 {/* <button type="submit" onClick={sendImageToFirebase}>send image</button> */}
                             </form>
-                            <div id="price__icon">
-                                <EuroIcon id="price__icon__euro" />
-                                <TextField
-
+                            <FormControl className={classes.formControl} style={{ margin: 0, marginTop: "18px" }}>
+                                <InputLabel htmlFor="input-with-icon-adornment" style={{ fontSize: "22px" }} >Price</InputLabel>
+                                <Input
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <EuroIcon />
+                                        </InputAdornment>
+                                    }
                                     margin="dense"
                                     id="name"
-                                    label="&nbsp; &nbsp; &nbsp; Price"
+                                    label="Price"
                                     type="text"
                                     fullWidth
                                     value={productPrice}
                                     onChange={e => setproductPrice(e.target.value)}
                                 />
-                            </div>
+                            </FormControl>
 
                         </DialogContent>
                         <DialogActions>
