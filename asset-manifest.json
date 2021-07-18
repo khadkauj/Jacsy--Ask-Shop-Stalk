@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/Jwork/static/css/main.c83e912f.chunk.css",
-    "main.js": "/Jwork/static/js/main.c49e485e.chunk.js",
-    "main.js.map": "/Jwork/static/js/main.c49e485e.chunk.js.map",
+    "main.js": "/Jwork/static/js/main.20748bd1.chunk.js",
+    "main.js.map": "/Jwork/static/js/main.20748bd1.chunk.js.map",
     "runtime-main.js": "/Jwork/static/js/runtime-main.f7dbec62.js",
     "runtime-main.js.map": "/Jwork/static/js/runtime-main.f7dbec62.js.map",
-    "static/js/2.5a60a06d.chunk.js": "/Jwork/static/js/2.5a60a06d.chunk.js",
-    "static/js/2.5a60a06d.chunk.js.map": "/Jwork/static/js/2.5a60a06d.chunk.js.map",
+    "static/js/2.83b4b2a4.chunk.js": "/Jwork/static/js/2.83b4b2a4.chunk.js",
+    "static/js/2.83b4b2a4.chunk.js.map": "/Jwork/static/js/2.83b4b2a4.chunk.js.map",
     "index.html": "/Jwork/index.html",
     "service-worker.js": "/Jwork/service-worker.js",
     "service-worker.js.map": "/Jwork/service-worker.js.map",
     "static/css/main.c83e912f.chunk.css.map": "/Jwork/static/css/main.c83e912f.chunk.css.map",
-    "static/js/2.5a60a06d.chunk.js.LICENSE.txt": "/Jwork/static/js/2.5a60a06d.chunk.js.LICENSE.txt"
+    "static/js/2.83b4b2a4.chunk.js.LICENSE.txt": "/Jwork/static/js/2.83b4b2a4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.f7dbec62.js",
-    "static/js/2.5a60a06d.chunk.js",
+    "static/js/2.83b4b2a4.chunk.js",
     "static/css/main.c83e912f.chunk.css",
-    "static/js/main.c49e485e.chunk.js"
+    "static/js/main.20748bd1.chunk.js"
   ]
 }
