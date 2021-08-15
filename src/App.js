@@ -22,8 +22,13 @@ import StalkComponent from "./Components/Stalk/StalkComponent";
 function App() {
 	useEffect(() => {
 		firebase.analytics().logEvent("User is in App Componen");
-		return () => { };
+
+
+
+
 	}, []);
+
+
 
 	return (
 		<div id="OutsideApp">

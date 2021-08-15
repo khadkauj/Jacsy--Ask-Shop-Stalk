@@ -47,7 +47,7 @@ const ClassifiedProductView = () => {
 
     return (
         <userContext.Provider value={{ statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold, productEditedInMArkSoldComponent, setProductEditedInMArkSoldComponent }}>
-            <div>
+            <div style={{ marginTop: "85px" }}>
 
                 {productDataFromFirebase?.id ? <div>
                     <div id="Edit__options">

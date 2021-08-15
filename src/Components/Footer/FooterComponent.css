@@ -52,5 +52,6 @@
   }
 }
 
-#footer__end {
+.footer-socailLink {
+  display: flex;
 }

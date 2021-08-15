@@ -19,29 +19,38 @@ const StalkComponent = () => {
     const [userName, setUserName] = useState("ukhadka")
     const [jacobsUserProfile, setJacobsUserProfile] = useState([])
     const [imgURL, setImgURL] = useState("")
+    const [errorInFetchingDetails, setErrorInFetchingDetails] = useState("")
     const submitUserName = async (e) => {
         e.preventDefault()
         await axios.get(`https://jacobsapigetallpeopledetails.herokuapp.com/api/${userName}`)
             .then(response => response.data)
             .then(data => {
+                setErrorInFetchingDetails("")
                 console.log(Object.entries(data))
                 setJacobsUserProfile(Object.entries(data))
             })
-            .catch(error => console.log("error in data , ", error))
-
-        await axios.get(`https://jacobsapigetallpeopledetails.herokuapp.com/api/${userName}/image`, {
-            responseType: 'arraybuffer',
-            headers: {
-                'Access-Control-Allow-Origin': "*"
-            }
-        })
-            .then(response => response)
-            .then(data => {
-                console.log(data)
-                // const ac = URL.createObjectURL(data.data)
-                // setImgURL(ac)
+            .catch(error => {
+                console.log("error in data , ", error);
+                setErrorInFetchingDetails(error)
             })
-            .catch(error => console.log("error in data , ", error))
+
+
+        // await axios.get(`https://jacobsapigetallpeopledetails.herokuapp.com/api/${userName}/image`, {
+        //     responseType: 'arraybuffer',
+        //     headers: {
+        //         'Access-Control-Allow-Origin': "*"
+        //     }
+        // })
+        //     .then(response => response)
+        //     .then(data => {
+        //         console.log(data)
+        //         // const ac = URL.createObjectURL(data.data)
+        //         // setImgURL(ac)
+        //     })
+        //     .catch(error => {
+        //         console.log("error in data , ", error);
+        //         setErrorInFetchingDetails(error)
+        //     })
     }
 
     return (
@@ -52,17 +61,19 @@ const StalkComponent = () => {
                     Submit
                 </Button>
             </form>
-            <div style={{ display: "grid", placeItems: "center" }}>
+            <code>Try putting your userid here. For example, if your email address is u.khadka@jacobs-university.de than than your username is ukhadka.
+                Likewise, ssah for s.sah@jacobs-university.de and ronepal for ronepal for ro.nepal@jacobs-university.de.</code>
+            <br /> <br />
+            {errorInFetchingDetails && <p className="invalid-user" >Invalid User Id</p>}
+            {!errorInFetchingDetails && <div style={{ display: "grid", placeItems: "center" }}>
                 {jacobsUserProfile?.map(object =>
                     <div style={{ display: "flex" }} >
                         <p> {object[0] + "  :   "} </p> <p> {"  " + object[1]} </p>
                     </div>
                 )}
-            </div>
-            <div  >
+            </div>}
 
-            </div>
-            <img scr={imgURL} alt="" />
+            {/* <img scr={imgURL} alt="" /> */}
         </div>
     )
 }
