@@ -69,8 +69,8 @@ const Login = () => {
         <div className="main_div__grid" >
 
             <div className="main123">
-                <h1 className="header1">Login</h1>
-                <hr className="hr__tag" />
+                {/* <h1 className="header1">Login</h1>
+                <hr className="hr__tag" /> */}
                 <h3 className="header3">Welcome to Login page</h3>
 
                 <input className="inp" value={email} onChange={(e) => setemail(e.target.value)} type="email" placeholder="Email" />

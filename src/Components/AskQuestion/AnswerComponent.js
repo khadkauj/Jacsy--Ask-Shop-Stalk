@@ -278,7 +278,9 @@ const AnswerComponent = () => {
                             <h3>{questionAnswerFromFB?.question}</h3>
                             <div className="icons__QA">
                                 <IconButton aria-label="share" onClick={e => handleClickOpen(e)}>
-                                    <BorderColorIcon fontSize="large" />
+                                    <div style={{ display: "flex", flexDirection: "column" }} >
+                                        <BorderColorIcon fontSize="large" /> <span style={{ fontSize: "12px" }}>Answer</span>
+                                    </div>
                                 </IconButton>
                                 {questionAnswerFromFB.peopleWhoVoted?.includes(user?.email) ?
                                     <IconButton aria-label="share" onClick={e => voteQuestion(1, -1)}>
@@ -294,7 +296,9 @@ const AnswerComponent = () => {
 
                                 {questionAnswerFromFB.questionPostedby === user?.email &&
                                     <IconButton aria-label="share" onClick={e => handleEditAsnwer(e)} >
-                                        <MoreHorizIcon fontSize="large" />
+                                        <div style={{ display: "flex", flexDirection: "column" }} >
+                                            <MoreHorizIcon fontSize="large" /><span style={{ fontSize: "12px" }}>Edit</span>
+                                        </div>
                                     </IconButton>
                                 }
 

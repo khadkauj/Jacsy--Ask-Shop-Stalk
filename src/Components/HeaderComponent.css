@@ -44,9 +44,10 @@
 }
 
 .stickyProp {
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 100;
+  width: 100%;
 }
 
 @media only screen and (max-width: 600px) {

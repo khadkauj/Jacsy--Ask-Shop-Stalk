@@ -31,6 +31,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { HomePageComponentsToSync } from "../ContextComponent";
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+
 
 import "./AskMeAQuestionComponent.css";
 
@@ -239,8 +241,9 @@ const AskMeAQuestionComponent = () => {
             <div id="filter__search">
                 <div>
                     <FormControl className={classes.formControl}>
-                        <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                        <InputLabel id="demo-simple-select-label">Tags</InputLabel>
                         <Select
+
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={filterAnswerByType}
@@ -276,7 +279,11 @@ const AskMeAQuestionComponent = () => {
                         </Select>
                     </FormControl>
                 </div>
-                <span onClick={(e) => clearFilter(e)}>Clear Filters</span>
+                <Button
+                    startIcon={<RotateLeftIcon />}
+                >
+                    Clear Filters
+                </Button>
             </div>
             <div className="appBAr">
                 <Paper square className={classes.paper}>
@@ -291,27 +298,27 @@ const AskMeAQuestionComponent = () => {
                                     className="link__newsDecoration"
                                 >
                                     <ListItem button>
-                                        <ListItemAvatar>
+                                        {/* <ListItemAvatar>
                                             <Avatar alt="Profile Picture" src={""} />
-                                        </ListItemAvatar>
+                                        </ListItemAvatar> */}
                                         {!query.data?.answered && (
                                             <ListItemText
                                                 primary={
-                                                    query.data?.question.length < 120
+                                                    query.data?.question.length < 200
                                                         ? query.data?.question
-                                                        : query.data?.question.slice(0, 112) + "...?"
+                                                        : query.data?.question.slice(0, 200) + "...?"
                                                 }
-                                                secondary={"No answer available at the moment."}
+                                                secondary={<p> "No answer available at the moment." 💓<sup>{query.data?.vote} </sup>  </p>}
                                             />
                                         )}
                                         {query.data?.answered && (
                                             <ListItemText
                                                 primary={
-                                                    query.data?.question.length < 120
+                                                    query.data?.question.length < 200
                                                         ? query.data?.question
-                                                        : query.data?.question.slice(0, 112) + "...?"
+                                                        : query.data?.question.slice(0, 200) + "...?"
                                                 }
-                                                secondary={"Click to view replies."}
+                                                secondary={<span>"Click to view replies." 💓<sup>{query.data?.vote}</sup></span>}
                                             />
                                         )}
                                     </ListItem>
@@ -327,33 +334,16 @@ const AskMeAQuestionComponent = () => {
                 </Paper>
             </div>
             <div>
-                <AppBar
-                    id="appbar__bottom__div"
-                    position="fixed"
-                    color="primary"
-                    className={classes.appBar}
-                >
-                    <Toolbar>
-                        <IconButton edge="start" color="inherit" aria-label="open drawer">
-                            <MenuIcon />
-                        </IconButton>
-                        <Fab
-                            color="secondary"
-                            aria-label="add"
-                            className={classes.fabButton}
-                            onClick={(e) => handleClickOpen()}
-                        >
-                            <AddIcon />
-                        </Fab>
-                        <div className={classes.grow} />
-                        <IconButton color="inherit">
-                            <SearchIcon />
-                        </IconButton>
-                        <IconButton edge="end" color="inherit">
-                            <MoreIcon />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
+                <div className="plus-fav" >
+                    <Fab
+                        color="secondary"
+                        aria-label="add"
+                        className={classes.fabButton}
+                        onClick={(e) => handleClickOpen()}
+                    >
+                        <AddIcon />
+                    </Fab>
+                </div>
             </div>
 
             {/* Form  Popup for a Question */}
@@ -374,13 +364,13 @@ const AskMeAQuestionComponent = () => {
                             autoFocus
                             margin="dense"
                             id="name"
-                            label="Question?(20 to 200 words)*"
+                            label="Question?(20 to 500 words)*"
                             type="text"
                             fullWidth
                             value={question}
                             onChange={(e) => handlesetErrorForMaxCharInput(e)}
                             inputProps={{
-                                maxLength: 200,
+                                maxLength: 500,
                                 minLength: 100,
                                 required: true,
                                 placeholder: "Put your question here.",
