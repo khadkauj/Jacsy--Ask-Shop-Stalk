@@ -62,13 +62,13 @@ const StalkComponent = () => {
                 </Button>
             </form>
             <code>Try putting your userid here. For example, if your email address is u.khadka@jacobs-university.de than than your username is ukhadka.
-                Likewise, ssah for s.sah@jacobs-university.de and ronepal for ronepal for ro.nepal@jacobs-university.de.</code>
+                Likewise, ssah for s.sah@jacobs-university.de and ronepal for ro.nepal@jacobs-university.de. Finally, wait for 5 seconds.</code>
             <br /> <br />
             {errorInFetchingDetails && <p className="invalid-user" >Invalid User Id</p>}
-            {!errorInFetchingDetails && <div style={{ display: "grid", placeItems: "center" }}>
+            {!errorInFetchingDetails && <div style={{ display: "grid", placeItems: "center", marginBottom: "24px" }}>
                 {jacobsUserProfile?.map(object =>
                     <div style={{ display: "flex" }} >
-                        <p> {object[0] + "  :   "} </p> <p> {"  " + object[1]} </p>
+                        <code> {object[0] + "  :   "} </code> <p> {"  " + object[1]} </p>
                     </div>
                 )}
             </div>}
