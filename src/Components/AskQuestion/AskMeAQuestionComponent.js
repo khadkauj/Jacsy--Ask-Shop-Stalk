@@ -92,7 +92,10 @@ const AskMeAQuestionComponent = () => {
     ]);
     const [stateAfterQuestionSubmit, setstateAfterQuestionSubmit] =
         useState(false);
-
+    const [firebaseSeachQuery, setFirebaseSeachQuery] = useState("")
+    const [clickResetFilter, setClickResetFilter] = useState(false)
+    const [orderAnswerBy, setOrderAnswerBy] = useState("Date:Latest");
+    const [filterAnswerByType, setfilterAnswerByType] = useState("");
     // all setup for Form Dialog Box
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
@@ -151,12 +154,29 @@ const AskMeAQuestionComponent = () => {
     const [noOfQuestionToShow, setNoOfQuestionToShow] = useState(25)
     // fetching questions and answers + checking user state
     useEffect(() => {
+
+        if (orderAnswerBy === "Date:Oldest") {
+            var type = "date"
+            var order = "asc"
+        } else if (orderAnswerBy === "Date:Latest") {
+            type = "date"
+            order = "desc"
+        } else if (orderAnswerBy === "Votes:Highest") {
+            type = "vote"
+            order = "desc"
+        } else if (orderAnswerBy === "Votes:Lowest") {
+            type = "vote"
+            order = "asc"
+        } else if (orderAnswerBy === "Replies:Max") {
+            type = "Vote"
+            order = "asc"
+        }
+
         db.collection("questions")
-            .orderBy("date", "desc")
+            .orderBy(type, order)
             .limit(noOfQuestionToShow)
             .get()
             .then((snapshot) => {
-                // console.log("ques snap, ", snapshot.docs);
                 setquestionAnswerFromFB(
                     snapshot.docs.map((doc) => ({
                         id: doc.id,
@@ -166,6 +186,7 @@ const AskMeAQuestionComponent = () => {
                 );
             })
             .catch((error) => console.log("error in fetching data from FB, ", error));
+
 
         // scroll to bottom of question if noOfQuestionToShow is more than 25
         if (noOfQuestionToShow > 25) {
@@ -182,7 +203,61 @@ const AskMeAQuestionComponent = () => {
         });
 
         return () => { };
-    }, [stateForHomePageTwoNestedCompToSync, noOfQuestionToShow]);
+    }, [stateForHomePageTwoNestedCompToSync, noOfQuestionToShow, clickResetFilter, orderAnswerBy]);
+
+    useEffect(() => {
+        // if (changeTypeFilter === "Date:Oldest") {
+        //     var type = "date"
+        //     var order = "asc"
+        // } else if (changeTypeFilter === "Date:Latest") {
+        //     type = "date"
+        //     order = "desc"
+        // } else if (changeTypeFilter === "Votes:Highest") {
+        //     type = "vote"
+        //     order = "desc"
+        // } else if (changeTypeFilter === "Votes:Lowest") {
+        //     type = "vote"
+        //     order = "asc"
+        // } else if (changeTypeFilter === "Replies:Max") {
+        //     type = "Vote"
+        //     order = "asc"
+        // }
+        if (filterAnswerByType) {
+            db.collection("questions")
+                .where("tag", "==", filterAnswerByType)
+                .orderBy("date", 'desc')
+                .limit(noOfQuestionToShow)
+                .get()
+                .then((snapshot) => {
+                    setquestionAnswerFromFB(
+                        snapshot.docs.map((doc) => ({
+                            id: doc.id,
+                            key: doc.id,
+                            data: doc.data(),
+                        }))
+                    );
+                })
+                .catch((error) => console.log("error in fetching data from FB, ", error));
+
+
+            // scroll to bottom of question if noOfQuestionToShow is more than 25
+            if (noOfQuestionToShow > 25) {
+                window.scrollTo(0, document.body.scrollHeight)
+            }
+
+
+            firebase.auth().onAuthStateChanged((userState) => {
+                if (userState) {
+                    setUser(userState);
+                } else {
+                    setUser(undefined);
+                }
+            });
+        }
+
+
+
+    }, [filterAnswerByType])
 
     // setting question checking for more than 120 chars
     const [question, setquestion] = useState("");
@@ -198,42 +273,53 @@ const AskMeAQuestionComponent = () => {
     };
 
     // setup for  filter
-    const [filterAnswerByType, setfilterAnswerByType] = useState("");
-    const [orderAnswerBy, setOrderAnswerBy] = useState("");
+
 
     const clearFilter = () => {
         setOrderAnswerBy("");
         setfilterAnswerByType("");
+        setFirebaseSeachQuery("")
+        // setClickResetFilter(!clickResetFilter)
+
     };
 
     const changeTypeFilter = (e) => {
         setfilterAnswerByType(e.target.value);
-        if (e.target.value) {
-            setquestionAnswerFromFB((obj) => [
-                ...questionAnswerFromFB.filter((a) => a.data.tag === e.target.value),
-                ...questionAnswerFromFB.filter((a) => a.data.tag !== e.target.value),
-            ]);
-        }
     };
     const changeOrderAnswer = (e) => {
         setOrderAnswerBy(e.target.value);
-
-        if (e.target.value === "Date:Oldest") {
-            console.log("ans, ", questionAnswerFromFB);
-            questionAnswerFromFB.sort((a, b) => a.data.date - b.data.date);
-        } else if (e.target.value === "Date:Latest") {
-            questionAnswerFromFB.sort((a, b) => b.data.date - a.data.date);
-        } else if (e.target.value === "Votes:Highest") {
-            questionAnswerFromFB.sort((a, b) => b.data.vote - a.data.vote);
-        } else if (e.target.value === "Votes:Lowest") {
-            questionAnswerFromFB.sort((a, b) => a.data.vote - b.data.vote);
-        }
     };
 
     // get more question after clicking on see more
     const seeMore = (e) => {
         console.log(noOfQuestionToShow);
         setNoOfQuestionToShow(noOfQuestionToShow + 25)
+    }
+    console.log("firebas esearch query", firebaseSeachQuery);
+
+    // firebase Full text search
+    const firebaseFulltextSearch = (e) => {
+        setFirebaseSeachQuery(e.target.value)
+
+        db.collection("questions")
+            .orderBy("question")
+            .startAt(firebaseSeachQuery.toUpperCase())
+            .endAt(firebaseSeachQuery.toLowerCase() + "~")
+            .limit(25)
+            .get()
+            .then((snapshot) => {
+                // snapshot.docs.map(docs => {
+                //     console.log("ujjwal sanpshot, ", docs.data());
+                // })
+                setquestionAnswerFromFB(
+                    snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        key: doc.id,
+                        data: doc.data(),
+                    }))
+                );
+            })
+            .catch((error) => console.log("error in fetching data from FB, ", error));
     }
 
     return (
@@ -279,11 +365,22 @@ const AskMeAQuestionComponent = () => {
                         </Select>
                     </FormControl>
                 </div>
-                <Button
-                    startIcon={<RotateLeftIcon />}
-                >
-                    Clear Filters
-                </Button>
+                <div className="text-search-firebase" >
+                    <form className="text-search-firebase-form" >
+                        <TextField style={{ flex: "1" }} id="text-search-firebase-form-textfield" label="Search questions"
+                            value={firebaseSeachQuery} onChange={e => firebaseFulltextSearch(e)} />
+                        <Button
+                            disabled={true}
+                            className="text-search-firebase-form-button"
+                            startIcon={<RotateLeftIcon />}
+                            onClick={e => clearFilter(e)}
+                        >
+                            reset
+                        </Button>
+                    </form>
+
+                </div>
+
             </div>
             <div className="appBAr">
                 <Paper square className={classes.paper}>
@@ -306,7 +403,7 @@ const AskMeAQuestionComponent = () => {
                                                 primary={
                                                     query.data?.question.length < 200
                                                         ? query.data?.question
-                                                        : query.data?.question.slice(0, 200) + "...?"
+                                                        : query.data?.question.slice(0, 200) + "....."
                                                 }
                                                 secondary={<p> "No answer available at the moment." 💓<sup>{query.data?.vote} </sup>  </p>}
                                             />
@@ -316,7 +413,7 @@ const AskMeAQuestionComponent = () => {
                                                 primary={
                                                     query.data?.question.length < 200
                                                         ? query.data?.question
-                                                        : query.data?.question.slice(0, 200) + "...?"
+                                                        : query.data?.question.slice(0, 200) + "....."
                                                 }
                                                 secondary={<span>"Click to view replies." 💓<sup>{query.data?.vote}</sup></span>}
                                             />
@@ -325,7 +422,11 @@ const AskMeAQuestionComponent = () => {
                                 </Link>
                             </React.Fragment>
                         ))}
-                        {questionAnswerFromFB.length >= 25 && <p id='seemoreQuestions' onClick={e => seeMore(e)} >Load more</p>}
+                        {questionAnswerFromFB.length >= 25 &&
+                            <div id='seemoreQuestions'>
+                                <p onClick={e => seeMore(e)} >Load more</p>
+                            </div>
+                        }
 
                     </List>
 

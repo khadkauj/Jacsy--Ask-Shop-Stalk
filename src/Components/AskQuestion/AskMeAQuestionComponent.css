@@ -42,27 +42,49 @@
   min-width: 100px;
 }
 
-@media screen and (min-width: 600px) {
-  #filter__search .makeStyles-formControl-8 {
-    width: 200px;
-  }
-  #filter__search {
-    display: flex;
-  }
-}
-
 #seemoreQuestions {
-  color: rgb(63, 81, 181);
   cursor: pointer;
-  text-decoration: underline;
   padding: 14px;
   text-transform: capitalize;
   text-align: center;
+  border: 1px solid #bda7a7;
+  width: 70%;
+  margin: auto;
+  color: #5c5353;
+  margin-top: 24px;
+  font-family: "Libre Franklin", sans-serif;
+}
+
+.plus-fav {
+  position: fixed;
+  bottom: 40px;
+  right: 0px;
+  left: 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-search-firebase {
+  flex: 1;
+  margin-left: 4px;
+}
+.text-search-firebase-form {
+  display: flex;
+}
+.text-search-firebase-form-button {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  align-self: flex-end;
+}
+
+.MuiFormLabel-root {
+  color: inherit !important;
 }
 
 @media only screen and (min-width: 960px) {
   #filter__search {
     width: 100%;
+    display: flex;
   }
 }
 
@@ -77,6 +99,9 @@
   #filter__search {
     width: 81%;
   }
+  .appBAr {
+    min-width: 800px;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
@@ -90,13 +115,26 @@
   #filter__search {
     width: 960px;
   }
+  .appBAr {
+    width: 960px;
+  }
 }
 
-.plus-fav {
-  position: fixed;
-  bottom: 40px;
-  right: 0px;
-  left: 0px;
-  margin-left: auto;
-  margin-right: auto;
+@media screen and (max-width: 960px) {
+  #filter__search .makeStyles-formControl-8 {
+    min-width: 200px;
+  }
+  #filter__search {
+    /* display: flex; */
+    height: 111px !important;
+  }
+}
+@media screen and (max-width: 450px) {
+  #filter__search .makeStyles-formControl-8 {
+    min-width: 120px;
+  }
+  #filter__search {
+    /* display: flex; */
+    height: 111px !important;
+  }
 }

@@ -14,7 +14,7 @@ const FooterComponent = () => {
                         {/* </IconButton> */}
                     </div>
                 </a>
-                <a href="https://www.instagram.com/infintyuj/" className="link__newsDecoration" >
+                <a href="https://www.linkedin.com/in/khadkauj/" className="link__newsDecoration" >
                     <div className="footer__icon12" >
                         {/* <p className="footer__left" style={{ marginRight: "5px" }}>Infintyuj</p> */}
                         {/* <IconButton > */}
