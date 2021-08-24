@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/Jwork/static/css/main.adda6e22.chunk.css",
-    "main.js": "/Jwork/static/js/main.08015c39.chunk.js",
-    "main.js.map": "/Jwork/static/js/main.08015c39.chunk.js.map",
+    "main.css": "/Jwork/static/css/main.079b7539.chunk.css",
+    "main.js": "/Jwork/static/js/main.9d3983ac.chunk.js",
+    "main.js.map": "/Jwork/static/js/main.9d3983ac.chunk.js.map",
     "runtime-main.js": "/Jwork/static/js/runtime-main.f7dbec62.js",
     "runtime-main.js.map": "/Jwork/static/js/runtime-main.f7dbec62.js.map",
     "static/js/2.adedcaed.chunk.js": "/Jwork/static/js/2.adedcaed.chunk.js",
@@ -10,13 +10,13 @@
     "index.html": "/Jwork/index.html",
     "service-worker.js": "/Jwork/service-worker.js",
     "service-worker.js.map": "/Jwork/service-worker.js.map",
-    "static/css/main.adda6e22.chunk.css.map": "/Jwork/static/css/main.adda6e22.chunk.css.map",
+    "static/css/main.079b7539.chunk.css.map": "/Jwork/static/css/main.079b7539.chunk.css.map",
     "static/js/2.adedcaed.chunk.js.LICENSE.txt": "/Jwork/static/js/2.adedcaed.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.f7dbec62.js",
     "static/js/2.adedcaed.chunk.js",
-    "static/css/main.adda6e22.chunk.css",
-    "static/js/main.08015c39.chunk.js"
+    "static/css/main.079b7539.chunk.css",
+    "static/js/main.9d3983ac.chunk.js"
   ]
 }
