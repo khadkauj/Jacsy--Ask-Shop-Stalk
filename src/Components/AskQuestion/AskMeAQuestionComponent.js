@@ -96,6 +96,9 @@ const AskMeAQuestionComponent = () => {
     const [clickResetFilter, setClickResetFilter] = useState(false)
     const [orderAnswerBy, setOrderAnswerBy] = useState("Date:Latest");
     const [filterAnswerByType, setfilterAnswerByType] = useState("");
+    // const [widthScreen, setWidthScreen] = useState(document.body.clientWidth)
+    var widthScreen = window.innerWidth
+    const [user, setUser] = useState(undefined);
     // all setup for Form Dialog Box
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
@@ -129,6 +132,7 @@ const AskMeAQuestionComponent = () => {
                     unVote: 0,
                     userEmailVerified: user.emailVerified,
                     userDisplayName: user?.displayName,
+                    uid: user.uid
                 })
                 .then((doc) => {
                     console.log("snap while sending question to FB", doc);
@@ -150,7 +154,7 @@ const AskMeAQuestionComponent = () => {
         }
     };
 
-    const [user, setUser] = useState(undefined);
+
     const [noOfQuestionToShow, setNoOfQuestionToShow] = useState(25)
     // fetching questions and answers + checking user state
     useEffect(() => {
@@ -206,22 +210,7 @@ const AskMeAQuestionComponent = () => {
     }, [stateForHomePageTwoNestedCompToSync, noOfQuestionToShow, clickResetFilter, orderAnswerBy]);
 
     useEffect(() => {
-        // if (changeTypeFilter === "Date:Oldest") {
-        //     var type = "date"
-        //     var order = "asc"
-        // } else if (changeTypeFilter === "Date:Latest") {
-        //     type = "date"
-        //     order = "desc"
-        // } else if (changeTypeFilter === "Votes:Highest") {
-        //     type = "vote"
-        //     order = "desc"
-        // } else if (changeTypeFilter === "Votes:Lowest") {
-        //     type = "vote"
-        //     order = "asc"
-        // } else if (changeTypeFilter === "Replies:Max") {
-        //     type = "Vote"
-        //     order = "asc"
-        // }
+
         if (filterAnswerByType) {
             db.collection("questions")
                 .where("tag", "==", filterAnswerByType)
@@ -264,17 +253,10 @@ const AskMeAQuestionComponent = () => {
     const [ErrorForMaxCharInput, setErrorForMaxCharInput] = useState(false);
     const handlesetErrorForMaxCharInput = (e) => {
         setquestion(e.target.value);
-        // if (question?.length === 200) {
-        //     console.log("elmgth is, ", question?.length);
-        //     setErrorForMaxCharInput(true)
-        // } else {
-        //     setErrorForMaxCharInput(false)
-        // }
+
     };
 
     // setup for  filter
-
-
     const clearFilter = () => {
         setOrderAnswerBy("");
         setfilterAnswerByType("");
@@ -398,7 +380,9 @@ const AskMeAQuestionComponent = () => {
                                         {/* <ListItemAvatar>
                                             <Avatar alt="Profile Picture" src={""} />
                                         </ListItemAvatar> */}
-                                        {!query.data?.answered && (
+
+                                        {/* smaller screen */}
+                                        {!query.data?.answered && widthScreen < 800 && (
                                             <ListItemText
                                                 primary={
                                                     query.data?.question.length < 200
@@ -408,12 +392,30 @@ const AskMeAQuestionComponent = () => {
                                                 secondary={<p> "No answer available at the moment." 💓<sup>{query.data?.vote} </sup>  </p>}
                                             />
                                         )}
-                                        {query.data?.answered && (
+                                        {query.data?.answered && widthScreen < 800 && (
                                             <ListItemText
                                                 primary={
                                                     query.data?.question.length < 200
                                                         ? query.data?.question
                                                         : query.data?.question.slice(0, 200) + "....."
+                                                }
+                                                secondary={<span>"Click to view replies." 💓<sup>{query.data?.vote}</sup></span>}
+                                            />
+                                        )}
+
+                                        {/* larger screen */}
+                                        {!query.data?.answered && widthScreen > 800 && (
+                                            <ListItemText
+                                                primary={
+                                                    query.data?.question.slice(0, 500)
+                                                }
+                                                secondary={<p> "No answer available at the moment." 💓<sup>{query.data?.vote} </sup>  </p>}
+                                            />
+                                        )}
+                                        {query.data?.answered && widthScreen > 800 && (
+                                            <ListItemText
+                                                primary={
+                                                    query.data?.question.slice(0, 500)
                                                 }
                                                 secondary={<span>"Click to view replies." 💓<sup>{query.data?.vote}</sup></span>}
                                             />

@@ -65,7 +65,7 @@ const HeaderComponent = () => {
                         color="primary"
                         startIcon={<PersonAddIcon />}
                     >
-                        Log in
+                        LogIn
                     </Button>
                 }
                 {/* {userStatus && <IconButton aria-label="add to favorites" onClick={signOutOfFirebase} >

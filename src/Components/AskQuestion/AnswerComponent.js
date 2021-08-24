@@ -44,21 +44,23 @@ const AnswerComponent = () => {
         // the below  function to retreive questions
         db.collection("questions")
             .doc(id)
-            .get()
-            .then((snapshot) => {
-                setquestionAnswerFromFB(snapshot.data());
-                setquestionId(snapshot.id)
-                setquestion(snapshot.data().question)
+            .onSnapshot((doc) => {
+                console.log('demon', doc.data());
+                setquestionAnswerFromFB(doc.data())
+                setquestionId(doc.id)
+                setquestion(doc.data().question)
+                // setquestionAnswerFromFB(snapshot.data());
+                // setquestionId(snapshot.id)
+                // setquestion(snapshot.data().question)
             })
-            .catch((error) => console.log("error in fetching data from FB, ", error));
+        // .catch((error) => console.log("error in fetching data from FB, ", error));
 
         // the below function to get  inner answer collection in question collection
         db.collection("questions")
             .doc(id)
             .collection("answersList")
             .orderBy("date", "desc")
-            .get()
-            .then((snapshot) => {
+            .onSnapshot((snapshot) => {
                 setanswerListsOfQuestions(
                     snapshot.docs.map((doc) => ({
                         id: doc.id,
@@ -67,7 +69,8 @@ const AnswerComponent = () => {
                     }))
                 );
             })
-            .catch((error) => console.log("error in fetching data from FB, ", error));
+        // .catch((error) => console.log("error in fetching data from FB, ", error));
+
         // checking if user is logged in
         firebase.auth().onAuthStateChanged((userState) => {
             if (userState) {
@@ -77,9 +80,12 @@ const AnswerComponent = () => {
             }
         });
         return () => { };
-    }, [stateAfterAnswerSubmit, stateAfterVote,
-        stateAfterQuestionSubmit, stateAfterAnswerDelete,
-        updateAfterSendingLike, stateAfterVotingQuestion, id]);
+    }, [
+        // stateAfterAnswerSubmit, stateAfterVote,
+        // stateAfterQuestionSubmit, stateAfterAnswerDelete,
+        // updateAfterSendingLike, stateAfterVotingQuestion,
+        id
+    ]);
 
     // all setup for Form Dialog Box
     const [open, setOpen] = React.useState(false);
@@ -117,6 +123,7 @@ const AnswerComponent = () => {
                     disLike: 0,
                     userEmailVerified: user.emailVerified,
                     userDisplayName: user?.displayName,
+                    uid: user.uid
                 })
                 .then((data) => {
                     console.log("Answer sent to firebase");
@@ -158,12 +165,12 @@ const AnswerComponent = () => {
                 console.log("chcking array, ", doc.data());
                 if (!doc.data().peopleWhoLiked?.includes(user?.email)) {
                     db.collection("questions").doc(questionId).collection("answersList").doc(data?.id).update({
-                        like: ++doc.data().like,
+                        like: firebase.firestore.FieldValue.increment(1),
                         peopleWhoLiked: firebase.firestore.FieldValue.arrayUnion(user?.email ? user?.email : "joke")
                     }, { merge: true }).catch(error => console.log("error in updating insideLike toFirebase Funciton, ", error))
                 } else {
                     db.collection("questions").doc(questionId).collection("answersList").doc(data?.id).update({
-                        like: --doc.data().like,
+                        like: firebase.firestore.FieldValue.increment(-1),
                         peopleWhoLiked: firebase.firestore.FieldValue.arrayRemove(user?.email)
                     }, { merge: true }).catch(error => console.log("error in updating insideLike in -else statement- toFirebase Funciton, ", error))
                 }
@@ -202,6 +209,7 @@ const AnswerComponent = () => {
             db.collection("questions").doc(questionId).update({
                 question: question,
                 date: new Date(),
+                uid: user.uid
             }).then(doc => {
                 console.log("snap while sending question to FB", doc)
                 // setStateForHomePageTwoNestedCompToSync(!stateForHomePageTwoNestedCompToSync)
@@ -246,12 +254,12 @@ const AnswerComponent = () => {
                 console.log("chcking array, ", doc.data());
                 if (!doc.data().peopleWhoVoted?.includes(user?.email)) {
                     db.collection("questions").doc(questionId).update({
-                        vote: ++doc.data().vote,
+                        vote: firebase.firestore.FieldValue.increment(1),
                         peopleWhoVoted: firebase.firestore.FieldValue.arrayUnion(user?.email ? user?.email : "joke")
                     }, { merge: true }).catch(error => console.log("error in updating insideLike toFirebase Funciton, ", error))
                 } else {
                     db.collection("questions").doc(questionId).update({
-                        vote: --doc.data().vote,
+                        vote: firebase.firestore.FieldValue.increment(-1),
                         peopleWhoVoted: firebase.firestore.FieldValue.arrayRemove(user?.email)
                     }, { merge: true }).catch(error => console.log("error in updating insideLike in -else statement- toFirebase Funciton, ", error))
                 }

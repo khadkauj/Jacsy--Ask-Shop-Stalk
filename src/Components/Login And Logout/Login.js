@@ -7,22 +7,23 @@ import { Button } from "@material-ui/core";
 // import { Log_in } from "./features/user/userSlice";
 
 const Login = () => {
-    const [email, setemail] = useState("@gmail.com");
+    const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
     const [wrongCredentialsInLogin, setwrongCredentialsInLogin] = useState(false)
     const [buttonDisable, setButtonDisable] = useState(false)
+    const [linkVerificationEmail, setLinkVerificationEmail] = useState(false)
     const history = useHistory();
-    const loginToFirebase = (e) => {
-        e.preventDefault()
-        firebase.auth().signInWithEmailAndPassword(email, password).then(userCredntials => {
-            console.log("User found on firebase, ", userCredntials);
-            setwrongCredentialsInLogin(false)
-            history.push("/")
-        }).catch(error => {
-            console.log("user not found");
-            setwrongCredentialsInLogin(true)
-        })
-    }
+    // const loginToFirebase = (e) => {
+    //     e.preventDefault()
+    //     firebase.auth().signInWithEmailAndPassword(email, password).then(userCredntials => {
+    //         console.log("User found on firebase, ", userCredntials);
+    //         setwrongCredentialsInLogin(false)
+    //         history.push("/")
+    //     }).catch(error => {
+    //         console.log("user not found");
+    //         setwrongCredentialsInLogin(true)
+    //     })
+    // }
 
     // google sign-in authentication
     const signInWithGoogleAuth = (e) => {
@@ -31,21 +32,19 @@ const Login = () => {
             .then(result => {
                 console.log("credentials from google auth, ", result.credential)
                 setwrongCredentialsInLogin(false)
-                history.push("/")
             })
             .catch(error => {
                 console.log("Error in google sign-in authentication", error)
                 setwrongCredentialsInLogin(true)
             })
     }
-
+    // microsoft
     const signInWithMicrosoftAuth = (e) => {
         e.preventDefault()
         firebase.auth().signInWithRedirect(microSoftAuthProvider)
             .then(result => {
                 console.log("credentials from Microsft auth, ", result.credential)
                 setwrongCredentialsInLogin(false)
-                history.push("/")
             })
             .catch(error => {
                 console.log("Error in Microsft sign-in authentication", error)
@@ -57,9 +56,9 @@ const Login = () => {
         firebase.analytics().logEvent("User is in Login Componen")
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                history.goBack()
+                history.go(-2)
             } else {
-
+                console.log("No user logged in.");
             }
         })
         return () => {
@@ -86,12 +85,13 @@ const Login = () => {
             // dynamicLinkDomain: 'http://localhost:3000/'
         };
 
-        if (email.slice(email.length - 20, email.length)) {
+        if (email.slice(email.length - 20, email.length) !== "@jacobs-university.com") {
             setButtonDisable(true)
             setwrongCredentialsInLogin(false)
             firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
                 .then(() => {
                     console.log("email sent");
+                    setLinkVerificationEmail(!linkVerificationEmail)
                     // The link was successfully sent. Inform the user.
                     // Save the email locally so you don't need to ask the user for it again
                     // if they open the link on the same device.
@@ -101,6 +101,7 @@ const Login = () => {
                 .catch((error) => {
                     setButtonDisable(false)
                     setwrongCredentialsInLogin(true)
+                    setLinkVerificationEmail(false)
                     var errorCode = error.code;
                     var errorMessage = error.message;
                     // ...
@@ -128,31 +129,33 @@ const Login = () => {
             <div className="main123">
                 {/* <h1 className="header1">Login</h1>
                 <hr className="hr__tag" /> */}
-                <h3 className="header3">Welcome to Login page</h3>
+                {!linkVerificationEmail && <>  <h3 className="header3">Welcome to Login page</h3>
 
-                <input className="inp" value={email} autoFocus
-                    onChange={(e) => setemail(e.target.value)} type="email"
-                    placeholder="SignIn With College Email Address" />
-                {/* <input
+                    <input className="inp" value={email} autoFocus
+                        onChange={(e) => setemail(e.target.value)} type="email"
+                        placeholder="u.khadka@jacobs-university.com" />
+                    {/* <input
                     className="inp"
                     value={password}
                     onChange={(e) => setpassword(e.target.value)}
                     type="password"
                     placeholder="Password"
                 /> */}
-                {wrongCredentialsInLogin && <p style={{ color: "#bb2124" }} >Wrong credentials!!!</p>}<br />
-                <p className="para">
-                    Not a member?{" "}
-                    <Link to="/SignUp">
+                    {wrongCredentialsInLogin && <p style={{ color: "#bb2124" }} >Wrong credentials!!!</p>}
+                    <p className="para">
+                        Password-less SignIn With College Email Address{" "}
+                        {/* <Link to="/SignUp">
                         <span className="span1">
                             <u>Register</u>
                         </span>
-                    </Link>
-                </p>
-                <Button variant="contained" disabled={email.slice(email.length - 20, email.length) !== "jacobs-university.de" || buttonDisable}
-                    onClick={e => sendEmailVerificationLink(e)}>
-                    Log In
-                </Button>
+                    </Link> */}
+                    </p>
+                    <Button style={{ marginTop: "32px" }} variant="contained" disabled={email.slice(email.length - 20, email.length) !== "jacobs-university.de" || buttonDisable}
+                        onClick={e => sendEmailVerificationLink(e)}>
+                        Login/Get-Link
+                    </Button> </>}
+                {linkVerificationEmail &&
+                    <p className="confirmation-link" >An email with confirmation link has been sent to {email} .</p>}
                 <div className="hrs">
                     <hr className="hr_line" /> <p>or</p> <hr className="hr_right" />
                 </div>

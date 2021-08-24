@@ -42,19 +42,6 @@
   min-width: 100px;
 }
 
-#seemoreQuestions {
-  cursor: pointer;
-  padding: 14px;
-  text-transform: capitalize;
-  text-align: center;
-  border: 1px solid #bda7a7;
-  width: 70%;
-  margin: auto;
-  color: #5c5353;
-  margin-top: 24px;
-  font-family: "Libre Franklin", sans-serif;
-}
-
 .plus-fav {
   position: fixed;
   bottom: 40px;
@@ -79,6 +66,18 @@
 
 .MuiFormLabel-root {
   color: inherit !important;
+}
+#seemoreQuestions {
+  cursor: pointer;
+  padding: 14px;
+  text-transform: capitalize;
+  text-align: center;
+  border: 1px solid #bda7a7;
+  width: 120px;
+  margin: auto;
+  color: #5c5353;
+  margin-top: 24px;
+  font-family: "Libre Franklin", sans-serif;
 }
 
 @media only screen and (min-width: 960px) {

@@ -27,7 +27,7 @@
 
 .header__Icons {
   margin-left: auto;
-  padding: 24px;
+  /* padding: 24px; */
 }
 
 .linkText {
@@ -65,7 +65,12 @@
 }
 
 #singIn__button__homepage .MuiButton-containedPrimary {
-  background-color: #1976d2;
-  background: linear-gradient(230deg, #a24bcf, #4b79cf, #4bc5cf);
-  background-size: 300% 300%;
+  background-color: transparent;
+  color: black;
+  /* background: linear-gradient(230deg, #a24bcf, #4b79cf, #4bc5cf); */
+  /* background-size: 300% 300%; */
+}
+
+#singIn__button__homepage .MuiButton-contained {
+  box-shadow: none;
 }
