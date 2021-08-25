@@ -156,8 +156,11 @@ const AskMeAQuestionComponent = () => {
 
 
     const [noOfQuestionToShow, setNoOfQuestionToShow] = useState(25)
+
+    const [lastVisible, setLastVisible] = useState("")
     // fetching questions and answers + checking user state
     useEffect(() => {
+        console.log("useeffect called");
 
         if (orderAnswerBy === "Date:Oldest") {
             var type = "date"
@@ -181,6 +184,8 @@ const AskMeAQuestionComponent = () => {
             .limit(noOfQuestionToShow)
             .get()
             .then((snapshot) => {
+                const vis = snapshot.docs[snapshot.docs.length - 1]
+                setLastVisible(vis)
                 setquestionAnswerFromFB(
                     snapshot.docs.map((doc) => ({
                         id: doc.id,
@@ -207,17 +212,37 @@ const AskMeAQuestionComponent = () => {
         });
 
         return () => { };
-    }, [stateForHomePageTwoNestedCompToSync, noOfQuestionToShow, clickResetFilter, orderAnswerBy]);
+    }, [stateForHomePageTwoNestedCompToSync, clickResetFilter, orderAnswerBy]);
 
-    useEffect(() => {
 
-        if (filterAnswerByType) {
+
+    // setting question checking for more than 120 chars
+    const [question, setquestion] = useState("");
+    const [ErrorForMaxCharInput, setErrorForMaxCharInput] = useState(false);
+    const handlesetErrorForMaxCharInput = (e) => {
+        setquestion(e.target.value);
+
+    };
+
+    // setup for  filter
+    const clearFilter = () => {
+        setOrderAnswerBy("");
+        setfilterAnswerByType("");
+        setFirebaseSeachQuery("")
+        // setClickResetFilter(!clickResetFilter)
+
+    };
+
+    const changeTypeFilter = (e) => {
+        setfilterAnswerByType(e.target.value);
+        if (e.target.value) {
             db.collection("questions")
-                .where("tag", "==", filterAnswerByType)
+                .where("tag", "==", e.target.value)
                 .orderBy("date", 'desc')
                 .limit(noOfQuestionToShow)
                 .get()
                 .then((snapshot) => {
+                    console.log(filterAnswerByType);
                     setquestionAnswerFromFB(
                         snapshot.docs.map((doc) => ({
                             id: doc.id,
@@ -243,30 +268,6 @@ const AskMeAQuestionComponent = () => {
                 }
             });
         }
-
-
-
-    }, [filterAnswerByType])
-
-    // setting question checking for more than 120 chars
-    const [question, setquestion] = useState("");
-    const [ErrorForMaxCharInput, setErrorForMaxCharInput] = useState(false);
-    const handlesetErrorForMaxCharInput = (e) => {
-        setquestion(e.target.value);
-
-    };
-
-    // setup for  filter
-    const clearFilter = () => {
-        setOrderAnswerBy("");
-        setfilterAnswerByType("");
-        setFirebaseSeachQuery("")
-        // setClickResetFilter(!clickResetFilter)
-
-    };
-
-    const changeTypeFilter = (e) => {
-        setfilterAnswerByType(e.target.value);
     };
     const changeOrderAnswer = (e) => {
         setOrderAnswerBy(e.target.value);
@@ -276,6 +277,53 @@ const AskMeAQuestionComponent = () => {
     const seeMore = (e) => {
         console.log(noOfQuestionToShow);
         setNoOfQuestionToShow(noOfQuestionToShow + 25)
+
+        if (orderAnswerBy === "Date:Oldest") {
+            var type = "date"
+            var order = "asc"
+        } else if (orderAnswerBy === "Date:Latest") {
+            type = "date"
+            order = "desc"
+        } else if (orderAnswerBy === "Votes:Highest") {
+            type = "vote"
+            order = "desc"
+        } else if (orderAnswerBy === "Votes:Lowest") {
+            type = "vote"
+            order = "asc"
+        } else if (orderAnswerBy === "Replies:Max") {
+            type = "Vote"
+            order = "asc"
+        }
+
+        if (lastVisible) {
+            db.collection("questions")
+                .orderBy(type, order)
+                .startAfter(lastVisible)
+                .limit(noOfQuestionToShow)
+                .get()
+                .then((snapshot) => {
+                    var lastVis = snapshot.docs[snapshot.docs.length - 1]
+                    console.log("lastvis", lastVis);
+                    setLastVisible(lastVis)
+                    setquestionAnswerFromFB(prev => [...prev, ...snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        key: doc.id,
+                        data: doc.data(),
+                    }))]
+
+                    );
+                })
+                .catch((error) => console.log("error in fetching data from FB, ", error));
+        }
+
+
+
+        // scroll to bottom of question if noOfQuestionToShow is more than 25
+        if (noOfQuestionToShow > 25) {
+            window.scrollTo(0, document.body.scrollHeight)
+        }
+
+
     }
     console.log("firebas esearch query", firebaseSeachQuery);
 
@@ -315,7 +363,9 @@ const AskMeAQuestionComponent = () => {
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={filterAnswerByType}
-                            onChange={(e) => changeTypeFilter(e)}
+                            onChange={(e) => {
+                                changeTypeFilter(e)
+                            }}
                         >
                             <MenuItem value={"CS/RIS"}>CS/RIS</MenuItem>
                             <MenuItem value={"Course"}>Course</MenuItem>
@@ -425,10 +475,10 @@ const AskMeAQuestionComponent = () => {
                                 </Link>
                             </React.Fragment>
                         ))}
-                        {questionAnswerFromFB.length >= 25 &&
+                        {questionAnswerFromFB.length % 25 === 0 && questionAnswerFromFB.length !== 0 ?
                             <div id='seemoreQuestions'>
                                 <p onClick={e => seeMore(e)} >Load more</p>
-                            </div>
+                            </div> : <></>
                         }
 
                     </List>
