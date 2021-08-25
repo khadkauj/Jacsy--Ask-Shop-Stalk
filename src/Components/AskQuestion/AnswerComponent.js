@@ -231,6 +231,7 @@ const AnswerComponent = () => {
 
     // delete answer
     const deleteAnswer = (idToDel, emailofAnswer) => {
+        console.log("delete function clciked");
         if (user?.email === emailofAnswer) {
             console.log("id to del", idToDel);
             db.collection("questions")
@@ -402,7 +403,7 @@ const AnswerComponent = () => {
                                             </div>
                                             <div>
                                                 {user?.email === docData.data.emailUsedToAnswerSavedForSecurityPurpose &&
-                                                    <Button size="small" color="secondary" onClick={e => deleteAnswer(docData?.data?.id, docData?.data?.answeredBy)}  >
+                                                    <Button size="small" color="secondary" onClick={e => deleteAnswer(docData?.data?.id, docData?.data?.emailUsedToAnswerSavedForSecurityPurpose)}  >
                                                         Delete.
                                                     </Button>
                                                 }

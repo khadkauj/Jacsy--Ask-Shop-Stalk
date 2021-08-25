@@ -42,6 +42,13 @@
   min-width: 100px;
 }
 
+#filter__search .MuiFormControl-root .makeStyles-formControl-8 {
+  margin: 4px;
+}
+#filter__search .jss8 {
+  margin: 4px;
+}
+
 .plus-fav {
   position: fixed;
   bottom: 40px;
@@ -137,3 +144,9 @@
     height: 111px !important;
   }
 }
+
+/* @media screen and (max-width: 960px) {
+  .appBAr {
+    margin-top: 195px;
+  }
+} */

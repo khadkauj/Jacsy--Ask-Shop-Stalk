@@ -196,7 +196,8 @@ const ClassifiedHomePageComponent = () => {
                             paymentOptions: paymentOptions,
                             like: 0,
                             peopleWhoLiked: ["ds@gmial.com", "djs.com"],
-                            disLike: 0
+                            disLike: 0,
+                            uid: userDetailsFirebase.uid
                         },
                     ).then(e => {
                         // res-setting everything

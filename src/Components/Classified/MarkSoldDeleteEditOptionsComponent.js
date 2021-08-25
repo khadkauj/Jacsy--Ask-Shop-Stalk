@@ -56,7 +56,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNot }) {
     const classes = useStyles();
-    const { statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold, productEditedInMArkSoldComponent, setProductEditedInMArkSoldComponent } = useContext(userContext)
+    const { statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold,
+        productEditedInMArkSoldComponent, setProductEditedInMArkSoldComponent } = useContext(userContext)
     console.log("test", statusOfItemMarkedAsSold);
 
 
@@ -149,6 +150,7 @@ export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNo
             productDetails: productCondition,
             productDescription: productDescription,
             paymentOptions: paymentOptions,
+            uid: user.uid
         }).then(res => {
             console.log("product details updated")
             setopenDialog(false)
