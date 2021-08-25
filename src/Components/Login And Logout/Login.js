@@ -155,7 +155,7 @@ const Login = () => {
                         Login/Get-Link
                     </Button> </>}
                 {linkVerificationEmail &&
-                    <p className="confirmation-link" >An email with confirmation link has been sent to {email} .</p>}
+                    <p className="confirmation-link" >An email with confirmation link has been sent to {email}.Please click on the link to safely login.</p>}
                 <div className="hrs">
                     <hr className="hr_line" /> <p>or</p> <hr className="hr_right" />
                 </div>
