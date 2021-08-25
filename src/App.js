@@ -19,7 +19,7 @@ import firebase from "firebase";
 import "./App.css";
 import StalkComponent from "./Components/Stalk/StalkComponent";
 import { useDispatch } from "react-redux";
-import { setUsername } from "./features/counter/counterSlice";
+import { setUsername } from "./features/counter/userSlice";
 
 function App() {
 	useEffect(() => {
@@ -66,22 +66,22 @@ function App() {
 
 	}, []);
 
-	const dispatch = useDispatch()
-	useEffect(() => {
-		firebase.auth().onAuthStateChanged(user => {
-			if (user) {
-				console.log("user", user);
-				dispatch(setUsername({
-					username: user.displayName,
-					photourl: user.photoURL,
-					email: user.email,
-					uid: user.uid
-				}))
-			} else {
-				console.log("no user", user);
-			}
-		})
-	}, [])
+	// const dispatch = useDispatch()
+	// useEffect(() => {
+	// 	firebase.auth().onAuthStateChanged(user => {
+	// 		if (user) {
+	// 			console.log("user", user);
+	// 			dispatch(setUsername({
+	// 				username: user.displayName,
+	// 				photourl: user.photoURL,
+	// 				email: user.email,
+	// 				uid: user.uid
+	// 			}))
+	// 		} else {
+	// 			console.log("no user", user);
+	// 		}
+	// 	})
+	// }, [])
 
 
 
