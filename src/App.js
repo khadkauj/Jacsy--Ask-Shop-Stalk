@@ -18,12 +18,14 @@ import AnswerComponent from "./Components/AskQuestion/AnswerComponent";
 import firebase from "firebase";
 import "./App.css";
 import StalkComponent from "./Components/Stalk/StalkComponent";
+import { useDispatch } from "react-redux";
+import { setUsername } from "./features/counter/counterSlice";
 
 function App() {
 	useEffect(() => {
 		firebase.analytics().logEvent("User is in App Componen");
 
-
+		console.log("app.js loaded");
 		const emailVerification = async () => {
 			// Confirm the link is a sign-in with email link.
 			if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
@@ -36,8 +38,7 @@ function App() {
 				var email = localStorage.getItem('emailForSignIn');
 				console.log(email);
 				// if (!email) {
-				// 	// User opened the link on a different device. To prevent session fixation
-				// 	// attacks, ask the user to provide the associated email again. For example:
+
 				// 	email = window.prompt('Please provide your email for confirmation');
 				// }
 				// The client SDK will parse the code from the link for you.
@@ -64,6 +65,23 @@ function App() {
 		emailVerification()
 
 	}, []);
+
+	const dispatch = useDispatch()
+	useEffect(() => {
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				console.log("user", user);
+				dispatch(setUsername({
+					username: user.displayName,
+					photourl: user.photoURL,
+					email: user.email,
+					uid: user.uid
+				}))
+			} else {
+				console.log("no user", user);
+			}
+		})
+	}, [])
 
 
 
