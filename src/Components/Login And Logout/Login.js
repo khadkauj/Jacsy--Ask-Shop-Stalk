@@ -56,7 +56,7 @@ const Login = () => {
         firebase.analytics().logEvent("User is in Login Componen")
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                history.go(-2)
+                history.push('/')
             } else {
                 console.log("No user logged in.");
             }

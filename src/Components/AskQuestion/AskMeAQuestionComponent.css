@@ -132,7 +132,7 @@
   }
   #filter__search {
     /* display: flex; */
-    height: 111px !important;
+    height: 120px !important;
   }
 }
 @media screen and (max-width: 450px) {
@@ -141,7 +141,7 @@
   }
   #filter__search {
     /* display: flex; */
-    height: 111px !important;
+    height: 120px !important;
   }
 }
 
