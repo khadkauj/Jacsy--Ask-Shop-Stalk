@@ -73,7 +73,7 @@ const Login = () => {
             // URL must be in the authorized domains list in the Firebase Console.
             // url: 'http://localhost:3000/',
             // url: "https://khadkauj.github.io/Jwork/",
-            url: "https://jacsy.netlify.app/",
+            url: "https://jacsy.tk",
             // This must be true.
             handleCodeInApp: true,
             // iOS: {
