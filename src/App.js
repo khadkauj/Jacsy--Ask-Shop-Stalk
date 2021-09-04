@@ -6,11 +6,9 @@ import {
 	HashRouter,
 } from "react-router-dom";
 import HomePageComponent from "./Components/HomePageComponent";
-import FreshiesMainComponents from "./Components/FreshiesMainComponents/FreshiesMainComponents";
 import ClassifiedHomePageComponent from "./Components/Classified/ClassifiedHomePageComponent";
 import Login from "./Components/Login And Logout/Login";
 import SignUp from "./Components/Login And Logout/SignUp";
-import ListNews from "./Components/ListNews";
 import HeaderComponent from "./Components/HeaderComponent";
 import ClassifiedProductView from "./Components/Classified/ClassifiedProductView";
 import FooterComponent from "./Components/Footer/FooterComponent";
@@ -18,8 +16,6 @@ import AnswerComponent from "./Components/AskQuestion/AnswerComponent";
 import firebase from "firebase";
 import "./App.css";
 import StalkComponent from "./Components/Stalk/StalkComponent";
-import { useDispatch } from "react-redux";
-import { setUsername } from "./features/counter/userSlice";
 
 function App() {
 	useEffect(() => {
@@ -94,10 +90,6 @@ function App() {
 				<HashRouter>
 					<HeaderComponent />
 					<div className="App">
-						<Route exact path="/Freshies">
-							<FreshiesMainComponents />
-							<FooterComponent />
-						</Route>
 						<Route exact path="/Classified">
 							<ClassifiedHomePageComponent />
 							<FooterComponent />
@@ -106,10 +98,10 @@ function App() {
 							<Login />
 							<FooterComponent />
 						</Route>
-						<Route exact path="/SignUp">
+						{/* <Route exact path="/SignUp">
 							<SignUp />
 							<FooterComponent />
-						</Route>
+						</Route> */}
 						<Route exact path="/Classified/Products/:id">
 							<ClassifiedProductView />
 						</Route>

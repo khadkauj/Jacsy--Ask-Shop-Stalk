@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import ListNews from './ListNews'
 import AskMeAQuestionComponent from "./AskQuestion/AskMeAQuestionComponent"
 import './HomePageComponent.css'
 import { HomePageComponentsToSync } from "./ContextComponent"

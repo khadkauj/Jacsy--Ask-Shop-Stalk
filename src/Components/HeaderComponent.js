@@ -34,19 +34,10 @@ const HeaderComponent = () => {
                 {/* Home Exams* Homeworks* Notes* Classified* Contact */}
                 <ul className="ul__list">
                     <li>
-                        <Link to="/" className="linkText " style={{ color: "#06201b" }} >Home</Link>
-                    </li>
-                    {/* <li>
-                        <Link to="/Freshies" className="linkText" style={{ color: "#06201b" }}>Freshies</Link>
+                        <Link to="/" className="linkText " style={{ color: "#06201b" }} >Question</Link>
                     </li>
                     <li>
-                        <Link to="/Homeworks" className="linkText" style={{ color: "#06201b" }}>Assignments</Link>
-                    </li> */}
-                    {/* <li>
-            <Link to="/Notes" style={{ color: "white"}}>Notes</Link>
-        </li> */}
-                    <li>
-                        <Link to="/Classified" className="linkText" style={{ color: "#06201b" }}>Store</Link>
+                        <Link to="/Classified" className="linkText" style={{ color: "#06201b" }}>Shop</Link>
                     </li>
                     <li>
                         <Link to="/Stalk" className="linkText" style={{ color: "#06201b" }}>Stalk</Link>
