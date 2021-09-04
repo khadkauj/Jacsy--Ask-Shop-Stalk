@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -8,7 +8,6 @@ import {
 import HomePageComponent from "./Components/HomePageComponent";
 import ClassifiedHomePageComponent from "./Components/Classified/ClassifiedHomePageComponent";
 import Login from "./Components/Login And Logout/Login";
-import SignUp from "./Components/Login And Logout/SignUp";
 import HeaderComponent from "./Components/HeaderComponent";
 import ClassifiedProductView from "./Components/Classified/ClassifiedProductView";
 import FooterComponent from "./Components/Footer/FooterComponent";
@@ -18,10 +17,12 @@ import "./App.css";
 import StalkComponent from "./Components/Stalk/StalkComponent";
 
 function App() {
+
+	const [state, setState] = useState({})
 	useEffect(() => {
 		firebase.analytics().logEvent("User is in App Componen");
 
-		console.log("app.js loaded");
+		console.log("useeffect app.js loaded");
 		const emailVerification = async () => {
 			// Confirm the link is a sign-in with email link.
 			if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
@@ -60,24 +61,30 @@ function App() {
 
 		emailVerification()
 
-	}, []);
+		firebase.auth().onAuthStateChanged(userObj => {
+			console.log("useeffect app.js auth loaded");
+			if (userObj) {
+				setState({
+					displayName: userObj.displayName,
+					email: userObj.email,
+					emailVerified: userObj.emailVerified,
+					uid: userObj.uid,
+					photoURL: userObj.photoURL
+				})
+				// user = {
+				// 	displayName: userObj.displayName,
+				// 	email: userObj.email,
+				// 	emailVerified: userObj.emailVerified,
+				// 	uid: userObj.uid,
+				// 	photoURL: userObj.photoURL
+				// }
+				// console.log("user in app,js useeffect", user);
+			} else {
+				console.log("no user in app,js useeffect userObj", userObj);
+			}
+		})
 
-	// const dispatch = useDispatch()
-	// useEffect(() => {
-	// 	firebase.auth().onAuthStateChanged(user => {
-	// 		if (user) {
-	// 			console.log("user", user);
-	// 			dispatch(setUsername({
-	// 				username: user.displayName,
-	// 				photourl: user.photoURL,
-	// 				email: user.email,
-	// 				uid: user.uid
-	// 			}))
-	// 		} else {
-	// 			console.log("no user", user);
-	// 		}
-	// 	})
-	// }, [])
+	}, []);
 
 
 
@@ -91,11 +98,11 @@ function App() {
 					<HeaderComponent />
 					<div className="App">
 						<Route exact path="/Classified">
-							<ClassifiedHomePageComponent />
+							<ClassifiedHomePageComponent user={state} />
 							<FooterComponent />
 						</Route>
 						<Route exact path="/Login">
-							<Login />
+							<Login user={state} />
 							<FooterComponent />
 						</Route>
 						{/* <Route exact path="/SignUp">
@@ -103,17 +110,17 @@ function App() {
 							<FooterComponent />
 						</Route> */}
 						<Route exact path="/Classified/Products/:id">
-							<ClassifiedProductView />
+							<ClassifiedProductView user={state} />
 						</Route>
 						<Route exact path="/Answers/:id">
-							<AnswerComponent />
+							<AnswerComponent user={state} />
 							<FooterComponent />
 						</Route>
 						<Route exact path="/Stalk">
 							<StalkComponent />
 						</Route>
 						<Route exact path="/">
-							<HomePageComponent />
+							<HomePageComponent user={state} />
 						</Route>
 					</div>
 				</HashRouter>
