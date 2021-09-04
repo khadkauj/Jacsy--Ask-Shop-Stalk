@@ -77,16 +77,18 @@ export default function CustomizedMenus({ user }) {
     return (
         <div>
             <IconButton onClick={handleClick}>
-                {user ? <SettingsIcon
-                    fontSize="large"
-                    aria-controls="customized-menu"
-                    aria-haspopup="true"
-                    variant="contained"
+                {user ?
+                    <SettingsIcon
+                        fontSize="large"
+                        aria-controls="customized-menu"
+                        aria-haspopup="true"
+                        variant="contained"
 
 
-                >
-                    Open Menu
-                </SettingsIcon> :
+                    >
+                        Open Menu
+                    </SettingsIcon>
+                    :
                     <PersonAddIcon
                         fontSize="large"
                         aria-controls="customized-menu"
