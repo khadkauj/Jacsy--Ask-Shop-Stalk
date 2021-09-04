@@ -58,7 +58,6 @@ export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNo
     const classes = useStyles();
     const { statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold,
         productEditedInMArkSoldComponent, setProductEditedInMArkSoldComponent } = useContext(userContext)
-    console.log("test", statusOfItemMarkedAsSold);
 
 
     const options = [soldOrNot ? "Marked as Not-Sold" : "Marked as Sold", 'Edit the details', 'Delete'];
@@ -94,7 +93,6 @@ export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNo
                 console.log("Error in marking field as Updated", error);
             })
         } else if (index === 1) {
-            console.log("index 1");
             setopenDialog(true)
             getDateForFormFromFB()
         }
@@ -128,8 +126,6 @@ export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNo
     const { id } = useParams()
     const getDateForFormFromFB = () => {
         db.collection("products").doc(id).get().then(snapshot => {
-            // console.log(snapshot.data());
-            // setDataForFromFB(snapshot.data())
             const data = snapshot.data()
             setnameofProduct(data.name)
             setproducttype(data.category)

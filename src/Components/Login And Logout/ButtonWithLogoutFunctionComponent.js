@@ -10,8 +10,10 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import BookIcon from '@material-ui/icons/Book';
 import InfoIcon from '@material-ui/icons/Info';
 import firebase from "firebase"
-import "./ButtonWithLogoutFunc.css"
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { useHistory } from 'react-router-dom';
+
+import "./ButtonWithLogoutFunc.css"
 const StyledMenu = withStyles({
     paper: {
         border: '1px solid #d3d4d5',
@@ -43,7 +45,7 @@ const StyledMenuItem = withStyles((theme) => ({
     },
 }))(MenuItem);
 
-export default function CustomizedMenus() {
+export default function CustomizedMenus({ user }) {
     // setup for menus
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event) => {
@@ -57,7 +59,6 @@ export default function CustomizedMenus() {
     const history = useHistory()
     const signOutOfFirebase = (e) => {
         e.preventDefault()
-        console.log("hahah");
         firebase.auth().signOut().then(user => {
             console.log("user signed out");
             history.push("/Login")
@@ -65,26 +66,18 @@ export default function CustomizedMenus() {
         }).catch(error => {
             console.log("user signed out");
         })
+        handleClose()
     }
-    // 
-    const [user, setUser] = useState(undefined)
-    useEffect(() => {
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                setUser(user)
-            } else {
-                setUser(undefined)
-            }
-        })
-        return () => {
 
-        }
-    }, [])
+    const takeToLogInPage = (e) => {
+        history.push("/Login")
+        handleClose()
+    }
 
     return (
         <div>
             <IconButton onClick={handleClick}>
-                <SettingsIcon
+                {user ? <SettingsIcon
                     fontSize="large"
                     aria-controls="customized-menu"
                     aria-haspopup="true"
@@ -93,7 +86,19 @@ export default function CustomizedMenus() {
 
                 >
                     Open Menu
-                </SettingsIcon>
+                </SettingsIcon> :
+                    <PersonAddIcon
+                        fontSize="large"
+                        aria-controls="customized-menu"
+                        aria-haspopup="true"
+                        variant="contained"
+
+
+                    >
+                        Open Menu
+                    </PersonAddIcon>
+
+                }
             </IconButton>
 
             <StyledMenu
@@ -103,18 +108,23 @@ export default function CustomizedMenus() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <div className="signedAs__main">
+                {user && <div className="signedAs__main">
                     <span className="signedAs__span">Signed-in as</span>
-                    <p className="signedAs__email"> {user?.email}</p>
-                </div>
-
-
-                <StyledMenuItem onClick={e => signOutOfFirebase(e)} >
+                    <p className="signedAs__email"> {user.email}</p>
+                </div>}
+                {user ? <StyledMenuItem onClick={e => signOutOfFirebase(e)} >
                     <ListItemIcon>
                         <ExitToAppIcon fontSize="small" />
                     </ListItemIcon>
                     <ListItemText primary="Log Out" />
-                </StyledMenuItem>
+                </StyledMenuItem> :
+                    <StyledMenuItem onClick={e => takeToLogInPage(e)} >
+                        <ListItemIcon>
+                            <ExitToAppIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary="Log In" />
+                    </StyledMenuItem>
+                }
                 <StyledMenuItem>
                     <ListItemIcon>
                         <BookIcon fontSize="small" />

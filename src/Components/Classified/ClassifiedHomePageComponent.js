@@ -123,7 +123,6 @@ const ClassifiedHomePageComponent = () => {
         firebase.auth().onAuthStateChanged(User => {
             if (User) {
                 setuserDetailsFirebase(User)
-                console.log("user found", User);
             }
             else {
                 console.log("User not found");
@@ -142,9 +141,6 @@ const ClassifiedHomePageComponent = () => {
         if (e.target.files) {
             // const files = []
             for (let index = 0; index < e.target.files.length && index < 5; index++) {
-                console.log("image is,", e.target.files[0]);
-                // setproductImage(e.target.files[0])
-                // resize
                 try {
                     const file = e.target.files[index];
                     const image = await resizeFile(file);
@@ -167,7 +163,6 @@ const ClassifiedHomePageComponent = () => {
         setstateAfterSubmit(!stateAfterSubmit)
         if (nameofProduct && producttype && productCondition && productPrice && productImage) {
             console.log("Trying to send image to firebase");
-
             const promises = []
             productImage.forEach((image, i) => {
                 var storageRef = firebase.storage().ref();
@@ -176,9 +171,7 @@ const ClassifiedHomePageComponent = () => {
             })
             const res = await Promise.all(promises).then(urlsArray => {
                 // send details from form
-                console.log("rlrurl", urlsArray);
                 if (nameofProduct && producttype && productCondition && productPrice) {
-                    console.log("urls, ", urlsArray);
                     const idGeneratedforProduct = userDetailsFirebase.uid + uuidv4()
                     db.collection("products").doc(idGeneratedforProduct).set(
                         {
@@ -222,11 +215,10 @@ const ClassifiedHomePageComponent = () => {
 
     // ading like/dis-like in each products
     const addLikeToFirebase = (data, numToAdd) => {
-        console.log("id in funciton, ", data, numToAdd);
+        // console.log("id in funciton, ", data, numToAdd);
         if (userDetailsFirebase) {
-            console.log("user found", userDetailsFirebase);
             db.collection("products").doc(data?.id).get().then(doc => {
-                console.log("chcking array, ", doc.data().peopleWhoLiked?.includes(userDetailsFirebase?.email));
+                // console.log("chcking array, ", doc.data().peopleWhoLiked?.includes(userDetailsFirebase?.email));
                 if (!doc.data().peopleWhoLiked?.includes(userDetailsFirebase?.email)) {
                     db.collection("products").doc(data?.id).update({
                         like: ++doc.data().like,
@@ -261,7 +253,6 @@ const ClassifiedHomePageComponent = () => {
     const handleClickOpen = () => {
         if (userDetailsFirebase) {
             setOpen(true);
-            console.log("user found", userDetailsFirebase);
         }
         else {
             handleClickSnackbar()
@@ -293,7 +284,6 @@ const ClassifiedHomePageComponent = () => {
         setOpenSnackbar(false);
     };
 
-    console.log("the logedinuser is, ", userDetailsFirebase);
     return (
         <div className="test" id="testinLocalCSSusingId">
             <div className="button">

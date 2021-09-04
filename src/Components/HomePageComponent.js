@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import AskMeAQuestionComponent from "./AskQuestion/AskMeAQuestionComponent"
-import './HomePageComponent.css'
 import { HomePageComponentsToSync } from "./ContextComponent"
+import './HomePageComponent.css'
 
 const HomePageComponent = () => {
     const [stateForHomePageTwoNestedCompToSync, setStateForHomePageTwoNestedCompToSync] = useState(false)

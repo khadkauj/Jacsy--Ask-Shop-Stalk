@@ -13,15 +13,18 @@ const SignUp = () => {
     const history = useHistory();
 
     const sendFromToFirbase = (e) => {
-        e.preventDefault()
-        firebase.auth().createUserWithEmailAndPassword(email, password).then(userCredentails => {
-            console.log("user credtenial returned after creating, ", userCredentails);
-            setuserAlreadyExits(false)
-            history.push("/Login")
-        }).catch(error => {
-            console.log("error while creating user in firebase, ", error);
-            setuserAlreadyExits(true)
-        })
+
+        console.log("Sign Up currently closed, talk to developer for any queries.");
+
+        // e.preventDefault()
+        // firebase.auth().createUserWithEmailAndPassword(email, password).then(userCredentails => {
+        //     // console.log("user credtenial returned after creating, ", userCredentails);
+        //     setuserAlreadyExits(false)
+        //     history.push("/Login")
+        // }).catch(error => {
+        //     console.log("error while creating user in firebase, ", error);
+        //     setuserAlreadyExits(true)
+        // })
     }
 
 

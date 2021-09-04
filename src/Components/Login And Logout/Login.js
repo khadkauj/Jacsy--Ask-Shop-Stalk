@@ -8,7 +8,6 @@ import { Button } from "@material-ui/core";
 
 const Login = () => {
     const [email, setemail] = useState("");
-    const [password, setpassword] = useState("");
     const [wrongCredentialsInLogin, setwrongCredentialsInLogin] = useState(false)
     const [buttonDisable, setButtonDisable] = useState(false)
     const [linkVerificationEmail, setLinkVerificationEmail] = useState(false)
@@ -30,7 +29,7 @@ const Login = () => {
         e.preventDefault()
         firebase.auth().signInWithRedirect(provider)
             .then(result => {
-                console.log("credentials from google auth, ", result.credential)
+                // console.log("credentials from google auth, ", result.credential)
                 setwrongCredentialsInLogin(false)
             })
             .catch(error => {
@@ -43,7 +42,7 @@ const Login = () => {
         e.preventDefault()
         firebase.auth().signInWithRedirect(microSoftAuthProvider)
             .then(result => {
-                console.log("credentials from Microsft auth, ", result.credential)
+                // console.log("credentials from Microsft auth, ", result.credential)
                 setwrongCredentialsInLogin(false)
             })
             .catch(error => {
@@ -115,13 +114,6 @@ const Login = () => {
 
 
     }
-
-    // document.getElementById("idOfButton").onClick = function () {
-    //     //disable
-    //     this.disabled = true;
-    //     //do some validation stuff
-    // }
-    // document.getElementById("idOfButton").disabled = true
 
 
 

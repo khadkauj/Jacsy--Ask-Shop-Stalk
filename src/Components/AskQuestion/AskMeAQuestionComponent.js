@@ -1,20 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
 import Paper from "@material-ui/core/Paper";
 import Fab from "@material-ui/core/Fab";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
-import Avatar from "@material-ui/core/Avatar";
-import MenuIcon from "@material-ui/icons/Menu";
 import AddIcon from "@material-ui/icons/Add";
-import SearchIcon from "@material-ui/icons/Search";
-import MoreIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -135,7 +127,6 @@ const AskMeAQuestionComponent = () => {
                     uid: user.uid
                 })
                 .then((doc) => {
-                    console.log("snap while sending question to FB", doc);
                     setStateForHomePageTwoNestedCompToSync(
                         !stateForHomePageTwoNestedCompToSync
                     );
@@ -160,8 +151,6 @@ const AskMeAQuestionComponent = () => {
     const [lastVisible, setLastVisible] = useState("")
     // fetching questions and answers + checking user state
     useEffect(() => {
-        console.log("useeffect called");
-
         if (orderAnswerBy === "Date:Oldest") {
             var type = "date"
             var order = "asc"
@@ -275,7 +264,6 @@ const AskMeAQuestionComponent = () => {
 
     // get more question after clicking on see more
     const seeMore = (e) => {
-        console.log(noOfQuestionToShow);
         setNoOfQuestionToShow(noOfQuestionToShow + 25)
 
         if (orderAnswerBy === "Date:Oldest") {
@@ -303,7 +291,6 @@ const AskMeAQuestionComponent = () => {
                 .get()
                 .then((snapshot) => {
                     var lastVis = snapshot.docs[snapshot.docs.length - 1]
-                    console.log("lastvis", lastVis);
                     setLastVisible(lastVis)
                     setquestionAnswerFromFB(prev => [...prev, ...snapshot.docs.map((doc) => ({
                         id: doc.id,
@@ -325,7 +312,6 @@ const AskMeAQuestionComponent = () => {
 
 
     }
-    console.log("firebas esearch query", firebaseSeachQuery);
 
     // firebase Full text search
     const firebaseFulltextSearch = (e) => {

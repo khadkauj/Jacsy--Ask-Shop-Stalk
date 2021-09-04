@@ -22,7 +22,6 @@ const ClassifiedProductView = () => {
         var docRef = db.collection("products").doc(`${id}`);
         docRef.get().then((doc) => {
             if (doc.exists) {
-                console.log("Document data:", doc.data());
                 setproductDataFromFirebase(doc.data())
             } else {
                 // doc.data() will be undefined in this case

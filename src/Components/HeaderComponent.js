@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useHistory } from "react-router-dom"
+import { Link } from "react-router-dom"
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import firebase from 'firebase';
 import ButtonWithLogoutFunctionComponent from "./Login And Logout/ButtonWithLogoutFunctionComponent"
@@ -9,16 +9,11 @@ import "./HeaderComponent.css"
 
 const HeaderComponent = () => {
 
-    const history = useHistory()
-    const signToFirebase = () => {
-        history.push("/LogIn")
-    }
-
-
     const [userStatus, setuserStatus] = useState(undefined)
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
+                user = { email: user.email }
                 setuserStatus(user)
             } else {
                 setuserStatus(undefined)
@@ -48,7 +43,7 @@ const HeaderComponent = () => {
                 {/* {!userStatus && <IconButton aria-label="Sign" onClick={signToFirebase}  >
                     <PersonAddIcon fontSize="large" />
                 </IconButton>} */}
-                {!userStatus &&
+                {/* {!userStatus &&
 
                     <Button
                         onClick={e => signToFirebase(e)}
@@ -59,10 +54,10 @@ const HeaderComponent = () => {
                         LogIn
                     </Button>
                 }
-                {/* {userStatus && <IconButton aria-label="add to favorites" onClick={signOutOfFirebase} >
-                    <ExitToAppIcon fontSize="large" />
-                </IconButton>} */}
-                {userStatus && <ButtonWithLogoutFunctionComponent />}
+              
+                {userStatus && <ButtonWithLogoutFunctionComponent />} */}
+
+                <ButtonWithLogoutFunctionComponent user={userStatus} />
             </div>
 
         </div>

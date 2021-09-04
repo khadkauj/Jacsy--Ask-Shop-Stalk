@@ -45,7 +45,6 @@ const AnswerComponent = () => {
         db.collection("questions")
             .doc(id)
             .onSnapshot((doc) => {
-                console.log('demon', doc.data());
                 setquestionAnswerFromFB(doc.data())
                 setquestionId(doc.id)
                 setquestion(doc.data().question)
@@ -231,9 +230,7 @@ const AnswerComponent = () => {
 
     // delete answer
     const deleteAnswer = (idToDel, emailofAnswer) => {
-        console.log("delete function clciked");
         if (user?.email === emailofAnswer) {
-            console.log("id to del", idToDel);
             db.collection("questions")
                 .doc(id)
                 .collection("answersList")
@@ -250,7 +247,6 @@ const AnswerComponent = () => {
     // vote question
     const voteQuestion = (e) => {
         if (user) {
-            console.log("user found", user);
             db.collection("questions").doc(questionId).get().then(doc => {
                 console.log("chcking array, ", doc.data());
                 if (!doc.data().peopleWhoVoted?.includes(user?.email)) {
