@@ -86,7 +86,7 @@ function App() {
 
 	}, []);
 
-
+	console.log("state in app.js is, ", state);
 
 	return (
 		<div id="OutsideApp">
@@ -98,11 +98,11 @@ function App() {
 					<HeaderComponent />
 					<div className="App">
 						<Route exact path="/Classified">
-							<ClassifiedHomePageComponent user={state} />
+							<ClassifiedHomePageComponent state={state} />
 							<FooterComponent />
 						</Route>
 						<Route exact path="/Login">
-							<Login user={state} />
+							<Login state={state} />
 							<FooterComponent />
 						</Route>
 						{/* <Route exact path="/SignUp">
@@ -110,17 +110,17 @@ function App() {
 							<FooterComponent />
 						</Route> */}
 						<Route exact path="/Classified/Products/:id">
-							<ClassifiedProductView user={state} />
+							<ClassifiedProductView state={state} />
 						</Route>
 						<Route exact path="/Answers/:id">
-							<AnswerComponent user={state} />
+							<AnswerComponent state={state} />
 							<FooterComponent />
 						</Route>
 						<Route exact path="/Stalk">
 							<StalkComponent />
 						</Route>
 						<Route exact path="/">
-							<HomePageComponent user={state} />
+							<HomePageComponent state={state} />
 						</Route>
 					</div>
 				</HashRouter>

@@ -23,8 +23,9 @@ import FavoriteBorderOutlined from "@material-ui/icons/FavoriteBorderOutlined";
 
 import "./AnswerComponent.css";
 
-const AnswerComponent = () => {
-    const [user, setUser] = useState(undefined);
+const AnswerComponent = ({ state }) => {
+
+    const [user, setUser] = useState(state);
     const [questionAnswerFromFB, setquestionAnswerFromFB] = useState(undefined);
     const [answerListsOfQuestions, setanswerListsOfQuestions] = useState(undefined);
     const [stateAfterAnswerSubmit, setstateAfterAnswerSubmit] = useState(false);
@@ -71,13 +72,13 @@ const AnswerComponent = () => {
         // .catch((error) => console.log("error in fetching data from FB, ", error));
 
         // checking if user is logged in
-        firebase.auth().onAuthStateChanged((userState) => {
-            if (userState) {
-                setUser(userState);
-            } else {
-                setUser(undefined);
-            }
-        });
+        // firebase.auth().onAuthStateChanged((userState) => {
+        //     if (userState) {
+        //         setUser(userState);
+        //     } else {
+        //         setUser(undefined);
+        //     }
+        // });
         return () => { };
     }, [
         // stateAfterAnswerSubmit, stateAfterVote,
@@ -157,11 +158,8 @@ const AnswerComponent = () => {
     // adding love to answer // ading like/dis-like in each products
     // like-dislike answers
     const addLikeToFirebase = (data, numToAdd) => {
-        console.log("id in funciton, ", data, numToAdd);
         if (user) {
-            console.log("user found", user);
             db.collection("questions").doc(questionId).collection("answersList").doc(data?.id).get().then(doc => {
-                console.log("chcking array, ", doc.data());
                 if (!doc.data().peopleWhoLiked?.includes(user?.email)) {
                     db.collection("questions").doc(questionId).collection("answersList").doc(data?.id).update({
                         like: firebase.firestore.FieldValue.increment(1),
@@ -248,7 +246,6 @@ const AnswerComponent = () => {
     const voteQuestion = (e) => {
         if (user) {
             db.collection("questions").doc(questionId).get().then(doc => {
-                console.log("chcking array, ", doc.data());
                 if (!doc.data().peopleWhoVoted?.includes(user?.email)) {
                     db.collection("questions").doc(questionId).update({
                         vote: firebase.firestore.FieldValue.increment(1),

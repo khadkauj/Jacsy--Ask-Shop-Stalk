@@ -3,20 +3,15 @@ import AskMeAQuestionComponent from "./AskQuestion/AskMeAQuestionComponent"
 import { HomePageComponentsToSync } from "./ContextComponent"
 import './HomePageComponent.css'
 
-const HomePageComponent = () => {
+const HomePageComponent = ({ state }) => {
     const [stateForHomePageTwoNestedCompToSync, setStateForHomePageTwoNestedCompToSync] = useState(false)
-    useEffect(() => {
 
-        return () => {
-
-        }
-    }, [stateForHomePageTwoNestedCompToSync])
     return (
         <HomePageComponentsToSync.Provider value={{ stateForHomePageTwoNestedCompToSync, setStateForHomePageTwoNestedCompToSync }}>
             <div id="homepage__main">
                 {/* the below is question ask topappbar */}
                 <div className="bottomBar__main">
-                    <AskMeAQuestionComponent />
+                    <AskMeAQuestionComponent state={state} />
                 </div>
                 {/* the below is grid in main homepage */}
                 {/* <div className="tets" id="tets__id">
