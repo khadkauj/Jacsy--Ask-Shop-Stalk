@@ -54,7 +54,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNot }) {
+export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNot, user }) {
+
+
     const classes = useStyles();
     const { statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold,
         productEditedInMArkSoldComponent, setProductEditedInMArkSoldComponent } = useContext(userContext)
@@ -159,18 +161,18 @@ export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNo
 
     // use effect hook
     // checking user state
-    const [user, setUser] = useState(undefined)
-    useEffect(() => {
-        firebase.auth().onAuthStateChanged(userstate => {
-            if (userstate) {
-                setUser(userstate)
-            } else {
-                setUser(undefined)
-            }
-        })
-        return () => {
-        }
-    }, [])
+
+    // useEffect(() => {
+    //     firebase.auth().onAuthStateChanged(userstate => {
+    //         if (userstate) {
+    //             setUser(userstate)
+    //         } else {
+    //             setUser(undefined)
+    //         }
+    //     })
+    //     return () => {
+    //     }
+    // }, [])
 
     return (
         <div>

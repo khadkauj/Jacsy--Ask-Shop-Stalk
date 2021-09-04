@@ -80,13 +80,14 @@ function App() {
 				// }
 				// console.log("user in app,js useeffect", user);
 			} else {
+				setState(undefined)
 				console.log("no user in app,js useeffect userObj", userObj);
 			}
 		})
 
 	}, []);
 
-	console.log("state in app.js is, ", state);
+
 
 	return (
 		<div id="OutsideApp">
@@ -95,7 +96,7 @@ function App() {
             renders the first one that matches the current URL. */}
 
 				<HashRouter>
-					<HeaderComponent />
+					<HeaderComponent userStatus={state} />
 					<div className="App">
 						<Route exact path="/Classified">
 							<ClassifiedHomePageComponent state={state} />

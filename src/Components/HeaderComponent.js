@@ -7,22 +7,22 @@ import Button from '@material-ui/core/Button';
 
 import "./HeaderComponent.css"
 
-const HeaderComponent = () => {
+const HeaderComponent = ({ userStatus }) => {
 
-    const [userStatus, setuserStatus] = useState(undefined)
-    useEffect(() => {
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                user = { email: user.email }
-                setuserStatus(user)
-            } else {
-                setuserStatus(undefined)
-            }
-        })
-        return () => {
+    // const [userStatus, setuserStatus] = useState(state)
+    // useEffect(() => {
+    //     firebase.auth().onAuthStateChanged(user => {
+    //         if (user) {
+    //             user = { email: user.email }
+    //             setuserStatus(user)
+    //         } else {
+    //             setuserStatus(undefined)
+    //         }
+    //     })
+    //     return () => {
 
-        }
-    }, [])
+    //     }
+    // }, [])
     return (
         <div className="router__div stickyProp" id="gulla">
             <nav className="nav__bar" >

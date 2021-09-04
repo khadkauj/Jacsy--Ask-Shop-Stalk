@@ -62,7 +62,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AskMeAQuestionComponent = () => {
+const AskMeAQuestionComponent = ({ user }) => {
+
+    // const [user, setUser] = useState(state);
+    // console.log("state in ask me", user);
     const classes = useStyles();
     // use-context stuffs
     const {
@@ -90,7 +93,7 @@ const AskMeAQuestionComponent = () => {
     const [filterAnswerByType, setfilterAnswerByType] = useState("");
     // const [widthScreen, setWidthScreen] = useState(document.body.clientWidth)
     var widthScreen = window.innerWidth
-    const [user, setUser] = useState(undefined);
+
     // all setup for Form Dialog Box
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
@@ -192,13 +195,13 @@ const AskMeAQuestionComponent = () => {
         }
 
 
-        firebase.auth().onAuthStateChanged((userState) => {
-            if (userState) {
-                setUser(userState);
-            } else {
-                setUser(undefined);
-            }
-        });
+        // firebase.auth().onAuthStateChanged((userState) => {
+        //     if (userState) {
+        //         setUser(userState);
+        //     } else {
+        //         setUser(undefined);
+        //     }
+        // });
 
         return () => { };
     }, [stateForHomePageTwoNestedCompToSync, clickResetFilter, orderAnswerBy]);
@@ -248,14 +251,6 @@ const AskMeAQuestionComponent = () => {
                 window.scrollTo(0, document.body.scrollHeight)
             }
 
-
-            firebase.auth().onAuthStateChanged((userState) => {
-                if (userState) {
-                    setUser(userState);
-                } else {
-                    setUser(undefined);
-                }
-            });
         }
     };
     const changeOrderAnswer = (e) => {
@@ -426,7 +421,7 @@ const AskMeAQuestionComponent = () => {
                                                         ? query.data?.question
                                                         : query.data?.question.slice(0, 200) + "....."
                                                 }
-                                                secondary={<p> "No answer available at the moment." 💓<sup>{query.data?.vote} </sup>  </p>}
+                                                secondary={<> "No answer available at the moment." 💓<sup>{query.data?.vote} </sup>  </>}
                                             />
                                         )}
                                         {query.data?.answered && widthScreen < 800 && (

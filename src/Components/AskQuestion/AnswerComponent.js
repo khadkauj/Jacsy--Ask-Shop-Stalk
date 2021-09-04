@@ -20,7 +20,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CardActions from "@material-ui/core/CardActions";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderOutlined from "@material-ui/icons/FavoriteBorderOutlined";
-
 import "./AnswerComponent.css";
 
 const AnswerComponent = ({ state }) => {

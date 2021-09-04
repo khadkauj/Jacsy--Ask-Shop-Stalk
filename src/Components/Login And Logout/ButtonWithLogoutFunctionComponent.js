@@ -64,7 +64,7 @@ export default function CustomizedMenus({ user }) {
             history.push("/Login")
             // setuserStatus(false)
         }).catch(error => {
-            console.log("user signed out");
+            console.log("user couldn't signed out");
         })
         handleClose()
     }

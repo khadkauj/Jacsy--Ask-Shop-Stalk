@@ -11,7 +11,7 @@ const HomePageComponent = ({ state }) => {
             <div id="homepage__main">
                 {/* the below is question ask topappbar */}
                 <div className="bottomBar__main">
-                    <AskMeAQuestionComponent state={state} />
+                    <AskMeAQuestionComponent user={state} />
                 </div>
                 {/* the below is grid in main homepage */}
                 {/* <div className="tets" id="tets__id">

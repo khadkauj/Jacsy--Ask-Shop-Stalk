@@ -89,8 +89,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ClassifiedHomePageComponent = () => {
+const ClassifiedHomePageComponent = ({ state }) => {
     // initializations
+    const [userDetailsFirebase, setuserDetailsFirebase] = useState(state)
+
     const [productFromFirebase, setproductFromFirebase] = useState("")
     const [nameofProduct, setnameofProduct] = useState("")
     const [producttype, setproducttype] = React.useState('');
@@ -100,7 +102,6 @@ const ClassifiedHomePageComponent = () => {
     const [productDescription, setproductDescription] = useState("")
     const [errorMessgae, seterrorMessgae] = useState(false)
     const history = useHistory()
-    const [userDetailsFirebase, setuserDetailsFirebase] = useState("")
     const [paymentOptions, setpaymentOptions] = useState([])
     const [popUpText, setpopUpText] = useState("")
     const [stateAfterSubmit, setstateAfterSubmit] = useState(true)
@@ -119,18 +120,7 @@ const ClassifiedHomePageComponent = () => {
                 ))
             )
         })
-        // checking user and his stauts
-        firebase.auth().onAuthStateChanged(User => {
-            if (User) {
-                setuserDetailsFirebase(User)
-            }
-            else {
-                console.log("User not found");
-                // history.push("/Login")
-            }
-        })
-        return () => {
-        }
+
     }, [])
 
 

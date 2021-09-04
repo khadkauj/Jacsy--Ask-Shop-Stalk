@@ -10,7 +10,7 @@ import { userContext } from "../ContextComponent"
 
 import './ClassifiedProductView.css';
 
-const ClassifiedProductView = () => {
+const ClassifiedProductView = ({ state }) => {
     const { id } = useParams();
     const [productDataFromFirebase, setproductDataFromFirebase] = useState([])
     const [statusOfItemMarkedAsSold, setStatusOfItemMarkedAsSold] = useState(false) //
@@ -51,7 +51,7 @@ const ClassifiedProductView = () => {
                 {productDataFromFirebase?.id ? <div>
                     <div id="Edit__options">
                         <SplitButton emailOfProductOwner={productDataFromFirebase?.userEmail}
-                            idOfProduct={productDataFromFirebase?.id} soldOrNot={productDataFromFirebase?.markedAsSold} />
+                            idOfProduct={productDataFromFirebase?.id} soldOrNot={productDataFromFirebase?.markedAsSold} user={state} />
                     </div>
                     {/* id="testinLocalCSSusingId__inProductview" */}
                     <div className="div__main__grid__productview  " >
