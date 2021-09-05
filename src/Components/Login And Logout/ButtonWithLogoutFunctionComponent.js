@@ -58,6 +58,7 @@ export default function CustomizedMenus({ user }) {
     // sign out of Firebase
     const history = useHistory()
     const signOutOfFirebase = (e) => {
+        handleClose()
         e.preventDefault()
         firebase.auth().signOut().then(user => {
             console.log("user signed out");
@@ -66,12 +67,21 @@ export default function CustomizedMenus({ user }) {
         }).catch(error => {
             console.log("user couldn't signed out");
         })
-        handleClose()
     }
 
     const takeToLogInPage = (e) => {
-        history.push("/Login")
         handleClose()
+        history.push("/Login")
+    }
+
+    const takeToDocumentation = (e) => {
+        handleClose()
+        history.push("/Documentation")
+    }
+
+    const takeToTermsAndCondition = (e) => {
+        handleClose()
+        history.push("/TermsAndCondition")
     }
 
     return (
@@ -127,13 +137,13 @@ export default function CustomizedMenus({ user }) {
                         <ListItemText primary="Log In" />
                     </StyledMenuItem>
                 }
-                <StyledMenuItem>
+                <StyledMenuItem onClick={e => takeToDocumentation(e)}  >
                     <ListItemIcon>
                         <BookIcon fontSize="small" />
                     </ListItemIcon>
                     <ListItemText primary="Documentation" />
                 </StyledMenuItem>
-                <StyledMenuItem>
+                <StyledMenuItem onClick={e => takeToTermsAndCondition(e)} >
                     <ListItemIcon>
                         <InfoIcon fontSize="small" />
                     </ListItemIcon>

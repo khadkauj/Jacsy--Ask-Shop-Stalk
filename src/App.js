@@ -15,6 +15,8 @@ import AnswerComponent from "./Components/AskQuestion/AnswerComponent";
 import firebase from "firebase";
 import "./App.css";
 import StalkComponent from "./Components/Stalk/StalkComponent";
+import Documentation from "./Components/Miscellaneous/Documentation";
+import TermsAndCondition from "./Components/Miscellaneous/TermsAndCondition";
 
 function App() {
 
@@ -119,6 +121,14 @@ function App() {
 						</Route>
 						<Route exact path="/Stalk">
 							<StalkComponent />
+						</Route>
+						<Route exact path="/Documentation">
+							<Documentation />
+							<FooterComponent />
+						</Route>
+						<Route exact path="/TermsAndCondition">
+							<TermsAndCondition />
+							<FooterComponent />
 						</Route>
 						<Route exact path="/">
 							<HomePageComponent state={state} />
