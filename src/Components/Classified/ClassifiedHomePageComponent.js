@@ -35,7 +35,8 @@ import Resizer from "react-image-file-resizer";
 import { useHistory } from "react-router-dom";
 import FavoriteBorderOutlined from "@material-ui/icons/FavoriteBorderOutlined";
 import EuroIcon from '@material-ui/icons/Euro';
-
+import Fab from '@material-ui/core/Fab';
+import AddShoppingCartSharpIcon from '@material-ui/icons/AddShoppingCartSharp';
 
 import "./ClassifiedHomePageComponent.css";
 // image file resizer
@@ -87,10 +88,13 @@ const useStyles = makeStyles((theme) => ({
     typography: {
         padding: theme.spacing(2),
     },
+    extendedIcon: {
+        marginRight: theme.spacing(1),
+    },
 }));
 
 const ClassifiedHomePageComponent = ({ userDetailsFirebase }) => {
-    console.log("state in classifed is, ", userDetailsFirebase);
+    // console.log("state in classifed is, ", userDetailsFirebase);
     // initializations
     // const [userDetailsFirebase, setuserDetailsFirebase] = useState(state)
 
@@ -281,9 +285,10 @@ const ClassifiedHomePageComponent = ({ userDetailsFirebase }) => {
         <div className="test" id="testinLocalCSSusingId">
             <div className="button">
                 <div style={{ margin: "20px" }}>
-                    <Button id="addButton" variant="contained" color="secondary" onClick={e => handleClickOpen(e)}>
-                        Add to Market.
-                    </Button>
+                    <Fab variant="extended" id="addButton" color="secondary" onClick={e => handleClickOpen(e)}>
+                        <AddShoppingCartSharpIcon className={classes.extendedIcon} />
+                        Add to Market
+                    </Fab>
                     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
                         <DialogContent>
