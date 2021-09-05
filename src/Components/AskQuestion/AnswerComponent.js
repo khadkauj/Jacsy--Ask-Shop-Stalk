@@ -45,12 +45,10 @@ const AnswerComponent = ({ state }) => {
         db.collection("questions")
             .doc(id)
             .onSnapshot((doc) => {
-                setquestionAnswerFromFB(doc.data())
-                setquestionId(doc.id)
-                setquestion(doc.data().question)
-                // setquestionAnswerFromFB(snapshot.data());
-                // setquestionId(snapshot.id)
-                // setquestion(snapshot.data().question)
+                setquestionAnswerFromFB(doc?.data())
+                setquestionId(doc?.id)
+                setquestion(doc?.data()?.question)
+
             })
         // .catch((error) => console.log("error in fetching data from FB, ", error));
 
