@@ -96,14 +96,16 @@ const ClassifiedProductView = ({ state }) => {
                                             <h2 className="productViewDetailsh2">Product Details:</h2>
                                             <div className="productViewDetails">
                                                 {productDataFromFirebase?.date && <h4> Posted on: {productDataFromFirebase?.date.toDate().toLocaleString()} </h4>}
+                                                {productDataFromFirebase?.userDisplayName && <h4> Posted by: {productDataFromFirebase?.userDisplayName} </h4>}
                                                 {productDataFromFirebase?.category && <h4> Category: {productDataFromFirebase?.category} </h4>}
                                                 {productDataFromFirebase?.productDetails && <h4> Condition: {productDataFromFirebase?.productDetails} </h4>}
                                                 {productDataFromFirebase?.category && <h4> Product: {productDataFromFirebase?.category} </h4>}
+                                                {productDataFromFirebase?.whatsAppNo && <h4> whatsAppNo: {productDataFromFirebase?.whatsAppNo} </h4>}
                                                 <div className="pay__div" >
-                                                    <h4>Pay by🤑:&nbsp;&nbsp; </h4>
+                                                    <h4>Pay🤑:&nbsp;&nbsp; </h4>
                                                     <div className="Payment">
                                                         {productDataFromFirebase?.paymentOptions?.map((option, i) => (
-                                                            <button key={i} >{option}</button>
+                                                            <span key={i} >{option}</span>
                                                         ))}
                                                     </div>
 

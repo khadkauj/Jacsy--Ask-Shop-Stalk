@@ -99,7 +99,7 @@ function App() {
 					<HeaderComponent userStatus={state} />
 					<div className="App">
 						<Route exact path="/Classified">
-							<ClassifiedHomePageComponent state={state} />
+							<ClassifiedHomePageComponent userDetailsFirebase={state} />
 							<FooterComponent />
 						</Route>
 						<Route exact path="/Login">

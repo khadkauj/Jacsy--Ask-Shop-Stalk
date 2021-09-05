@@ -56,12 +56,9 @@
 }
 .Payment > * {
   background-color: #fff6ff;
-  outline: none;
-  border: 1px solid #f6d2f6;
-  /* margin: 10px; */
-  border-radius: 10px;
   font-size: 14px;
   color: #e12165;
+  margin: 4px;
 }
 
 .pay__div {
@@ -178,6 +175,17 @@
   align-items: center;
 }
 
+.product__image__grid {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+.product__image__grid > img {
+  width: 60px;
+  height: 60px;
+}
+
 /* media queries always at the end */
 @media only screen and (max-width: 600px) {
   .GiveWidth {
@@ -225,13 +233,9 @@
   }
 }
 
-.product__image__grid {
-  display: flex;
-  justify-content: space-evenly;
-  padding: 10px;
-}
-
-.product__image__grid > img {
-  width: 60px;
-  height: 60px;
+@media only screen and (max-width: 400px) {
+  .Payment > * {
+    font-size: 10px;
+    margin: 4px;
+  }
 }

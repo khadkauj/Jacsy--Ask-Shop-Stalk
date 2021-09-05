@@ -499,7 +499,7 @@ const AskMeAQuestionComponent = ({ user }) => {
                             autoFocus
                             margin="dense"
                             id="name"
-                            label="Question?(20 to 500 words)*"
+                            label="Question?(20-500 characters)*"
                             type="text"
                             fullWidth
                             value={question}

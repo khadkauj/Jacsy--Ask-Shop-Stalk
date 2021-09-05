@@ -89,9 +89,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ClassifiedHomePageComponent = ({ state }) => {
+const ClassifiedHomePageComponent = ({ userDetailsFirebase }) => {
+    console.log("state in classifed is, ", userDetailsFirebase);
     // initializations
-    const [userDetailsFirebase, setuserDetailsFirebase] = useState(state)
+    // const [userDetailsFirebase, setuserDetailsFirebase] = useState(state)
 
     const [productFromFirebase, setproductFromFirebase] = useState("")
     const [nameofProduct, setnameofProduct] = useState("")
@@ -100,6 +101,7 @@ const ClassifiedHomePageComponent = ({ state }) => {
     const [productImage, setproductImage] = useState([])
     const [productPrice, setproductPrice] = useState("")
     const [productDescription, setproductDescription] = useState("")
+    const [whatsAppNo, setWhatsAppNo] = useState("")
     const [errorMessgae, seterrorMessgae] = useState(false)
     const history = useHistory()
     const [paymentOptions, setpaymentOptions] = useState([])
@@ -171,7 +173,7 @@ const ClassifiedHomePageComponent = ({ state }) => {
                             price: productPrice,
                             category: producttype,
                             productDetails: productCondition,
-                            productDescription: productDescription,
+                            productDescription: productDescription.slice(0, 500),
                             imageURL: urlsArray,
                             userEmail: userDetailsFirebase.email,
                             userEmailVerified: userDetailsFirebase.emailVerified,
@@ -180,7 +182,8 @@ const ClassifiedHomePageComponent = ({ state }) => {
                             like: 0,
                             peopleWhoLiked: ["ds@gmial.com", "djs.com"],
                             disLike: 0,
-                            uid: userDetailsFirebase.uid
+                            uid: userDetailsFirebase.uid,
+                            whatsAppNo: whatsAppNo
                         },
                     ).then(e => {
                         // res-setting everything
@@ -303,8 +306,9 @@ const ClassifiedHomePageComponent = ({ state }) => {
                                 onChange={e => setnameofProduct(e.target.value)}
                             />
                             <FormControl className={classes.formControl} style={{ margin: 0 }} >
-                                <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Category*</InputLabel>
                                 <Select
+
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     value={producttype}
@@ -325,7 +329,7 @@ const ClassifiedHomePageComponent = ({ state }) => {
                             </FormControl>
                             <br></br>
                             <FormControl className={classes.formControl} style={{ margin: 0 }}>
-                                <InputLabel id="demo-simple-select-label">Condition</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Condition*</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
@@ -340,7 +344,7 @@ const ClassifiedHomePageComponent = ({ state }) => {
                             </FormControl>
                             <br></br>
                             <FormControl className={classes.formControl} style={{ margin: 0 }}>
-                                <InputLabel id="demo-simple-select-label">Payment</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Payment*</InputLabel>
                                 <Select
                                     multiple
                                     labelId="demo-simple-select-label"
@@ -357,7 +361,7 @@ const ClassifiedHomePageComponent = ({ state }) => {
                             <TextField
                                 margin="dense"
                                 id="description"
-                                label="Description"
+                                label="Description*"
                                 type="text"
                                 multiline
                                 rows={3}
@@ -366,28 +370,39 @@ const ClassifiedHomePageComponent = ({ state }) => {
                                 onChange={e => setproductDescription(e.target.value)}
                             />
                             <form style={{ color: "rgb(112 103 103 / 87%)" }}>
-                                <label id="fname" style={{ color: "rgb(112 103 103 / 87%)" }}>Product Image(up to 5 images)</label><br></br>
+                                <label id="fname" className="product-image-text" >Product Image*</label><br></br>
                                 <input type="file" style={{ color: "rgb(112 103 103 / 87%)" }} accept="image/*" multiple
                                     onChange={e => imagehandleChange(e)} ></input>
                                 {/* <button type="submit" onClick={sendImageToFirebase}>send image</button> */}
                             </form>
                             <FormControl className={classes.formControl} style={{ margin: 0, marginTop: "18px" }}>
-                                <InputLabel htmlFor="input-with-icon-adornment" style={{ fontSize: "22px" }} >Price</InputLabel>
+                                <InputLabel htmlFor="input-with-icon-adornment" style={{ fontSize: "22px" }} >Price*</InputLabel>
                                 <Input
                                     startAdornment={
                                         <InputAdornment position="start">
-                                            <EuroIcon />
+                                            <EuroIcon style={{ fontSize: "1rem" }} />
                                         </InputAdornment>
                                     }
                                     margin="dense"
                                     id="name"
                                     label="Price"
-                                    type="text"
+                                    type="number"
                                     fullWidth
                                     value={productPrice}
                                     onChange={e => setproductPrice(e.target.value)}
                                 />
                             </FormControl>
+
+                            <TextField
+                                margin="dense"
+                                id="name"
+                                label="WhastsApp No."
+                                type="text"
+                                fullWidth
+                                value={whatsAppNo}
+                                placeholder="Big black Ikea Drawer"
+                                onChange={e => setWhatsAppNo(e.target.value)}
+                            />
 
                         </DialogContent>
                         <DialogActions>
