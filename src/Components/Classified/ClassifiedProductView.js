@@ -59,9 +59,11 @@ const ClassifiedProductView = ({ state }) => {
                             <Grid container spacing={1}>
                                 <Grid item xs={12} sm={12} md={6} lg={6} className="GiveWidth" >
                                     {/* imageURL is an array of images */}
+                                    {console.log(productDataFromFirebase.imageURL)}
+                                    { }
                                     {productDataFromFirebase.imageURL && <><CardMedia
                                         className="image__product GiveWidth"
-                                        image={productDataFromFirebase.imageURL ? productDataFromFirebase.imageURL[imageIndex] : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
+                                        image={productDataFromFirebase.imageURL.length > 0 ? productDataFromFirebase.imageURL[imageIndex] : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"}
                                         title="Paella dish"
                                     />{productDataFromFirebase?.markedAsSold && <p className="alreadySold">Already Sold.</p>}</>}
                                     <div className="product__image__grid">

@@ -8,7 +8,7 @@
 }
 
 .appBAr {
-  margin-top: 190px;
+  margin-top: 190px !important;
 }
 
 #filter__search {

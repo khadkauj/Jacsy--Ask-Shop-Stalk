@@ -1,6 +1,6 @@
 #QA__main {
   padding-bottom: 80px;
-  margin-top: 85px;
+  margin-top: 85px !important;
 }
 
 #QA__main h3 {

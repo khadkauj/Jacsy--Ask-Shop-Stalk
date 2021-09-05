@@ -72,7 +72,7 @@ const AskMeAQuestionComponent = ({ user }) => {
         stateForHomePageTwoNestedCompToSync,
         setStateForHomePageTwoNestedCompToSync,
     } = useContext(HomePageComponentsToSync);
-    const [FilterTag, setFilterTag] = React.useState("Miscellaneous"); //checkbox
+    const [FilterTag, setFilterTag] = React.useState(""); //checkbox
     // extra state to not allow double clicking of submit
     const [noDoubleSUbmitCLick, setnoDoubleSUbmitCLick] = useState(false);
     const [questionAnswerFromFB, setquestionAnswerFromFB] = useState([
@@ -349,17 +349,22 @@ const AskMeAQuestionComponent = ({ user }) => {
                             }}
                         >
                             <MenuItem value={"CS/RIS"}>CS/RIS</MenuItem>
-                            <MenuItem value={"Course"}>Course</MenuItem>
-                            <MenuItem value={"Housing"}>Housing</MenuItem>
-                            <MenuItem value={"Admission"}>Admission</MenuItem>
-                            <MenuItem value={"Faculty"}>Faculty</MenuItem>
+                            <MenuItem value={"Math"}>Math</MenuItem>
+                            <MenuItem value={"Programming"}>Programming</MenuItem>
+                            <MenuItem value={"Courses"}>Courses</MenuItem>
+                            <MenuItem value={"Resources"}>Resources</MenuItem>
+                            <MenuItem value={"Tips"}>Tips</MenuItem>
+                            <MenuItem value={"Academic"}>Academic</MenuItem>
                             <MenuItem value={"Job/Internship"}>Job/Internship</MenuItem>
-                            <MenuItem value={"Party/Holiday"}>Party/Holiday</MenuItem>
                             <MenuItem value={"Krupp"}>Krupp</MenuItem>
                             <MenuItem value={"Nordmetall"}>Nordmetall</MenuItem>
                             <MenuItem value={"College3"}>College3</MenuItem>
                             <MenuItem value={"Mercator"}>Mercator</MenuItem>
-                            <MenuItem value={"Miscellaneous"}>Miscellaneous</MenuItem>
+                            <MenuItem value={"Housing"}>Housing</MenuItem>
+                            <MenuItem value={"Party/Holiday"}>Party/Holiday</MenuItem>
+                            <MenuItem value={"Faculty"}>Faculty</MenuItem>
+                            <MenuItem value={"Admission"}>Admission</MenuItem>
+                            <MenuItem value={"Other"}>Other</MenuItem>
                         </Select>
                     </FormControl>
                     <FormControl className={classes.formControl}>
@@ -521,13 +526,22 @@ const AskMeAQuestionComponent = ({ user }) => {
                                 onChange={(e) => setFilterTag(e.target.value)}
                             >
                                 <MenuItem value={"CS/RIS"}>CS/RIS</MenuItem>
-                                <MenuItem value={"Course"}>Course</MenuItem>
-                                <MenuItem value={"Housing"}>Housing</MenuItem>
-                                <MenuItem value={"Admission"}>Admission</MenuItem>
-                                <MenuItem value={"Faculty"}>Faculty</MenuItem>
+                                <MenuItem value={"Math"}>Math</MenuItem>
+                                <MenuItem value={"Programming"}>Programming</MenuItem>
+                                <MenuItem value={"Courses"}>Courses</MenuItem>
+                                <MenuItem value={"Resources"}>Resources</MenuItem>
+                                <MenuItem value={"Tips"}>Tips</MenuItem>
+                                <MenuItem value={"Academic"}>Academic</MenuItem>
                                 <MenuItem value={"Job/Internship"}>Job/Internship</MenuItem>
+                                <MenuItem value={"Krupp"}>Krupp</MenuItem>
+                                <MenuItem value={"Nordmetall"}>Nordmetall</MenuItem>
+                                <MenuItem value={"College3"}>College3</MenuItem>
+                                <MenuItem value={"Mercator"}>Mercator</MenuItem>
+                                <MenuItem value={"Housing"}>Housing</MenuItem>
                                 <MenuItem value={"Party/Holiday"}>Party/Holiday</MenuItem>
-                                <MenuItem value={"Miscellaneous"}>Miscellaneous</MenuItem>
+                                <MenuItem value={"Faculty"}>Faculty</MenuItem>
+                                <MenuItem value={"Admission"}>Admission</MenuItem>
+                                <MenuItem value={"Other"}>Other</MenuItem>
                             </Select>
                         </FormControl>
                     </DialogContent>
