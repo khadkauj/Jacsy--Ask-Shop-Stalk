@@ -173,11 +173,11 @@ const ClassifiedHomePageComponent = ({ userDetailsFirebase }) => {
                         {
                             id: idGeneratedforProduct,
                             date: new Date(),
-                            name: nameofProduct.slice(0, 100),
+                            name: nameofProduct.slice(0, 60),
                             price: productPrice,
                             category: producttype,
                             productDetails: productCondition,
-                            productDescription: productDescription.slice(0, 350),
+                            productDescription: productDescription.slice(0, 250),
                             imageURL: urlsArray,
                             userEmail: userDetailsFirebase.email,
                             userEmailVerified: userDetailsFirebase.emailVerified,
