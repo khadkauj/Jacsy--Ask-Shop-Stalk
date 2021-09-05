@@ -284,7 +284,7 @@ const ClassifiedHomePageComponent = ({ userDetailsFirebase }) => {
     return (
         <div className="test" id="testinLocalCSSusingId">
             <div className="button">
-                <div style={{ margin: "20px" }}>
+                <div style={{ margin: "20px 0 0 0" }}>
                     <Fab variant="extended" id="addButton" color="secondary" onClick={e => handleClickOpen(e)}>
                         <AddShoppingCartSharpIcon className={classes.extendedIcon} />
                         Add to Market

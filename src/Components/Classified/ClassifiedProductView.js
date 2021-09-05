@@ -76,7 +76,7 @@ const ClassifiedProductView = ({ state }) => {
                                 <Grid item xs={12} sm={12} md={6} lg={6}>
                                     <div className="secondDivInGrid GiveWidth alignCenterForSecondGridwhihhchisInforGrid">
                                         <div className="tophead">
-                                            <Grid container id="name__avatar__div" >
+                                            <Grid container id="name__avatar__div" spacing={1} >
                                                 <Grid item sm={4} md={3} lg={4} >
                                                     <h2 className="productViewDetailsFont" style={{ textTransform: "capitalize" }} >{productDataFromFirebase?.name}</h2>
                                                     <span className="prodPricedet" >{"€" + productDataFromFirebase?.price}</span>

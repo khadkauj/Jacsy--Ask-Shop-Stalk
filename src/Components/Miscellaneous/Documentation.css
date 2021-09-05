@@ -3,3 +3,18 @@
   margin-top: 130px;
   padding: 0px 10px 90px 10px;
 }
+
+.documentation-image {
+  display: flex;
+  justify-content: center;
+}
+
+.documentation-image > img {
+  width: 60%;
+}
+
+@media screen and (max-width: 600px) {
+  .documentation-image > img {
+    width: 100%;
+  }
+}
