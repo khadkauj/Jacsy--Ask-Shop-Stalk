@@ -134,6 +134,9 @@
     /* display: flex; */
     height: 120px !important;
   }
+  .appBAr {
+    min-width: 100vw;
+  }
 }
 @media screen and (max-width: 450px) {
   #filter__search .makeStyles-formControl-8 {
@@ -144,9 +147,3 @@
     height: 120px !important;
   }
 }
-
-/* @media screen and (max-width: 960px) {
-  .appBAr {
-    margin-top: 195px;
-  }
-} */
