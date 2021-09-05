@@ -173,11 +173,11 @@ const ClassifiedHomePageComponent = ({ userDetailsFirebase }) => {
                         {
                             id: idGeneratedforProduct,
                             date: new Date(),
-                            name: nameofProduct,
+                            name: nameofProduct.slice(0, 100),
                             price: productPrice,
                             category: producttype,
                             productDetails: productCondition,
-                            productDescription: productDescription.slice(0, 500),
+                            productDescription: productDescription.slice(0, 350),
                             imageURL: urlsArray,
                             userEmail: userDetailsFirebase.email,
                             userEmailVerified: userDetailsFirebase.emailVerified,
@@ -342,9 +342,10 @@ const ClassifiedHomePageComponent = ({ userDetailsFirebase }) => {
                                     onChange={e => setproductCondition(e.target.value)}
                                 >
                                     <MenuItem value={"New"}>New</MenuItem>
-                                    <MenuItem value={"Used only once"}>Used only once</MenuItem>
-                                    <MenuItem value={"Used and all parts fine"}>Used and all parts fine</MenuItem>
-                                    <MenuItem value={"Used but few parts not working"}>Used but few parts not working</MenuItem>
+                                    <MenuItem value={"Used Only Once"}>Used Only Once</MenuItem>
+                                    <MenuItem value={"Used And All Parts Fine"}>Used And All Parts Fine</MenuItem>
+                                    <MenuItem value={"Used But Few Parts Not Working"}>Used But Few Parts Not Working</MenuItem>
+                                    <MenuItem value={"Contact Owner For Product Condition"}>Contact Owner For Product Condition</MenuItem>
                                 </Select>
                             </FormControl>
                             <br></br>

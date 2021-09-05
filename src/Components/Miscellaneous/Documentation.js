@@ -1,10 +1,11 @@
 import React from 'react'
+import "./Documentation.css"
 
 const Documentation = () => {
     console.log("docume");
 
     return (
-        <div>
+        <div className="documentation">
             Documentation
         </div>
     )

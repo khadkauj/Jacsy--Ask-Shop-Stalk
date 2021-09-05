@@ -100,7 +100,7 @@ const ClassifiedProductView = ({ state }) => {
                                                 {productDataFromFirebase?.category && <h4> Category: {productDataFromFirebase?.category} </h4>}
                                                 {productDataFromFirebase?.productDetails && <h4> Condition: {productDataFromFirebase?.productDetails} </h4>}
                                                 {productDataFromFirebase?.category && <h4> Product: {productDataFromFirebase?.category} </h4>}
-                                                {productDataFromFirebase?.whatsAppNo && <h4> whatsAppNo: {productDataFromFirebase?.whatsAppNo} </h4>}
+                                                {productDataFromFirebase?.whatsAppNo && <h4> whatsAppNo: <a href={`tel:${productDataFromFirebase?.whatsAppNo}`} style={{ fontWeight: "500", color: "#e12165" }} > {productDataFromFirebase?.whatsAppNo} </a> </h4>}
                                                 <div className="pay__div" >
                                                     <h4>Pay🤑:&nbsp;&nbsp; </h4>
                                                     <div className="Payment">

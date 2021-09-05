@@ -142,11 +142,11 @@ export default function SplitButton({ emailOfProductOwner, idOfProduct, soldOrNo
         setStateAfterSubmitClick(true)
         db.collection("products").doc(id).update({
             date: new Date(),
-            name: nameofProduct,
+            name: nameofProduct.slice(0, 100),
             price: productPrice,
             category: producttype,
             productDetails: productCondition,
-            productDescription: productDescription,
+            productDescription: productDescription.slice(0, 350),
             paymentOptions: paymentOptions,
             uid: user.uid
         }).then(res => {

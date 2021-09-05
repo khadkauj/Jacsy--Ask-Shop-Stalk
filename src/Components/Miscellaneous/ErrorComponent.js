@@ -2,7 +2,7 @@ import React from 'react'
 
 const ErrorComponent = () => {
     return (
-        <div>
+        <div className="termAndCondition">
             Error 404
         </div>
     )

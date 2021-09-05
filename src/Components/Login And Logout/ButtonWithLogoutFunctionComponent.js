@@ -141,7 +141,7 @@ export default function CustomizedMenus({ user }) {
                     <ListItemIcon>
                         <BookIcon fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText primary="Documentation" />
+                    <ListItemText primary="Documentation/Updates" />
                 </StyledMenuItem>
                 <StyledMenuItem onClick={e => takeToTermsAndCondition(e)} >
                     <ListItemIcon>
