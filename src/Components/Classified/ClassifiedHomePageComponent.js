@@ -519,7 +519,7 @@ const ClassifiedHomePageComponent = ({ userDetailsFirebase }) => {
                         </Grid>
                     ))}
                 </Grid>
-            </div> : <div className="skeleton__div"  ><Skeleton variant="rect" width="80vw" height="60vh" /></div>
+            </div> : <div className=""  ><Skeleton className="skeleton" variant="rect" width="80vw" height="60vh" /></div>
             }
             {/* Snackbar sub-component */}
             <div>

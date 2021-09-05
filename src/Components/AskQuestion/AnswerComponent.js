@@ -409,8 +409,8 @@ const AnswerComponent = ({ state }) => {
                     </Grid>
                 </div>
             ) : (
-                <div className="skeleton__div">
-                    <Skeleton variant="rect" width="80vw" height="30vh" />
+                <div className="">
+                    <Skeleton className="skeleton" variant="rect" width="80vw" height="30vh" />
                 </div>
             )}
 

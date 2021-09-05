@@ -12,9 +12,12 @@
   flex-grow: 1;
 }
 
-.skeleton__div {
-  display: grid;
-  place-items: center;
+.skeleton {
+  position: fixed;
+  top: 150px;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 
 /* CSS appplied gloablly for Signed in as Snackbar */
