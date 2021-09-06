@@ -53,6 +53,7 @@ const Documentation = () => {
             <div className="documentation-image">
                 <img src={process.env.PUBLIC_URL + '/settings.jpg'} alt="" />
             </div>
+            {/*  */}
             <br />
             <p><b>6.</b> Finally, You can log in using any of the three listed methods: </p>
             <ul><li>You can sign in using password less method ie. provide your college email address and
@@ -62,6 +63,15 @@ const Documentation = () => {
 
             <div className="documentation-image">
                 <img src={process.env.PUBLIC_URL + '/login.png'} alt="" />
+            </div>
+
+
+            {/*  */}
+            <br />
+            <p><b>7.</b> Finally you can open it in chrome and go to chrom settings and install it: </p>
+
+            <div className="documentation-image">
+                <img src={process.env.PUBLIC_URL + '/install.jpg'} alt="" />
             </div>
 
             <br />
