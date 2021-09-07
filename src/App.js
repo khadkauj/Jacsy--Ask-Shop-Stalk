@@ -23,7 +23,7 @@ function App() {
 	const [state, setState] = useState({})
 	useEffect(() => {
 		firebase.analytics().logEvent("User is in App Componen");
-
+		localStorage.setItem("version", 1)
 		console.log("useeffect app.js loaded");
 		const emailVerification = async () => {
 			// Confirm the link is a sign-in with email link.

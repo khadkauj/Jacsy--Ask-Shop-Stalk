@@ -10,11 +10,11 @@ const Documentation = () => {
 
             <p>These webApp has mainly three Five components:</p>
             <ul>
-                <li>Questions</li>
-                <li>Asnwers</li>
-                <li>Shop</li>
-                <li>Shop-Product View</li>
-                <li>LogIn</li>
+                <li>Questions Section</li>
+                <li>Answers Section</li>
+                <li>Shop Section</li>
+                <li>Shop-Product View Section</li>
+                <li>LogIn Section</li>
             </ul>
             {/*  */}
             <br />
@@ -55,7 +55,7 @@ const Documentation = () => {
             </div>
             {/*  */}
             <br />
-            <p><b>6.</b> Finally, You can log in using any of the three listed methods: </p>
+            <p><b>6.</b> Additionally, You can log in using any of the three listed methods: </p>
             <ul><li>You can sign in using password less method ie. provide your college email address and
                 get a link in  your outlook. Then, sign in using the sent link.</li>
                 <li>Easy Sign in using Google or Microsoft Auth. Both of these google and outlook
@@ -68,7 +68,7 @@ const Documentation = () => {
 
             {/*  */}
             <br />
-            <p><b>7.</b> Finally you can open it in chrome and go to chrom settings and install it: </p>
+            <p><b>7.</b> Finally you can open it in chrome and go to chrome settings and install it: </p>
 
             <div className="documentation-image">
                 <img src={process.env.PUBLIC_URL + '/install.jpg'} alt="" />
