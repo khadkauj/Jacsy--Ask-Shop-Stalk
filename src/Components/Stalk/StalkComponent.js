@@ -65,7 +65,7 @@ const StalkComponent = () => {
                 <code  >Try putting your userid here. For example, if
                     your email address is u.khadka@jacobs-university.de than than your username is ukhadka.
                     Likewise, ssah for s.sah@jacobs-university.de and ronepal for ro.nepal@jacobs-university.
-                    de. Finally, wait for 5 seconds.</code>
+                    de. Finally, wait for 10 seconds.</code>
             </div>
 
             <br /> <br />
