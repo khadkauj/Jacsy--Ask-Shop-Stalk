@@ -6,7 +6,7 @@ A PWA for University with Quora-like features, online store, and stalking page. 
 Stacks: React, Firebase, Express, AWS, Nginx <br/>
 
 ## DEMO
-Live Demo: http://jacsy.ujjwal-khadka.com.np
+Live Demo: http://jacsy.ujjwal-khadka.com.np<br/>
 Live Demo: https://festive-noether-e12858.netlify.app/ <br/>
 Documentation: https://festive-noether-e12858.netlify.app/#/Documentation <br/>
 
