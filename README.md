@@ -31,9 +31,9 @@ yarn dev
 
 1. Install [Docker](https://www.docker.com)
 2. Pull the Docker image by running </br>
-  `docker pull ujjwalinnfinxx/chatbox:latest`
+  `docker pull ujjwalinnfinxx/jacsy`
 3. Run </br>
-  `docker run -p 5000:5000 ujjwalinnfinxx/jacsy:latest`
+  `docker run -p 5000:5000 ujjwalinnfinxx/jacsy`
 
 
 Open [http://localhost:5000](http://localhost:5000) with your browser to see the result.
