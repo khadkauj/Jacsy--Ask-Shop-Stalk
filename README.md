@@ -1,14 +1,16 @@
-### Introduction
+## Introduction
 
 A PWA for University with Quora-like features, online store, and stalking page. Helps reduce spamming emails Look more into our Documentation.
 
-Stacks: React, Firebase, Express, Redux <br/>
+## TECH USED
+Stacks: React, Firebase, Express, AWS, Nginx <br/>
+
+## DEMO
 Live Demo: http://jacsy.ujjwal-khadka.com.np
 Live Demo: https://festive-noether-e12858.netlify.app/ <br/>
 Documentation: https://festive-noether-e12858.netlify.app/#/Documentation <br/>
 
 
-## Getting Started
 ## Installation
 
 ### NPM
