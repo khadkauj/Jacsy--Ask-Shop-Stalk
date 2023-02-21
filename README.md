@@ -16,9 +16,9 @@ Documentation: https://festive-noether-e12858.netlify.app/#/Documentation <br/>
 ### NPM
 
 ```bash
-git clone https://github.com/khadkauj/Chatbox-Hosted-on-Ubuntu-AWS-EC2.git
+git clone https://github.com/khadkauj/Jacsy--Ask-Shop-Stalk.git
 
-cd Chatbox-Hosted-on-Ubuntu-AWS-EC2
+cd Jacsy--Ask-Shop-Stalk
 
 npm install 
 
