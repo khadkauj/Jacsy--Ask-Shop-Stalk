@@ -1,21 +1,23 @@
-# Use node image as base image
+# Base image
 FROM node:latest
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the package.json file and install dependencies
+# Copy the package.json and package-lock.json files
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
 # Copy the rest of the application files
 COPY . .
 
-# Build the Vite application
-# RUN npm run build
+# Build the app
+RUN npm run build
 
-# Expose the port 3000
-EXPOSE 3000
+# Serve the app
+CMD serve -s build
 
-# Set the command to start the application
-CMD [ "npm", "start" ]
+# Expose the port
+EXPOSE 5000

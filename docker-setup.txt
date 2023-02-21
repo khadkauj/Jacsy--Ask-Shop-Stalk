@@ -1,0 +1,35 @@
+# remove everything that are dangling
+docker system prune
+docker system prune -a
+
+# stop and remove unwanted conflicting containers
+docker ps -a 
+docker stop ID_or_Name
+docker rm ID_or_Name
+
+# stop and remove unwanted conflicting images
+docker images -a
+docker rmi image_id
+
+
+# build and deploy
+
+Once you have created this Dockerfile, you can build the image using the following command:
+```
+docker build -t yourusername/yourappname .
+```
+Replace yourusername with your Docker Hub username and yourappname with the name you want to give your app.
+
+After the image has been built, you can push it to Docker Hub using the following command:
+
+
+```
+docker push yourusername/yourappname
+```
+Once the push is complete, your app will be available on Docker Hub and can be pulled and run using the following command:
+
+```
+docker run -p 5000:5000 yourusername/yourappname
+```
+
+This will run your app on port 5000 on your local machine.
