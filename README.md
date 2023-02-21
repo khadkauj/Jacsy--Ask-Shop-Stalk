@@ -33,7 +33,7 @@ yarn dev
 2. Pull the Docker image by running </br>
   `docker pull ujjwalinnfinxx/chatbox:latest`
 3. Run </br>
-  `docker pull ujjwalinnfinxx/jacsy`
+  `docker run -p 5000:5000 ujjwalinnfinxx/jacsy:latest`
 
 
 Open [http://localhost:5000](http://localhost:5000) with your browser to see the result.
