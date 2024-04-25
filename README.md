@@ -8,7 +8,7 @@ A PWA for University with Quora-like features, online store, and stalking page. 
 ● Leveraged technologies including React.js, Firebase, Express, and AWS to create a dynamic and responsive application. <br />
 ● Implemented analytics to drive feature enhancements and meet user needs. <br />
 ● Presented project at hackathons, gaining recognition for innovation.<br />
-● Explore the live demo at <a href"https://festive-noether-e12858.netlify.app">uniconnect.ujjwal-khadka.com.np</a> to witness the impact firsthand and experience the future of student-centric digital platforms<br />
+● Explore the live demo at < a href="https://festive-noether-e12858.netlify.app">uniconnect.ujjwal-khadka.com.np</a> to witness the impact firsthand and experience the future of student-centric digital platforms<br />
 
 ## TECH USED
 Stacks: React, Firebase, Express, AWS, Nginx <br/>
