@@ -3,12 +3,12 @@
 A PWA for University with Quora-like features, online store, and stalking page. Helps reduce spamming emails Look more into our Documentation.
 
 
-● Developed a Progressive Web App (PWA) aimed at my university students, offering a versatile platform featuring a Quora-style Q&A forum, an integrated online store, and a Stalk page for social connections.
-● Implemented features to reduce spamming of promotional emails and facilitate seamless interaction for over 500 students, resulting in improved user engagement and satisfaction.
-● Leveraged technologies including React.js, Firebase, Express, and AWS to create a dynamic and responsive application. 
-● Implemented analytics to drive feature enhancements and meet user needs
-● Presented project at hackathons, gaining recognition for innovation.
-● Explore the live demo at <a href"https://festive-noether-e12858.netlify.app">uniconnect.ujjwal-khadka.com.np</a> to witness the impact firsthand and experience the future of student-centric digital platforms
+● Developed a Progressive Web App (PWA) aimed at my university students, offering a versatile platform featuring a Quora-style Q&A forum, an integrated online store, and a Stalk page for social connections.<br />
+● Implemented features to reduce spamming of promotional emails and facilitate seamless interaction for over 500 students, resulting in improved user engagement and satisfaction.<br />
+● Leveraged technologies including React.js, Firebase, Express, and AWS to create a dynamic and responsive application. <br />
+● Implemented analytics to drive feature enhancements and meet user needs. <br />
+● Presented project at hackathons, gaining recognition for innovation.<br />
+● Explore the live demo at <a href"https://festive-noether-e12858.netlify.app">uniconnect.ujjwal-khadka.com.np</a> to witness the impact firsthand and experience the future of student-centric digital platforms<br />
 
 ## TECH USED
 Stacks: React, Firebase, Express, AWS, Nginx <br/>
